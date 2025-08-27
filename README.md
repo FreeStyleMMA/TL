@@ -1,0 +1,68 @@
+-- git 활용 가이드 -- 
+1. GitHub SSH키 등록
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+(enter x3회 정도 하면 기본으로 설정)
+
+
+2. 공개키 복사
+cat ~/.ssh/id_rsa.pub
+
+
+3. GitHub에 공개 키 붙여넣기
+  GitHub -> Settings -> SSH and GPG keys -> new SSH key       # 여기에 붙여넣기
+
+
+4. GitBash에서 연결 테스트
+  ssh -T git@github.com
+ -> "Hi, 로컬이름! You've successfully ~~ " 메세지 나오면 성공
+
+
+5. GitBash 정보 등록 확인
+  git config -- global user.name                # 이름확인
+  git config -- global user.email               # 이메일 확인
+
+6. 원격 저장소 연동
+git remote add origin 원격저장소URL            # URL은 github repository에서 확인
+
+   
+8. GitBash에서 로컬 저장소 연결 및 클론 폴더 생성
+:\C\workplace> 등 원하는 위치로 가서
+git clone git@github.com:FreeStyleMMA/TL.git      #클론
+cd TL >> 클론 폴더로 들어가
+
+
+9. 브랜치 생성
+git checkout -b 새롭게 만들 브랜치 이름
+
+10. 브랜치 작업 코드
+git checkout dev
+git pull origin dev                   #최신 코드 받아오기
+git checkout feature/login            # feature/login 브랜치 선택
+git switch main  # main 브랜치로 이동
+
+
+// 브랜치 이름 기준:
+- `feature/login`
+- `fix/api-error`
+- `docs/readme-update`
+
+//커밋 메세지 기준
+- `feat: 새로운 기능 추가`
+- `fix: 버그 수정`
+- `docs: 문서 수정`
+- `refactor: 코드 리팩토링
+
+9. 커밋
+git add .                            # 작업 파일(git이 들어있는)에서 git에 준비시키기( . 말고 원하는 범위 설정 가능)
+git commit -m "커밋 할 메세지"       # 커밋 메세지는 'TL 프로젝트 버전 V.0.0.0 메세지 내용' 혹은 개별 기능 'feat: 로그인 기능 추가' 같은 형식으로 통일
+git log                              # 메세지 확인
+git branch                           # 브랜치 확인
+git remote -v                        # 원격 저장소 확인
+git push -u origin 브랜치명          # 브랜치 명으로 원격 저장소에 upload
+
+
+10. 원격 저장소에서 파일 가져오기
+GitBash 에서 작업 폴더로 들어간 다음
+git pull
+    
+  
