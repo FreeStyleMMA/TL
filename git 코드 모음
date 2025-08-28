@@ -1,5 +1,6 @@
 -- git 활용 가이드 -- 
-** 바로 위네 Preview -> Code로 바꾸고 보시면 좋아요
+
+** 바로 위에 Preview -> Code로 바꾸고 보시면 좋아요 **
 
 1. GitHub SSH키 등록
 ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
