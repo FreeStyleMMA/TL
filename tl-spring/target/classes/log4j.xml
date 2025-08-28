@@ -13,7 +13,7 @@
 	</appender>
 
 	<!-- Application Loggers -->
-	<logger name="com.jd.spring">
+	<logger name="com.sdt">
 		<level value="info" />
 	</logger>
 
@@ -46,7 +46,13 @@
 	</logger>
 
 	<!-- TestController 컨트롤러 때문에 추가함 -->
-	<logger name="com.jd.spring.controller">
+	<logger name="com.tl.dto">
+		<level value="info" />
+	</logger>
+	<logger name="com.tl.controller">
+		<level value="info" />
+	</logger>
+	<logger name="com.tl.service">
 		<level value="info" />
 	</logger>
 

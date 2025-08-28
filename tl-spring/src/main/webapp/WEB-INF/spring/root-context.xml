@@ -45,7 +45,7 @@
 	<!-- 내가 추가한거 -->
 	<!-- mybatis - mapper 설정 -->
 	<mybatis-spring:scan
-		base-package="com.sdt.mapper" /><!-- 패키지명에 맞게 수정 -->
+		base-package="com.tl.mapper" /><!-- 패키지명에 맞게 수정 -->
 
 	<!-- 내가 추가한거 -->
 	<!-- <context:component-scan base-package="org.zerock.sample"> </context:component-scan> -->
@@ -53,7 +53,7 @@
 		
 	<!-- 내가 추가한거 -->
 
-	<context:component-scan base-package="com.sdt.service">
+	<context:component-scan base-package="com.tl.service">
 	</context:component-scan>
 
 	
