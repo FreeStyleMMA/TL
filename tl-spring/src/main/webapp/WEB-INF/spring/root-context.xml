@@ -7,54 +7,30 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-	<!-- Root Context: defines shared resources visible to all other web components -->
-	<!-- 내가 추가한거 -->
 	<!-- 커넥션 풀 - 아파치 - Commons DBCP 2.8.0 -->
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp2.BasicDataSource"
-		destroy-method="close">
-		<!-- log4jdbc.log4j2 때문에 기존 코드 주석친거 -->
-		<!-- 
-		<property name="driverClassName"
-			value="com.mysql.cj.jdbc.Driver" />
-		<property name="url"
-			value="jdbc:mysql://localhost:3306/my_board" />
- 		-->			
-		<!-- 시작 끝 -->
-		<!-- log4jdbc.log4j2 때문에 수정 삽입한거 -->
-		<!-- 시작 -->
-
-			
+		destroy-method="close">				
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
-		<property name="url" value="jdbc:log4jdbc:mysql://localhost:3306/my_cat"></property>			
-		<!-- 이거 오라클임 마이에스큐엘로 수정해야함 -->
-		<!-- 끝 -->
-
-		<property name="username" value="root" /><!-- db 계정에 맞게 수정 -->
-		<property name="password" value="root" /><!-- db 계정에 맞게 수정 -->
+			<!-- DB 이름 tl 확인 -->
+		<property name="url" value="jdbc:log4jdbc:mysql://localhost:3306/tl"></property>	
+			<!-- db 계정에 맞게 수정 -->				
+		<property name="username" value="root" />
+		<property name="password" value="root" />
 	</bean>
 
-	<!-- 내가 추가한거 -->
 	<!-- SQLSessionFactiory -->
 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 
-
-	<!-- 내가 추가한거 -->
 	<!-- mybatis - mapper 설정 -->
 	<mybatis-spring:scan
-		base-package="com.sdt.mapper" /><!-- 패키지명에 맞게 수정 -->
-
-	<!-- 내가 추가한거 -->
-	<!-- <context:component-scan base-package="org.zerock.sample"> </context:component-scan> -->
-	
+		base-package="com.tl.mapper" /><!-- 패키지명에 맞게 수정 -->
 		
 	<!-- 내가 추가한거 -->
-
-	<context:component-scan base-package="com.sdt.service">
+	<context:component-scan base-package="com.tl.service">
 	</context:component-scan>
-
 	
 </beans>

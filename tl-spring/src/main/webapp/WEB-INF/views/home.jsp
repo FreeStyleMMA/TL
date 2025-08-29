@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>
-	Hello world!  
+Theatre Link Project!!
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tl.mapper.memberMapper">
+	<insert id = "singUp">
+	INSERT INTO tl_member (memberName,memberId,memberPw,role)
+	VALUES(#{memberName},#{memberId},#{memberPw},#{role})
+	</insert>
+	
+	
+
+	 <select id="findByMemberId" parameterType="String" resultType="com.tl.dto.MemberVO">
+        SELECT memberId, memberPw, role
+        FROM tbl_user
+        WHERE memberId = #{memberId}
+    </select>
+    
+</mapper>

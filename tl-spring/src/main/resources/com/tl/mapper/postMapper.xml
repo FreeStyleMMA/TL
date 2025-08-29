@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tl.mapper.postMapper">
+	
+	<!-- 게시물 글쓰기  -->
+	<!-- REPLY, MEDIA 어떻게 처리하는지 고민 PAGE는 안넘기고 -->
+	<insert id = "write">
+	INSERT INTO tl_post(category, title, content, userid, date,media )
+	values(#{category},#{title},#{content},#{userid},#{date}, #{mdiea})	
+	</insert>
+	
+	<!-- 게시물 클릭 하면 게시물 넘버로 셀렉트  -->
+	<select id="read">
+	SELECT*FROM tl_post where no = #{no}
+	</select>
+	
+	<!-- 게시물 지우기하면 게시물 넘버로 셀렉트  -->
+	<delete id="delete">
+	DELETE FROM tl_post where no = #{no}
+	</delete>
+	
+</mapper>
