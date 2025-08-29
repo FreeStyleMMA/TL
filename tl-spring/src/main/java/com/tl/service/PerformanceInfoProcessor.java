@@ -1,7 +1,8 @@
 package com.tl.service;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.tl.dto.PerformanceDetailListDto;
+import com.tl.dto.PerformanceDetailDto;
+import com.tl.dto.PerformanceDetailWrapperDto;
 import com.tl.dto.PerformanceDto;
 import com.tl.dto.PerformanceListDto;
 import com.tl.dto.PerformanceRequestDto;
@@ -20,7 +21,7 @@ public class PerformanceInfoProcessor {
 	private String apiKey = "da8350e1cfc642d49f9486fb19ade562"; // kopis api key
 	
 	public PerformanceListDto performanceList = new PerformanceListDto(); // 공연 목록 배열
-	public ArrayList<PerformanceDetailListDto> performanceDetailList = new ArrayList<PerformanceDetailListDto>(); // 공연 상세 정보 배열
+	public ArrayList<PerformanceDetailDto> performanceDetailList = new ArrayList<PerformanceDetailDto>(); // 공연 상세 정보 배열
 	
 	public PerformanceInfoProcessor(PerformanceRequestDto prd) { // 생성자 함수
 		setPerformanceList(prd);
@@ -72,8 +73,8 @@ public class PerformanceInfoProcessor {
             	try {
             		String xmlResponse = restTemplate.getForObject(API_URL, String.class);
         	        // performanceList에 받아온 값 저장
-        	        PerformanceDetailListDto detail = xmlMapper.readValue(xmlResponse, PerformanceDetailListDto.class);
-            	    performanceDetailList.add(detail);
+        	        PerformanceDetailWrapperDto detail = xmlMapper.readValue(xmlResponse, PerformanceDetailWrapperDto.class);
+            	    performanceDetailList.add(detail.getDb());
 
             	    Thread.sleep(100); // 0.1초 지연
 

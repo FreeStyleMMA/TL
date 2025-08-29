@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true) // 클래스에 정의되지 않은 필드가 xml에 있어도 무시
-public class PerformanceDetailDto {
+public class PerformanceDetailDto { // api에서 받아온 공연 상세 정보를 담을 클래스
 
     public String mt20id;        // 공연ID
     public String prfnm;         // 공연명

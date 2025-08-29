@@ -3,7 +3,7 @@ package com.tl.dto;
 import lombok.Data;
 
 @Data
-public class PerformanceDto {
+public class PerformanceDto { // api에서 받아온 공연 목록의 정보를 받아올 클래스
 	public String mt20id;     // 공연 ID (예: PF178134)
 	public String prfnm;      // 공연명 (예: 반짝반짝 인어공주)
 	public String genrenm;    // 공연 장르명 (예: 뮤지컬)

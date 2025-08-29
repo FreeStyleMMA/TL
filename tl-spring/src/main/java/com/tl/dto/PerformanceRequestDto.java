@@ -3,7 +3,7 @@ package com.tl.dto;
 import lombok.Data;
 
 @Data
-public class PerformanceRequestDto {
+public class PerformanceRequestDto { // api에서 공연 목록을 받아올 때 요청할 매개변수를 담을 클래스
     public String startdate;     // 공연 시작일자 (필수, 8자리, 예: 20230101)
     public String enddate;       // 공연 종료일자 (필수, 8자리, 예: 20230630)
     public String cpage;         // 현재 페이지 (필수, 최대 3자리, 예: 1)

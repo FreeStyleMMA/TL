@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Data
 @JacksonXmlRootElement(localName = "dbs") // xml데이터에서 이 이름으로 인식
-public class PerformanceListDto {
+public class PerformanceListDto { // api에서 받아온 공연 목록을 받아올 클래스
     
     @JacksonXmlProperty(localName = "db") // xml데이터에서 이 이름으로 인식
     @JacksonXmlElementWrapper(useWrapping = false) // xml에서 감싸는 태그 없이 배열 데이터 사용시 필요
