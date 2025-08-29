@@ -4,6 +4,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.tl.dto.PerformanceDetailDto;
 import com.tl.dto.PerformanceDetailWrapperDto;
 import com.tl.dto.PerformanceDto;
+import com.tl.dto.PerformanceInfoDto;
 import com.tl.dto.PerformanceListDto;
 import com.tl.dto.PerformanceRequestDto;
 
@@ -20,14 +21,17 @@ import lombok.extern.log4j.Log4j;
 public class PerformanceInfoProcessor {
 	private String apiKey = "da8350e1cfc642d49f9486fb19ade562"; // kopis api key
 	
-	public PerformanceListDto performanceList = new PerformanceListDto(); // 공연 목록 배열
-	public ArrayList<PerformanceDetailDto> performanceDetailList = new ArrayList<PerformanceDetailDto>(); // 공연 상세 정보 배열
+	private PerformanceListDto performanceList = new PerformanceListDto(); // 공연 목록 배열
+	private ArrayList<PerformanceDetailDto> performanceDetailList = new ArrayList<PerformanceDetailDto>(); // 공연 상세 정보 배열
+	public ArrayList<PerformanceInfoDto> performanceinfoList = new ArrayList<PerformanceInfoDto>(); // 사용할 것만 정리한 공연 상세 정보
 	
 	public PerformanceInfoProcessor(PerformanceRequestDto prd) { // 생성자 함수
 		setPerformanceList(prd);
 		setPerformanceDetailList(performanceList);
+		setPerformanceInfo(performanceDetailList);
 	}
 
+	// kopis에서 공연 목록 api 받아오는 함수
 	private void setPerformanceList(PerformanceRequestDto prd) {
 		String API_URL = String.format( // apiKey, prd 사용해서 api url 생성
 			    "http://kopis.or.kr/openApi/restful/pblprfr?service=%s&stdate=%s&eddate=%s&cpage=%s&"
@@ -49,12 +53,14 @@ public class PerformanceInfoProcessor {
 	        // performanceList에 받아온 값 저장
 	        performanceList = xmlMapper.readValue(xmlResponse, PerformanceListDto.class);
 	        
-	        Thread.sleep(100);//0.1초 지연
+	        Thread.sleep(130);//0.13초 지연
 	    } catch (Exception e) { // 예외 처리
 	        e.printStackTrace();
 	        log.info("setPerformanceList 실패");
 	    }
 	}
+	
+	// 받아온 공연 목록의 공연 상세 정보 api 받아오는 함수
 	private void setPerformanceDetailList(PerformanceListDto performanceListDto) {
 		// restTemplate은 spring에서 제공하는 http와의 통신 도구
         RestTemplate restTemplate = new RestTemplate();
@@ -68,7 +74,7 @@ public class PerformanceInfoProcessor {
             for (PerformanceDto perf : performanceListDto.getDb()) {
             	String API_URL = String.format(
             			"http://www.kopis.or.kr/openApi/restful/pblprfr/%s?service=%s",
-            			perf.mt20id, apiKey
+            			perf.getMt20id(), apiKey
             			);
             	try {
             		String xmlResponse = restTemplate.getForObject(API_URL, String.class);
@@ -76,15 +82,24 @@ public class PerformanceInfoProcessor {
         	        PerformanceDetailWrapperDto detail = xmlMapper.readValue(xmlResponse, PerformanceDetailWrapperDto.class);
             	    performanceDetailList.add(detail.getDb());
 
-            	    Thread.sleep(100); // 0.1초 지연
+            	    Thread.sleep(130); // 0.13초 지연
 
             	} catch (HttpClientErrorException e) { // 400, 404 등 클라이언트 오류
-            	    log.error("HTTP 오류 발생: "+ perf.mt20id+ e.getStatusCode());
+            	    log.error("HTTP 오류 발생: "+ perf.getMt20id()+ e.getStatusCode());
             	    log.error("Response Body: "+ e.getResponseBodyAsString()); // 서버가 준 오류 내용도 출력
             	} catch (Exception e) { // 기타 예외
-            	    log.error("XML 파싱/통신 오류: "+ perf.mt20id, e);
+            	    log.error("XML 파싱/통신 오류: "+ perf.getMt20id(), e);
             	}
             }
         }
     }
+	
+	//받아온 공연 상세 정보 api 정리
+	private void setPerformanceInfo(ArrayList<PerformanceDetailDto> detailList) {
+		for(PerformanceDetailDto detail : detailList) {
+			performanceinfoList.add(new PerformanceInfoDto(detail.getPrfnm(), detail.getPrfpdfrom(),
+					detail.getPrfpdto(),detail.getFcltynm(), detail.getPrfruntime(), detail.getDtguidance(),
+					detail.getGenrenm(), detail.getPoster(), detail.getRelates()));
+		}
+	}
 }
