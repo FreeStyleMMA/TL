@@ -1,38 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="cp" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-	<title>Home</title>
+<title>Home</title>
 </head>
 <body>
-<h1>Kopis api</h1>
-<hr>
-<h2>공연 목록 보기</h2>
-<form action="${cp}/tl/getPerformanceList">
-<input name="startdate" placeholder="공연 시작 일자(필수)">
-<input name="enddate" placeholder="공연 종료 일자(필수)">
-<input name="cpage" placeholder="현재 페이지(필수)">
-<input name="rows" placeholder="페이지당 목록 수(필수)">
-<br>
-<input name="shprfnm" placeholder="공연명">
-<input name="shprfnmfct" placeholder="공연시설명">
-<input name="shcate" placeholder="장르코드">
-<input name="prfplccd" placeholder="공연장코드">
-<input name="signgucode" placeholder="지역(시도)코드">
-<br>
-<input name="signgucodesub" placeholder="지역(구군)코드">
-<input name="kidstate" placeholder="아동공연여부(Y,N)">
-<input name="prfstate" placeholder="공연상태 코드">
-<input name="openrun" placeholder="오픈런(Y,N)">
-<input name="afterdate" placeholder="해당일자 이후 등록/수정된 항목출력">
-<br>
-<input type="submit" value = "api보기">
-</form>
-<pre>
+	<h1>Kopis api</h1>
+	<hr>
+	<h2>공연 목록 보기</h2>
+	<form method="get">
+		<input name="startdate" placeholder="공연 시작 일자(필수)"> <input
+			name="enddate" placeholder="공연 종료 일자(필수)"> <input
+			name="cpage" placeholder="현재 페이지(필수)"> <input name="rows"
+			placeholder="페이지당 목록 수(필수)"> <br> <input name="shprfnm"
+			placeholder="공연명"> <input name="shprfnmfct"
+			placeholder="공연시설명"> <input name="shcate" placeholder="장르코드">
+		<input name="prfplccd" placeholder="공연장코드"> <input
+			name="signgucode" placeholder="지역(시도)코드"> <br> <input
+			name="signgucodesub" placeholder="지역(구군)코드"> <input
+			name="kidstate" placeholder="아동공연여부(Y,N)"> <input
+			name="prfstate" placeholder="공연상태 코드"> <input name="openrun"
+			placeholder="오픈런(Y,N)"> <input name="afterdate"
+			placeholder="해당일자 이후 등록/수정된 항목출력"> <br> <input
+			type="submit" value="테이블 보기"
+			formaction="${cp}/tl/getPerformanceInfoTable"> <input
+			type="submit" value="JSON 보기" formaction="${cp}/tl/getPerformanceInfo">
+	</form>
+	<pre>
 공연상태 코드
 01 공연예정
 02 공연중
