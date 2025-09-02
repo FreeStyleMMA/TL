@@ -1,0 +1,31 @@
+# Maven 관련
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Eclipse/STS IDE 관련
+/.classpath
+/.project
+/.settings/
+/bin/
+
+# Intellij 관련
+/.idea/
+/out/
+/*.iml
+
+# OS 관련
+.DS_Store
+Thumbs.db
+
+# 로그 및 임시 파일
+*.log
+*.tmp
+*.bak
+
+# 환경설정 파일
+*.env
+application.properties
+application.yml
+
+# 기타
+*.class
