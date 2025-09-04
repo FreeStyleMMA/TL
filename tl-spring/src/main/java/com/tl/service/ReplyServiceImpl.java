@@ -13,7 +13,7 @@ import lombok.extern.log4j.Log4j;
 
 @Service
 @Log4j
-public class ReplyServiceImpl {
+public class ReplyServiceImpl implements ReplyService{
 
 	@Setter(onMethod_ = @Autowired)
 	public ReplyMapper mapper;

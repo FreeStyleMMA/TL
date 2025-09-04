@@ -24,27 +24,27 @@ public class JwtFilter extends OncePerRequestFilter {
 	@Autowired
 	private CustomUserDetailsService userDetailsService;
 
-	@Override
 
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		
-		
-		// 쿠키에서 jwt 꺼내기
+	
+		// 요청 header의 쿠키에서 token 추출
 		String token = jwtUtil.getJwtFromCookie(request);
 		
-	if(token != null) {
-		String memberId = jwtUtil.extractMemberId(token);
+		// token에서 memberId 추출
+		if(token != null) {
+			String memberId = jwtUtil.extractMemberId(token);
+			
+			//memberId에 Authntication 세팅이 안되어있으면 userDetails 가져오기
 			if (memberId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 				UserDetails userDetails = userDetailsService.loadUserByUsername(memberId);
-
 				
 				if (jwtUtil.validateToken(token, userDetails)) {
-					UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,
-							null, userDetails.getAuthorities());
+					UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken
+							(userDetails,null, userDetails.getAuthorities());
 					authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-					SecurityContextHolder.getContext().setAuthentication(authToken);
-					
+					SecurityContextHolder.getContext().setAuthentication(authToken);// 인증 정보 저장
 				}
 			}
 		}

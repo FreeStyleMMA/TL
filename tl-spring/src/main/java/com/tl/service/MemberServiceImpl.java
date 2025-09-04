@@ -14,7 +14,7 @@ import lombok.extern.log4j.Log4j;
 
 @Service
 @Log4j
-public class MemberServiceImpl {
+public class MemberServiceImpl implements MemberService {
 	@Setter(onMethod_ = @Autowired)
 	public MemberMapper mapper;
 
@@ -35,6 +35,7 @@ public class MemberServiceImpl {
 	public LoginResponse signIn(LoginRequest request) {
 		
 		MemberVO member = mapper.findByMemberId(request.memberId);
+		
 	    LoginResponse response = new LoginResponse();
 
 	    if(member==null || !member.getMemberPw().equals(request.getMemberPw())) {

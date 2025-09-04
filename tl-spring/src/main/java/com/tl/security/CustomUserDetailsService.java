@@ -8,12 +8,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import com.tl.dto.MemberVO;
 import com.tl.mapper.MemberMapper;
 
 import lombok.Setter;
 
+@Service
 public class CustomUserDetailsService implements UserDetailsService{
 
 	@Setter(onMethod_ = @Autowired)
@@ -28,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService{
         //권한 인증을 위한 role 정보 세팅
         GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getRole());
 
-        //jwt 토큰 생성을 위한 User(member) 정보 세팅
+        //Jwt Filter를 위한 User객체 세팅
         return new org.springframework.security.core.userdetails.User(
                 user.getMemberId(),
                 user.getMemberPw(),

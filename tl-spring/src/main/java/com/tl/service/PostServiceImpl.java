@@ -13,8 +13,9 @@ import lombok.extern.log4j.Log4j;
 
 @Service
 @Log4j
-public class PostServiceImpl {
 
+public class PostServiceImpl implements PostService{
+	
 	@Setter(onMethod_=@Autowired)
 	public PostMapper mapper;
 	
