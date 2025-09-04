@@ -28,7 +28,8 @@
 	<!-- mybatis - mapper 설정 -->
 	<mybatis-spring:scan
 		base-package="com.tl.mapper" /><!-- 패키지명에 맞게 수정 -->
-	<!-- 내가 추가한거 -->
+
+	<!-- componentscan -->
 	<context:component-scan base-package="com.tl.service,com.tl.security">
 	</context:component-scan>
 </beans>
