@@ -26,36 +26,28 @@ public class JwtFilter extends OncePerRequestFilter {
 
 	@Override
 
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		
 		
-		// http 정보 받고
-		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		// 쿠키에서 jwt 꺼내기
+		String token = jwtUtil.getJwtFromCookie(request);
 		
-		// header를 Authorization이라는 이름으로 받아온다
-		String authHeader = httpRequest.getHeader("Authorization");
-		
-		// 헤더가 null이 아니고 Bearea
-		if (authHeader != null && authHeader.startsWith("Bearer ")) {
-			String token = authHeader.substring(7);
-			String username = jwtUtil.extractMemberId(token);
-			
-
-			if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-				UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+	if(token != null) {
+		String memberId = jwtUtil.extractMemberId(token);
+			if (memberId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+				UserDetails userDetails = userDetailsService.loadUserByUsername(memberId);
 
 				
 				if (jwtUtil.validateToken(token, userDetails)) {
 					UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,
 							null, userDetails.getAuthorities());
-					authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
+					authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 					SecurityContextHolder.getContext().setAuthentication(authToken);
 					
 				}
 			}
 		}
-
-		chain.doFilter(request, response);
+		filterChain.doFilter(request, response);
 	}
 }

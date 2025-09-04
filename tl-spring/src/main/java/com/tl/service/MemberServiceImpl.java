@@ -33,6 +33,7 @@ public class MemberServiceImpl {
 	 * login 성공 여부, jwt 토큰, 결과 메세지를	LoginResponse로 결과 처리.
 	 */
 	public LoginResponse signIn(LoginRequest request) {
+		
 		MemberVO member = mapper.findByMemberId(request.memberId);
 	    LoginResponse response = new LoginResponse();
 

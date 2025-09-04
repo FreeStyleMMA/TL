@@ -8,8 +8,6 @@
 	VALUES(#{memberName},#{memberId},#{memberPw},#{role})
 	</insert>
 	
-	
-
 	 <select id="findByMemberId" parameterType="String" resultType="com.tl.dto.MemberVO">
         SELECT memberId, memberPw, role
         FROM tbl_user
