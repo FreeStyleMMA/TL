@@ -10,7 +10,7 @@
 
 	<!-- DB 연결 -->
 	<!-- root-context.xml 가져오기 -->
-	<import resource="classpath:/root-context.xml" />
+	<import resource="/root-context.xml" />
 
 	<!-- BCrypt 패스워드 인코더 -->
 	<bean id="bcryptPasswordEncoder"

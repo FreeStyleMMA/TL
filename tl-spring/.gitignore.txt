@@ -1,29 +1,46 @@
-# 빌드 결과물
-tl-spring/target/
-*.class
-*.jar
-*.war
+# IntelliJ IDEA
+/.idea/
+/*.iml
+/out/
 
-# Eclipse 설정 파일
-tl-spring/.classpath
-tl-spring/.project
-tl-spring/.settings/
+# Eclipse
+/.settings/
+/.project
+/.classpath
+/.factorypath
 
-# Maven 관련
-tl-spring/.mvn/
-tl-spring/mvnw
-tl-spring/mvnw.cmd
-tl-spring/.idea/
-tl-spring/.springBeans
+# NetBeans
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# Maven
+/target/
+/pom.xml.tag
+/pom.xml.releaseBackup
+/pom.xml.versionsBackup
+/logs/
+/META-INF/maven/**/pom.properties
+/META-INF/maven/**/pom.xml
+
+# Gradle
+/.gradle/
+/build/
+
+# OS 파일
+.DS_Store
+Thumbs.db
 
 # 로그 파일
 *.log
 
-# 운영체제 관련
-.DS_Store
-Thumbs.db
+# Temporary files
+*.tmp
+*.swp
+*.bak
 
-# IntelliJ IDE 설정 (혹시 IntelliJ도 사용한다면)
-*.iml
-.idea/
-out/
+# Spring Boot DevTools (있다면)
+spring-boot-devtools-*.jar
