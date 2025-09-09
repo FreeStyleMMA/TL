@@ -1,5 +1,6 @@
 package com.tl.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -11,10 +12,9 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JacksonXmlRootElement(localName = "dbs") // xml데이터에서 이 이름으로 인식
-public class PerformanceListDto { // api에서 받아온 공연 목록을 받아올 클래스
-
-	@JacksonXmlProperty(localName = "db") // xml데이터에서 이 이름으로 인식
+@JacksonXmlRootElement(localName = "boxofs") // xml데이터에서 이 이름으로 인식
+public class PerformanceStatusListDto { // api로 받아온 공연 예매 현황판 데이터 목록
+	@JacksonXmlProperty(localName = "boxof") // xml데이터에서 이 이름으로 인식
 	@JacksonXmlElementWrapper(useWrapping = false) // xml에서 감싸는 태그 없이 배열 데이터 사용시 필요
-	private List<PerformanceDto> db; // 공연 데이터 목록
+	private List<PerformanceStatusDto> boxof = new ArrayList<PerformanceStatusDto>(); // 공연 데이터 목록
 }

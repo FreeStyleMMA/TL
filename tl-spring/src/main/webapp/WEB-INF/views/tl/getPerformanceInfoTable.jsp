@@ -41,7 +41,7 @@
 					<td><img src="${info.per_poster}"
 						style="width: 100px; height: 120px"></td>
 					<td><c:forEach var="ticket" items="${info.per_ticket}">
-							<a href="${ticket.value}" target="_blank">${ticket.key}</a>
+							<a href="${ticket.url}" target="_blank">${ticket.name}</a>
 							<br />
 						</c:forEach></td>
 				</tr>

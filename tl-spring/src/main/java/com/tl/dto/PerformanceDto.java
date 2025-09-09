@@ -1,8 +1,11 @@
 package com.tl.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PerformanceDto { // api에서 받아온 공연 목록의 정보를 받아올 클래스
 	private String mt20id;     // 공연 ID (예: PF178134)
 	private String prfnm;      // 공연명 (예: 반짝반짝 인어공주)
