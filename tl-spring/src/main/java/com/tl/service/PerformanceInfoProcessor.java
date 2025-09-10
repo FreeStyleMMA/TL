@@ -60,8 +60,8 @@ public class PerformanceInfoProcessor {
 			// 추천, 랭킹 공연 목록을 요청 받았을 때
 			if (isBoxOfficeRequest(prd)) { // 공연, 랭킹 요청일 때
 				String API_URL = String.format( // apiKey, prd 사용해서 api url 생성
-						"http://kopis.or.kr/openApi/restful/boxoffice?service=%s&stdate=%s&eddate=%s", apiKey,
-						prd.startdate, prd.enddate);
+						"http://kopis.or.kr/openApi/restful/boxoffice?service=%s&stdate=%s&eddate=%s&catecode=%s", apiKey,
+						prd.startdate, prd.enddate, prd.shcate);
 				String xmlResponse = restTemplate.getForObject(API_URL, String.class);
 				//전체 리스트 받아오기
 				PerformanceStatusListDto temp = xmlMapper.readValue(xmlResponse, PerformanceStatusListDto.class);
