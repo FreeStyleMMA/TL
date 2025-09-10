@@ -1,20 +1,16 @@
 package com.tl.dto;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 import lombok.Data;
 
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true) // 클래스에 정의되지 않은 필드가 xml에 있어도 무시
 @JacksonXmlRootElement(localName = "dbs") // xml데이터에서 이 이름으로 인식
-public class PerformanceListDto { // api에서 받아온 공연 목록을 받아올 클래스
-
+public class PerformancePeaceWrapperDto { // api에서 받아온 공연시설 상세 정보를 받아올 껍데기 클래스
 	@JacksonXmlProperty(localName = "db") // xml데이터에서 이 이름으로 인식
-	@JacksonXmlElementWrapper(useWrapping = false) // xml에서 감싸는 태그 없이 배열 데이터 사용시 필요
-	private List<PerformanceDto> db; // 공연 데이터 목록
+	private PerformancePeaceDto db; // 공연시설 데이터 목록
+
 }

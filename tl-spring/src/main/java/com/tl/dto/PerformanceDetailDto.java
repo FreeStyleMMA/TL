@@ -1,6 +1,6 @@
 package com.tl.dto;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
@@ -45,9 +45,9 @@ public class PerformanceDetailDto { // api에서 받아온 공연 상세 정보를 담을 클래
 
     @JacksonXmlElementWrapper(localName = "styurls") // xml에서 감싸는 태그 없이 배열 데이터 사용시 필요
     @JacksonXmlProperty(localName = "styurl")        // XML에서 이 이름으로 매핑
-    private ArrayList<String> styurls;               // 소개 이미지 목록
+    private List<String> styurls;               // 소개 이미지 목록
 
     @JacksonXmlElementWrapper(localName = "relates") // xml에서 감싸는 태그 없이 배열 데이터 사용시 필요
     @JacksonXmlProperty(localName = "relate")       // XML에서 이 이름으로 매핑
-    private ArrayList<RelateDto> relates;           // 예매처 목록
+    private List<RelateDto> relates;           // 예매처 목록
 }
