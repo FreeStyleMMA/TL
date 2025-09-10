@@ -44,3 +44,6 @@ Thumbs.db
 
 # Spring Boot DevTools (있다면)
 spring-boot-devtools-*.jar
+
+#텍스트 파일 인코딩
+*.java text eol=lf working-tree-encoding=UTF-8

@@ -26,57 +26,61 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 @RequestMapping("/tl/*")
 public class ApiController {
+	// ê¹ƒ ì£¼ì„ í…ŒìŠ¤íŠ¸
+	// ê¹ƒ ì£¼ì„ í…ŒìŠ¤íŠ¸
+	// ìƒˆë¡œìš´ ê¹ƒ ì£¼ì„ í…ŒìŠ¤íŠ¸
 
 	ApiService service;
 
-	// È£Ãâ ½Ã getPerformanceInfo.jsp·Î ÀÌµ¿(api Á¤º¸ Å×½ºÆ®¿ë)
+	// È£ï¿½ï¿½ ï¿½ï¿½ getPerformanceInfo.jspï¿½ï¿½ ï¿½Ìµï¿½(api ï¿½ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ®ï¿½ï¿½)
 	@RequestMapping("/getPerformanceInfoTable")
 	public String getPerformanceInfoTable(PerformanceRequestDto requestDto, Model model) {
-		// performanceInfoList Àü´Ş
+		// performanceInfoList ï¿½ï¿½ï¿½ï¿½
 		model.addAttribute("performanceInfoList", service.getPIP(requestDto).performanceInfoList);
 
 		return "tl/getPerformanceInfoTable";
 	}
 
-	// È£Ãâ ½Ã PerformanceInfoProcessor ¹İÈ¯(½ÇÁ¦ »ç¿ëÇÒ ¹İÈ¯¿ë)
+	// È£ï¿½ï¿½ ï¿½ï¿½ PerformanceInfoProcessor ï¿½ï¿½È¯(ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½)
 	@GetMapping(value = "/getPerformanceInfo", produces = "application/json")
 	@ResponseBody
-	// reactÀÇ ¸Å°³º¯¼ö ¿äÃ»À» ÀÚµ¿À¸·Î ¹Ù²ãÁÖ±â À§ÇØ ModelAttribute »ç¿ë
+	// reactï¿½ï¿½ ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ ModelAttribute ï¿½ï¿½ï¿½
 	public ArrayList<PerformanceInfoDto> getPerformanceInfo(@ModelAttribute PerformanceRequestDto requestDto) {
-		log.info("getPerformanceInfo ½ÇÇà");
-		return service.getPIP(requestDto).performanceInfoList; // performanceInfoList¸¸ °¡Á®¿À±â
+		log.info("getPerformanceInfo ï¿½ï¿½ï¿½ï¿½");
+		return service.getPIP(requestDto).performanceInfoList; // performanceInfoListï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	}
 	
-	// Å×½ºÆ®¿ë(performanceList Ãâ·Â)
+	
+	// ï¿½×½ï¿½Æ®ï¿½ï¿½(performanceList ï¿½ï¿½ï¿½)
 	@GetMapping("/getPerformanceList")
 	@ResponseBody
-	// reactÀÇ ¸Å°³º¯¼ö ¿äÃ»À» ÀÚµ¿À¸·Î ¹Ù²ãÁÖ±â À§ÇØ ModelAttribute »ç¿ë
+	// reactï¿½ï¿½ ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ ModelAttribute ï¿½ï¿½ï¿½
 	public PerformanceListDto getPerformanceList(@ModelAttribute PerformanceRequestDto requestDto) {
-		log.info("getPerformanceList ½ÇÇà");
-		return service.getPIP(requestDto).getPerformanceList(); // performanceList¸¸ °¡Á®¿À±â
+		log.info("getPerformanceList ï¿½ï¿½ï¿½ï¿½");
+		return service.getPIP(requestDto).getPerformanceList(); // performanceListï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	}
-	// Å×½ºÆ®¿ë(performanceDetailList Ãâ·Â)
+	// ï¿½×½ï¿½Æ®ï¿½ï¿½(performanceDetailList ï¿½ï¿½ï¿½)
 	@GetMapping("/getPerformanceDetailList")
 	@ResponseBody
-	// reactÀÇ ¸Å°³º¯¼ö ¿äÃ»À» ÀÚµ¿À¸·Î ¹Ù²ãÁÖ±â À§ÇØ ModelAttribute »ç¿ë
+	// reactï¿½ï¿½ ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ ModelAttribute ï¿½ï¿½ï¿½
 	public ArrayList<PerformanceDetailDto> getPerformanceDetailList(@ModelAttribute PerformanceRequestDto requestDto) {
-		log.info("getPerformanceList ½ÇÇà");
-		return service.getPIP(requestDto).getPerformanceDetailList(); // performanceDetailList¸¸ °¡Á®¿À±â
+		log.info("getPerformanceList ï¿½ï¿½ï¿½ï¿½");
+		return service.getPIP(requestDto).getPerformanceDetailList(); // performanceDetailListï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	}
-	// Å×½ºÆ®¿ë(performancePeaceList Ãâ·Â)
+	// ï¿½×½ï¿½Æ®ï¿½ï¿½(performancePeaceList ï¿½ï¿½ï¿½)
 	@GetMapping("/getPerformancePeaceList")
 	@ResponseBody
-	// reactÀÇ ¸Å°³º¯¼ö ¿äÃ»À» ÀÚµ¿À¸·Î ¹Ù²ãÁÖ±â À§ÇØ ModelAttribute »ç¿ë
+	// reactï¿½ï¿½ ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ ModelAttribute ï¿½ï¿½ï¿½
 	public ArrayList<PerformancePeaceDto> getPerformancePeaceList(@ModelAttribute PerformanceRequestDto requestDto) {
-		log.info("getPerformancePeaceList ½ÇÇà");
-		return service.getPIP(requestDto).getPerformancePeaceList(); // performancePeaceList¸¸ °¡Á®¿À±â
+		log.info("getPerformancePeaceList ï¿½ï¿½ï¿½ï¿½");
+		return service.getPIP(requestDto).getPerformancePeaceList(); // performancePeaceListï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	}
-	// Å×½ºÆ®¿ë(performanceStatusList Ãâ·Â)
+	// ï¿½×½ï¿½Æ®ï¿½ï¿½(performanceStatusList ï¿½ï¿½ï¿½)
 	@GetMapping("/getPerformanceStatusList")
 	@ResponseBody
-	// reactÀÇ ¸Å°³º¯¼ö ¿äÃ»À» ÀÚµ¿À¸·Î ¹Ù²ãÁÖ±â À§ÇØ ModelAttribute »ç¿ë
+	// reactï¿½ï¿½ ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ ModelAttribute ï¿½ï¿½ï¿½
 	public PerformanceStatusListDto getPerformanceStatusList(@ModelAttribute PerformanceRequestDto requestDto) {
-		log.info("getPerformanceStatusList ½ÇÇà");
-		return service.getPIP(requestDto).getPerformanceStatusList(); // performanceStatusList¸¸ °¡Á®¿À±â
+		log.info("getPerformanceStatusList ï¿½ï¿½ï¿½ï¿½");
+		return service.getPIP(requestDto).getPerformanceStatusList(); // performanceStatusListï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	}
 }
