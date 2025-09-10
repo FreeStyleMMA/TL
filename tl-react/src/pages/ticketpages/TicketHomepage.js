@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+//git 설정 확인용
 export default function TicketHomepage() {
   const [performanceInfos, setPerformanceInfos] = useState([]); // 공연 데이터
   const [rankPerformanceInfos, setRankPerformanceInfos] = useState([]); // 공연 랭킹 데이터
