@@ -10,6 +10,7 @@ import TicketConcertpage from './pages/ticketpages/TicketConcertpage';
 import TicketMusicalpage from './pages/ticketpages/TicketMusicalpage';
 import TicketTheatrepage from './pages/ticketpages/TicketTheatrepage';
 import TicketInfopage from './pages/ticketpages/TicketInfopage';
+import TicketResearchpage from './pages/ticketpages/TicketResearchpage';
 
 // Comunitypage 연결 모음
 import ComHomepage from './pages/communitypages/ComHomepage';
@@ -64,6 +65,7 @@ export default function App() {
           <Route path="musical" element={<TicketMusicalpage />} />
           <Route path="theatre" element={<TicketTheatrepage />} />
           <Route path="info" element={<TicketInfopage />} />
+          <Route path="research" element={<TicketResearchpage/>} />
         </Route>
 
         {/* Community 전용 레이아웃 */}

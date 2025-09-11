@@ -8,7 +8,7 @@ export default function TicketHomepage() {
   const [recommendPerformanceInfos, setRecommendPerformanceInfos] = useState([]); // 추천 공연 데이터
   const [regionPerformanceInfos, setRegionPerformanceInfos] = useState([]); // 지역별 공연 데이터
   const [regionCode, setRegionCode] = useState("11"); // 서울 기본값
-  
+  const [searchQuery, setSearchQuery] = useState(""); // 검색어
   const [loading, setLoading] = useState(true);  // 데이터 불러오는 중인지 여부
   const [regionLoading, setRegionLoading] = useState(true); // 지역 데이터 로딩 여부
  
@@ -97,6 +97,22 @@ export default function TicketHomepage() {
 
   return (
     <div>
+      <form onSubmit={(e) => e.preventDefault()} style={{ marginBottom: "20px", display: "flex", justifyContent: "center" }}>
+        <input 
+          type="text" 
+          placeholder="공연명을 검색하세요" 
+          value={searchQuery} 
+          onChange={(e) => setSearchQuery(e.target.value)} 
+          style={{ width: "300px", padding: "8px" }}
+        />
+        <Link 
+          to="/ticket/research" 
+          state={{ searchQuery, page : 1 }} // 검색어, 기본 페이지 전달
+          style={{ marginLeft: "10px", padding: "8px 15px", background: "#ddd", textDecoration: "none" }}
+        >
+          검색
+        </Link>
+      </form>
       <h2>전체 공연</h2>
       <div style={{ display: "flex" }}>
         {performanceInfos.map((performanceInfo, idx) => ( //전체 공연 정보 출력
