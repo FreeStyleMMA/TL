@@ -1,0 +1,29 @@
+.postLayout {
+  display: flex;
+  flex-direction: column;
+}
+
+.select {
+  margin-top: 30px;
+}
+
+.titleBox {
+  width: 300px;
+  align-content: center;
+}
+
+.textBox {
+  margin-top: 30px;
+  width: 1000px;
+  height: 500px;
+}
+
+.file {
+  padding: 30px;
+  margin-left: 750px;
+}
+
+.submitButton {
+  margin-left: 800px;
+  width: 70px;
+}

@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import './Navbar.css';
-
+import { useAuth } from '../pages/auth/AuthContext';
 
 function Navbar() {
+  const { member, signOut } = useAuth();
+
   return (
     <div className='NavbarLayout'>
       {/* nav 헤더(상위 우상단에 로그인, 마이페이지 등 작은 글씨로 링크) */}
@@ -14,7 +16,15 @@ function Navbar() {
           {/* 일단은 여백 공간 2 */}
         </div>
         <div className='headerRight'>
-          로그인, 마이페이지, 링크할 티켓 사이트 페이지?
+          {member ? (
+            <>
+              <button onClick={signOut}>로그아웃</button>
+            </>) : (
+            <>
+              <Link to="../signin">로그인</Link>
+              <Link to="../signup" > 회원가입</Link>
+            </>
+          )}
         </div>
       </div>
       {/* nav body 홈페이지 로고 들어가고 커뮤니티/티켓 분기해주는 보통 아이콘 같은 

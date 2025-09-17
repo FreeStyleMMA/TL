@@ -2,17 +2,35 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.tl.mapper.postMapper">
+<mapper namespace="com.tl.mapper.PostMapper">
 	
 	<!-- 게시물 글쓰기  -->
 	<!-- REPLY, MEDIA 어떻게 처리하는지 고민 PAGE는 안넘기고 -->
 	<insert id = "write">
-	INSERT INTO tl_post(category, title, content, userid, date,media )
-	values(#{category},#{title},#{content},#{userid},#{date}, #{mdiea})	
+	INSERT INTO tl_post(category, title, content, memberId,media )
+	values(#{category},#{title},#{content},#{memberId}, #{media})	
 	</insert>
 	
+	<!-- <select id = "getList" resultType ="com.tl.dto.PostDto">
+	SELECT*FROM tl_post WHERE no = #{no} LIMIT #{POSTS_ON_PAGE} OFFSET #{offset}
+	</select> -->
+	<select id="getList" resultType="com.tl.dto.PostDto">
+    SELECT * FROM tl_post
+    <choose> 
+    <when test="lastNo != 0">
+      WHERE no <![CDATA[ < ]]> #{lastNo}
+      </when>
+    </choose>
+    ORDER BY no DESC  LIMIT #{pageSize}
+  </select>
+  
+	
+	<select id="getTotalPosts" resultType="int">
+    SELECT COUNT(*) FROM tl_post
+</select>
+	
 	<!-- 게시물 클릭 하면 게시물 넘버로 셀렉트  -->
-	<select id="read">
+	<select id="read" resultType ="com.tl.dto.PostDto">
 	SELECT*FROM tl_post where no = #{no}
 	</select>
 	
