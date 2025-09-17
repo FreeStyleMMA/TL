@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,8 @@ import lombok.extern.log4j.Log4j;
 
 @RestController
 @Log4j
-@RequestMapping("/member")
+@RequestMapping("/api/*")
+@CrossOrigin(value = "http://localhost:3000", allowCredentials = "true")
 public class MemberController {
 
 	@Setter(onMethod_ = @Autowired)
@@ -35,25 +37,22 @@ public class MemberController {
 		return service.signUp(member);
 	}
 
-	
-
+	//로그인 처리
 	@PostMapping("/signIn")
-//	Http 헤더에 토큰을 넣어서 전달하기 위한 ResponseEntity사용
-	
-	public ResponseEntity<LoginResponse> signIn(@RequestBody LoginRequest request, HttpServletResponse response) {
+	// http 리턴을 위한 ResponseEntity 사용
+	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request, HttpServletResponse response) {
+		log.info("로그인 요청 id:" + request.memberId);
 		LoginResponse loginResponse = service.signIn(request);
-		//로그인 유효성 확인
-		if(loginResponse.loginSuccess) {
-			//token을 response(Http header)에 추가
-			jwtUtil.addJwtToCookie(loginResponse.token, response);
+		log.info("http요청: "+request);
+		// 로그인 유효성 확인
+		log.info("로그인 성공 여부:"+loginResponse.loginSuccess);
+		if (loginResponse.loginSuccess == true) {
+			// 쿠키에 토큰 저장 jwt:token 형태.
+			 jwtUtil.addJwtToCookie(loginResponse.token, response);
 		}
-//	보안을 위해bodyResponse에는 token제거
-		LoginResponse bodyResponse = new LoginResponse();
-		bodyResponse.setLoginSuccess(loginResponse.loginSuccess);
-		bodyResponse.setToken(null);
-		bodyResponse.setMessage(loginResponse.message);
-		
-		return ResponseEntity.ok(bodyResponse);
+		loginResponse.setToken(null);
+		// http 형태로 리턴. header에는 jwt가 있는 쿠키, body에 loginResponse.
+		return ResponseEntity.ok(loginResponse);
 		
 	}
 

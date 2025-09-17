@@ -15,6 +15,9 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import lombok.extern.log4j.Log4j;
+
+@Log4j
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 

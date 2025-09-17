@@ -32,7 +32,7 @@ public class JwtTokenProvider {
 	//JWT 토큰 생성
 	public String createToken(String memberId) {
 		//	DB에서 role 가져오기
-		 String role = mapper.findByMemberId(memberId).getRole();
+		 String role = mapper.findByMemberId(memberId).getAuthorities();
 		return Jwts.builder()
 				.setSubject(memberId)
 				.claim("role", role)

@@ -23,7 +23,15 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		
+			<!-- multipart Resolver 설정 -->
+		 <multipart-config>
+        <max-file-size>524288000</max-file-size> <!-- 500MB -->
+        <max-request-size>524288000</max-request-size> <!-- 500MB -->
+        <file-size-threshold>0</file-size-threshold>
+    </multipart-config>
 	</servlet>
+		
 		
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
@@ -40,5 +48,7 @@
 	<filter-name>springSecurityFilterChain</filter-name>
 	<url-pattern>/*</url-pattern>
 </filter-mapping>
+  
+  
 
 </web-app>

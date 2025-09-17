@@ -1,8 +1,10 @@
 package com.tl.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.tl.dto.LoginDTO;
 import com.tl.dto.LoginRequest;
 import com.tl.dto.LoginResponse;
 import com.tl.dto.MemberVO;
@@ -19,13 +21,15 @@ public class MemberServiceImpl implements MemberService {
 	public MemberMapper mapper;
 
 	@Setter(onMethod_=@Autowired)
-	public JwtTokenProvider tokenProvider;
+	public JwtTokenProvider jwtProvider;
 	
 	//회원가입 처리
 
 	public MemberVO signUp(MemberVO member) {
 		return mapper.signUp(member);
 	}
+	@Setter(onMethod_ = @Autowired)
+	PasswordEncoder passwordEncoder;
 	
 	/*
 	 * 로그인 처리파트 
@@ -33,30 +37,33 @@ public class MemberServiceImpl implements MemberService {
 	 * login 성공 여부, jwt 토큰, 결과 메세지를	LoginResponse로 결과 처리.
 	 */
 	public LoginResponse signIn(LoginRequest request) {
+//		http에서 요청을 받고 요청에서 memberId를 추출한다. 
+//		추출한 memberId로 mapper에서 로그인에 필요한 정보(memberId,memberPw,role)를 가져와 
+//		각각 username,password,authorities로 바인딩한 LoginDTO객체 user를 만든다. >>filter 등 내장 함수와 변수를 통일하기 위함.  
+		LoginDTO user = mapper.findByMemberId(request.memberId);
 		
-		MemberVO member = mapper.findByMemberId(request.memberId);
+//		if (user != null && user.getUsername() != null && passwordEncoder.matches(request.getMemberPw(),user.getUsername())) {
+			if (user != null && user.getUsername() != null && request.getMemberPw().equals(user.getPassword())) {
+			String token = jwtProvider.createToken(user.getUsername());
+			 return LoginResponse.builder() // 로그인 결과와 role 등을 만들기.
+		                .loginSuccess(true)
+		                .token(token)
+		                .role(user.getAuthorities())
+		                .message("로그인 성공")
+		                .build();
+		} else {
+			return LoginResponse.builder()
+					.loginSuccess(false)
+					.message("로그인 실패")
+					.token(null)
+					.role(null)
+					.build();
 		
-	    LoginResponse response = new LoginResponse();
-
-	    if(member==null || !member.getMemberPw().equals(request.getMemberPw())) {
-			response.loginSuccess = false;
-			response.token = null;
-			response.message="로그인 실패";
-					return response;
-			}
-			 String token = tokenProvider.createToken(member.getMemberId());
-				response.loginSuccess = true;
-				response.token = token;
-				response.message="로그인 성공";
-		        return response;
-	
+		}
 	}
 
-	public MemberVO findByMemberId(String memberId) {
+	public LoginDTO findByMemberId(String memberId) {
 		return mapper.findByMemberId(memberId);
 	}
 	
-	/* 로그아웃은 프론트에서 jwt 토큰만 지우면 됨.
-	 * @PostMapping("/signOut") public void signOut(String memberId) { }
-	 */	
 }

@@ -10,11 +10,13 @@
 	<!-- 커넥션 풀 - 아파치 - Commons DBCP 2.8.0 -->
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp2.BasicDataSource"
-		destroy-method="close">				
-		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
-			<!-- DB 이름 tl 확인 -->
-		<property name="url" value="jdbc:log4jdbc:mysql://localhost:3306/tl"></property>	
-			<!-- db 계정에 맞게 수정 -->				
+		destroy-method="close">
+		<property name="driverClassName"
+			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+		<!-- DB 이름 tl 확인 -->
+		<property name="url"
+			value="jdbc:log4jdbc:mysql://localhost:3306/TL"></property>
+		<!-- db 계정에 맞게 수정 -->
 		<property name="username" value="root" />
 		<property name="password" value="root" />
 	</bean>
@@ -23,13 +25,16 @@
 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
+		<property name="mapperLocations" value="classpath:com/tl/mapper/*.xml" />
 	</bean>
+	<!-- Mapper 인터페이스 스캔 -->
+	<mybatis-spring:scan base-package="com.tl.mapper" /><!-- 
+		패키지명에 맞게 수정 -->
 
-	<!-- mybatis - mapper 설정 -->
-	<mybatis-spring:scan
-		base-package="com.tl.mapper" /><!-- 패키지명에 맞게 수정 -->
-
-	<!-- componentscan -->
-	<context:component-scan base-package="com.tl.service,com.tl.security">
+	<!-- component 스캔 -->
+	<context:component-scan
+		base-package="com.tl.service,com.tl.security">
 	</context:component-scan>
+
+
 </beans>

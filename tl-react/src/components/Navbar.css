@@ -10,16 +10,20 @@
   margin-bottom: 8px;
 }
 
-/*
-.headerLeft{
+
+/* .headerLeft{
   
 }
 .headerMid{
   
-}
-.headerRight{
-  
 } */
+.headerRight {
+  display: flex;
+  margin-right: 50px;
+  margin-top: 10px;
+  gap: 20px;
+  font-size: medium;
+}
 
 .body {
   font-size: 30px;

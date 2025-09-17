@@ -4,13 +4,16 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tl.dto.ReplyDto;
-import com.tl.mapper.ReplyMapper;
+import com.tl.dto.ReplyRequestDto;
+import com.tl.service.ReplyService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -20,23 +23,24 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/reply/*")
 public class ReplyController {
 	@Setter(onMethod_ = @Autowired)
-	public ReplyMapper mapper;
+	public ReplyService service;
 
-//	Dto 중에 memberId는 따로 받아야돼서 쪼개서 받아야 할 가능성. 
-	@GetMapping("/write")
+	// 댓글 작성 파트
+	@PostMapping("/write")
 	public void write(@RequestBody ReplyDto reply) {
+		service.write(reply);
 
 	}
 
-	
+	// 댓글 읽기. List 형식으로 데이터 전송.
 	@GetMapping("/read")
-	public ArrayList<ReplyDto> read(@RequestParam long no, @RequestParam long originNo) {
-		return mapper.read(no,originNo);
+	public ArrayList<ReplyDto> read(@RequestParam Long originNo) {
+		return service.read(originNo);
 	}
 
 	@GetMapping("/delete")
-	public void delete(@RequestParam long no, @RequestParam long originNo) {
-
+	public void delete(@ModelAttribute ReplyRequestDto request) {
+		service.delete(request);
 	}
 
 }

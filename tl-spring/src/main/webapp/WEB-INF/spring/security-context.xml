@@ -10,8 +10,8 @@
 
 	<!-- DB 연결 -->
 	<!-- root-context.xml 가져오기 -->
-	<import resource="/root-context.xml" />
-
+<!-- 	<import resource="/root-context.xml" />
+ -->
 	<!-- BCrypt 패스워드 인코더 -->
 	<bean id="bcryptPasswordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
@@ -20,7 +20,9 @@
 	<security:http create-session="stateless"
 		entry-point-ref="authenticationEntryPoint">
 		<!-- 권한 핸들링 -->
-		<security:intercept-url pattern="/all/**"
+		<security:intercept-url pattern="/api/**"
+			access="permitAll" />
+		<security:intercept-url pattern="/post/**"
 			access="permitAll" />
 		<security:intercept-url pattern="/member/**"
 			access="hasRole('MEMBER')" />
