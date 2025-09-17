@@ -69,11 +69,13 @@ public class PerformanceInfoProcessor {
 				if (prd.requestType.equals("recommend")) {
 		            Collections.shuffle(temp.getBoxof());
 		        }
-				// 최대 5개만 performanceStatusList에 저장
-				if (temp != null && temp.getBoxof() != null) {
-					int limit = Math.min(5, temp.getBoxof().size());
+				// cpage, rows 값을 계산해서 요청한만큼 performanceStatusList에 저장
+				if (temp != null && temp.getBoxof() != null && prd.cpage != null && prd.rows != null) {
+					int start = (Integer.parseInt(prd.cpage) - 1)*Integer.parseInt(prd.rows);
+					int limit = Math.min(start + Integer.parseInt(prd.rows), temp.getBoxof().size());
+					log.info(start +"---"+ limit);
 					performanceStatusList.getBoxof().clear(); // 기존 데이터 초기화
-					performanceStatusList.getBoxof().addAll(temp.getBoxof().subList(0, limit));
+					performanceStatusList.getBoxof().addAll(temp.getBoxof().subList(start, limit));
 				}
 			} else { // 이외 공연 목록
 				String API_URL = String.format( // apiKey, prd 사용해서 api url 생성
@@ -120,7 +122,7 @@ public class PerformanceInfoProcessor {
 
 					} catch (HttpClientErrorException e) { // 400, 404 등 클라이언트 오류
 						log.error("HTTP 오류 발생: " + perf.getMt20id() + e.getStatusCode());
-						log.error("Response Body: " + e.getResponseBodyAsString()); // 서버가 준 오류 내용도 출력
+						log.error("Response Body: " + e.getResponseHeaders()); // 서버가 준 오류 내용도 출력
 					} catch (Exception e) { // 기타 예외
 						log.error("XML 파싱/통신 오류: " + perf.getMt20id(), e);
 					}

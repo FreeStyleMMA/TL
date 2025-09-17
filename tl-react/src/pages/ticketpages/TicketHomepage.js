@@ -12,7 +12,7 @@ export default function TicketHomepage() {
   const [loading, setLoading] = useState(true);
   const [statusLoading, setStatusLoading] = useState(true);
   const [regionLoading, setRegionLoading] = useState(true);
-  //지역 코드 맵
+  //지역 코드
   const regions = [
     { code: "11", name: "서울" },
     { code: "28", name: "인천" },
@@ -37,19 +37,19 @@ export default function TicketHomepage() {
     twoWeeksAfter.setDate(today.getDate() + 14);
 
     return {
-      defaultStartDate: twoWeeksBefore.toISOString().split("T")[0],
-      defaultEndDate: twoWeeksAfter.toISOString().split("T")[0],
+      startDate: twoWeeksBefore.toISOString().split("T")[0],
+      endDate: twoWeeksAfter.toISOString().split("T")[0],
     };
   }
 
   // 기본 날짜
-  const { defaultStartDate, defaultEndDate } = getDefaultDates();
-  // 실제 API 호출용 날짜
-  const [startDate, setStartDate] = useState(defaultStartDate);
-  const [endDate, setEndDate] = useState(defaultEndDate);
+  const { startDate, endDate } = getDefaultDates();
+  // 실제 API 호출용 날짜 / 달력
+  // const [startDate, setStartDate] = useState(defaultStartDate);
+  // const [endDate, setEndDate] = useState(defaultEndDate);
   // 달력에서 선택하는 임시 날짜
-  const [tempStartDate, setTempStartDate] = useState(defaultStartDate);
-  const [tempEndDate, setTempEndDate] = useState(defaultEndDate);
+  // const [tempStartDate, setTempStartDate] = useState(defaultStartDate);
+  // const [tempEndDate, setTempEndDate] = useState(defaultEndDate);
 
 
   // 날짜 데이터를 YYYYMMDD형식의 문자열로 반환하는 함수
@@ -67,10 +67,10 @@ export default function TicketHomepage() {
         setStatusLoading(true);
 
         const rankResponse = await axios.get("http://localhost:8080/tl/getPerformanceInfo", {
-          params: { startdate: sDate, enddate: eDate, requestType: "rank" },
+          params: { startdate: sDate, enddate: eDate, rows: 5, cpage: 1, requestType: "rank" },
         });
         const recommendResponse = await axios.get("http://localhost:8080/tl/getPerformanceInfo", {
-          params: { startdate: sDate, enddate: eDate, requestType: "recommend" },
+          params: { startdate: sDate, enddate: eDate, rows: 5, cpage: 1, requestType: "recommend" },
         });
 
         setRankPerformanceInfos(rankResponse.data);
@@ -81,39 +81,33 @@ export default function TicketHomepage() {
         setStatusLoading(false);
       }
     }
-    if (defaultStartDate && defaultEndDate) fetchStatusData(formatDate(new Date(defaultStartDate)), formatDate(new Date(defaultEndDate)));
-  }, [defaultStartDate, defaultEndDate]);
+    if (startDate && endDate) fetchStatusData(formatDate(new Date(startDate)), formatDate(new Date(endDate)));
+  }, [startDate, endDate]);
 
   // 전체 공연
-  const fetchData = async (sDate, eDate) => {
-    try {
-      setLoading(true);
-      const allResponse = await axios.get("http://localhost:8080/tl/getPerformanceInfo", {
-        params: { startdate: sDate, enddate: eDate, cpage: 1, rows: 5 },
-      });
-
-      setPerformanceInfos(allResponse.data);
-      setLoading(false);
-    } catch (err) {
-      console.error("api 불러오기 실패:", err);
-      setLoading(false);
-    }
-  };
-
-  // 날짜 바뀔 때 실행
   useEffect(() => {
-    if (startDate && endDate) {
-      fetchData(formatDate(new Date(startDate)), formatDate(new Date(endDate)));
-    }
+    const fetchData = async (sDate, eDate) => {
+      try {
+        setLoading(true);
+        const allResponse = await axios.get("http://localhost:8080/tl/getPerformanceInfo", {
+          params: { startdate: sDate, enddate: eDate, cpage: 1, rows: 5 },
+        });
+
+        setPerformanceInfos(allResponse.data);
+        setLoading(false);
+      } catch (err) {
+        console.error("api 불러오기 실패:", err);
+        setLoading(false);
+      }
+    };
+    if (startDate && endDate) fetchData(formatDate(new Date(startDate)), formatDate(new Date(endDate)));
   }, [startDate, endDate]);
 
   // 지역별 공연
   useEffect(() => {
-    const fetchRegionData = async () => {
+    const fetchRegionData = async (sDate, eDate) => {
       try {
         setRegionLoading(true);
-        const sDate = formatDate(new Date(startDate));
-        const eDate = formatDate(new Date(endDate));
         const regionResponse = await axios.get("http://localhost:8080/tl/getPerformanceInfo", {
           params: { startdate: sDate, enddate: eDate, cpage: 1, rows: 5, signgucode: regionCode },
         });
@@ -125,14 +119,14 @@ export default function TicketHomepage() {
       }
     };
 
-    if (startDate && endDate) fetchRegionData();
+    if (startDate && endDate) fetchRegionData(formatDate(new Date(startDate)), formatDate(new Date(endDate)));
   }, [regionCode, startDate, endDate]);
 
-  // 커밋 버튼 동작 (API만 다시 불러옴)
-  const handleCommit = () => {
-    setStartDate(tempStartDate);
-    setEndDate(tempEndDate);
-  };
+  // 커밋 버튼 동작 (API만 다시 불러옴) 달력
+  // const handleCommit = () => {
+  //   setStartDate(tempStartDate);
+  //   setEndDate(tempEndDate);
+  // };
 
   // 공연 목록 출력
   function PerformanceList({ data, loading }) {
@@ -177,14 +171,21 @@ export default function TicketHomepage() {
       </form>
 
       {/* 공연 랭킹 */}
-      <h2>공연 랭킹</h2>
+      <div style={{ display: "flex", alignItems: "center", margin: "20px" }}>
+        <h2>공연 랭킹</h2>
+        <Link to="/ticket/list" state={{ type: "rank" }} // 모두 보기 버튼
+          style={{ margin: "5px", border: "1px, solid, black", }}
+        >
+          모두 보기
+        </Link>
+      </div>
       <PerformanceList data={rankPerformanceInfos} loading={statusLoading} />
       {/* 추천 공연 */}
       <h2>추천 공연</h2>
       <PerformanceList data={recommendPerformanceInfos} loading={statusLoading} />
 
       {/* 달력 + 커밋 버튼 */}
-      <div style={{ margin: "30px", textAlign: "center" }}>
+      {/* <div style={{ margin: "30px", textAlign: "center" }}>
         <label>
           시작일:{" "}
           <input
@@ -204,13 +205,13 @@ export default function TicketHomepage() {
         <button onClick={handleCommit} style={{ marginLeft: "20px", padding: "5px 15px" }}>
           적용
         </button>
-      </div>
+      </div> */}
 
       {/* 전체 공연 */}
-      <div style={{ display: "flex", alignItems: "center", marginRight: "20px" }}>
+      <div style={{ display: "flex", alignItems: "center", margin: "20px" }}>
         <h2>전체 공연</h2>
-        <Link to="/ticket/list" state={{ startDate, endDate }} // 모두 보기 버튼
-          style={{margin:"5px", border: "1px, solid, black", }}
+        <Link to="/ticket/list" // 모두 보기 버튼
+          style={{ margin: "5px", border: "1px, solid, black", }}
         >
           모두 보기
         </Link>
@@ -218,7 +219,14 @@ export default function TicketHomepage() {
       <PerformanceList data={performanceInfos} loading={loading} />
 
       {/* 지역별 공연 */}
-      <h2>지역별 공연</h2>
+      <div style={{ display: "flex", alignItems: "center", margin: "20px" }}>
+        <h2>지역별 공연</h2>
+        <Link to="/ticket/list" state={{ region: regionCode }} // 모두 보기 버튼
+          style={{ margin: "5px", border: "1px, solid, black", }}
+        >
+          모두 보기
+        </Link>
+      </div>
       <div style={{ marginBottom: "10px" }}>
         {regions.map((region) => (
           <button key={region.code} onClick={() => setRegionCode(region.code)}>
