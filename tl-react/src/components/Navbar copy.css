@@ -3,60 +3,6 @@
   flex-direction: column;
 }
 
-.header {
-  background-color: beige;
-  height: 30px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding-left: 1200px;
-}
-
-
-/* .headerLeft{
-  
-}
-.headerMid{
-  
-} */
-/* .headerRight {
-  display: flex;
-  margin-right: 50px;
-  margin-top: 10px;
-  gap: 20px;
-  font-size: medium;
-} */
-
-.body {
-  font-size: 30px;
-  height: 100px;
-  display: flex;
-  /* height: 100px; */
-  gap: 30px;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-}
-
-.bodyLeft {
-  margin-left: 350px;
-  /* margin-right: auto; */
-}
-
-.bodyMid {
-  margin-left: 50px;
-  gap: 50px;
-  background-color: aliceblue;
-  /* width: 800px; */
-  display: flex;
-  justify-content: center;
-}
-
-.bodyRight {
-  margin-left: auto;
-}
-
-
 #nav {
   background-color: beige;
   height: 30px;

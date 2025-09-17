@@ -41,7 +41,6 @@ public class MemberController {
 	@PostMapping("/signIn")
 	// http 리턴을 위한 ResponseEntity 사용
 	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request, HttpServletResponse response) {
-		log.info("로그인 요청 id:" + request.memberId);
 		LoginResponse loginResponse = service.signIn(request);
 		log.info("http요청: "+request);
 		// 로그인 유효성 확인

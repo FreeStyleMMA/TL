@@ -16,8 +16,6 @@ import ReviewBoard from './pages/communitypages/ReviewBoard';
 import FreeBoard from './pages/communitypages/FreeBoard';
 import PostWrite from './pages/communitypages/PostWrite';
 import PostDetailPage from './pages/communitypages/PostDetailPage';
-import ReplyList from './pages/communitypages/ReplyList';
-import ReplyWrite from './pages/communitypages/ReplyWrite';
 
 //memberpage 연결 모음
 import SignIn from './pages/memberpages/SignInPage';
@@ -64,8 +62,9 @@ export default function App() {
   );
 }
 
+//함수 호출을 위한 Route 페이지 분기
 function AppRoutes() {
-  const member = useAuth(); // 이제 AuthProvider 내부이므로 안전
+  const { member } = useAuth(); // member 정보 받아오기
   console.log("멤버?", member);
 
   return (
@@ -90,6 +89,7 @@ function AppRoutes() {
         <Route index element={<Navigate to="reviewBoard" />} />
         <Route path="reviewBoard" element={<ReviewBoard />} />
         <Route path="freeBoard" element={<FreeBoard />} />
+        {/* 권한에 따른 접근 제한 예시 */}
         <Route path="posting" element=
           {<ProtectedRoute member={member} allowedRoles={['ADMIN', 'MEMBER']}><PostWrite /></ProtectedRoute>} />
         <Route path="reviewBoard/posts/:no" element={<><PostDetailPage /></>} /> {/* PostDetailPage -- Review 컴포넌트들 동적 연결 */}

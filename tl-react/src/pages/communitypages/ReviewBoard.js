@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import './reset.css';
+import './ReviewBoard.css';
 
 export default function ReviewBoard() {
   const [posts, setPosts] = useState([]);
@@ -71,7 +73,7 @@ export default function ReviewBoard() {
 
 
   return (
-    <div>
+    <div id='myLayout'>
       후기 게시판
       <div>
         <Link to='../posting'>글쓰기</Link>

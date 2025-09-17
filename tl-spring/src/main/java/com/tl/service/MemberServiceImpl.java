@@ -41,7 +41,7 @@ public class MemberServiceImpl implements MemberService {
 //		추출한 memberId로 mapper에서 로그인에 필요한 정보(memberId,memberPw,role)를 가져와 
 //		각각 username,password,authorities로 바인딩한 LoginDTO객체 user를 만든다. >>filter 등 내장 함수와 변수를 통일하기 위함.  
 		LoginDTO user = mapper.findByMemberId(request.memberId);
-		
+		log.info("DB 조회 정보: " + user);
 //		if (user != null && user.getUsername() != null && passwordEncoder.matches(request.getMemberPw(),user.getUsername())) {
 			if (user != null && user.getUsername() != null && request.getMemberPw().equals(user.getPassword())) {
 			String token = jwtProvider.createToken(user.getUsername());

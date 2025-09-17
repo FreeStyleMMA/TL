@@ -1,0 +1,54 @@
+  #post {
+    width: 750px;
+    height: 525px;
+    background-color: white;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    margin: 50px 0px 0px 270px;
+  }
+
+  #post_profile {
+    display: flex;
+    align-items: center;
+    /* 세로 중앙 정렬 */
+    gap: 12px;
+    /* 이미지와 텍스트 사이 간격 */
+    margin: 10px 0px 0px 10px;
+  }
+
+  .p_i {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid black;
+  }
+
+  .p_n {
+    color: black;
+
+  }
+
+  .p_b {
+    width: 60px;
+    height: 25px;
+    border-radius: 15px;
+    background-color: navy;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 420px;
+  }
+
+  .post_title {
+    font-size: 20px;
+    margin: 15px 0px 0px 10px;
+
+  }
+
+  .post_img {
+    width: 750px;
+    height: 400px;
+    margin: 10px 0px 0px 0px;
+    border-radius: 10px;
+  }

@@ -18,11 +18,12 @@ function Navbar() {
         <div className='headerRight'>
           {member ? (
             <>
-              <button onClick={signOut}>로그아웃</button>
+              <button onClick={signOut}>&nbsp;로그아웃&nbsp;</button>
             </>) : (
             <>
-              <Link to="../signin">로그인</Link>
+              <Link to="../signin">로그인&nbsp;</Link>
               <Link to="../signup" > 회원가입</Link>
+              {/* <Link to="../signup" > 장바구니</Link> */}
             </>
           )}
         </div>

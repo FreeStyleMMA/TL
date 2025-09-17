@@ -34,14 +34,34 @@ export default function PostDetailPage() {
     setReplys(prev => [...prev, newReply]);
   };
 
+  const handleAddReply = async (newReply) => {
+    try {
+      const response = await axios.post("http://localhost:8080/reply/write", newReply);
+      const savedReply = response.data; // 여기에는 DB에서 생성된 id 포함
+      setReplys(prev => [...prev, savedReply]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
-      <div className="PostLayout">
-        <p>글번호: {no}</p>
-        <h2>제목:{title}</h2><br />
-        {memberId}<br />
-        {content}<br />
-        {media && <img src={`http://localhost:8080${media}`} alt="media" style={{ height: 500, width: 400 }} />}
+      <div id="PostLayout">
+        <div id='post_profile'>
+          <img class='p_i' src="grey.jpg" /> {/* 이미지 넣는 태그 */}
+        </div>
+        <div class='post_title'>
+          <p>글번호: {no}</p>
+          <h2>제목:{title}</h2><br />
+          {memberId}<br />
+          {media && <img class="post_img" src={`http://localhost:8080${media}`} alt="media" />}
+        </div>
+        <div id="react">
+          <div class="re">좋아요</div>
+          <div class="re">댓글</div>
+          <div class="re">공유</div>
+        </div>
+        {/* {content}<br /> */}
       </div>
       <div className="ReplyLayout">
         <ReplyWrite onAdd={addReply} /><br />

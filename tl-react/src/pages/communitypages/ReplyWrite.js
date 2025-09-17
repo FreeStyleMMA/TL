@@ -22,7 +22,6 @@ export default function ReplyWrite({ onAdd }) {
   const handleReply = async (e) => {
     e.preventDefault();
     try {
-
       const response = await axios.post('http://localhost:8080/reply/write', {
         memberId: memberId,
         content: content,
@@ -33,7 +32,7 @@ export default function ReplyWrite({ onAdd }) {
     } catch (error) {
       console.error("업로드 실패", error);
     }
-
+    onAdd({ id: memberId, content: content });
   }
 
   return (

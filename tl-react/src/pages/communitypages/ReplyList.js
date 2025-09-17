@@ -12,7 +12,7 @@ export default function ReplyList({ replys }) {
         const response = await axios.get(`http://localhost:8080/reply/read?originNo=${no}`);
         setReplyList(response.data);
         console.log(ReplyList);
-
+        replys();
       } catch (error) {
         console.log(error);
       }

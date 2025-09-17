@@ -3,7 +3,8 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../auth/AuthContext';
 
-export default function Login() {
+export default function Login({ onSignIn }) {
+  const location = useLocation();
   const { loginComplete } = useAuth();
   const [memberId, setMemberId] = useState("");
   const [memberPw, setMemberPw] = useState("");
@@ -25,16 +26,17 @@ export default function Login() {
         console.log("멤버아이디:", memberId)
 
         loginComplete({ memberId: memberId, role: role })//세션이 로그인 정보 저장
+        onSignIn && onSignIn({ memberId, role }); // 로그인 이전 페이지로 이동
 
         //로그인 성공 후 role에 따른 페이지 분기는 일단 모두 홈페이지로.
-        if (role.includes("ADMIN")) {
-          nav('/admin');        // 관리자 페이지
-        } else if (role.includes("ROLE_MEMBER")) {
-          nav('/member');       // 일반 회원 페이지
-        } else {
-          nav('/');             // 그 외 기본 페이지
-        }
-      } else {
+        // if (role.includes("ADMIN")) {
+        //   nav('/');        // 관리자 페이지
+        // } else if (role.includes("ROLE_MEMBER")) {
+        //   nav('/');       // 일반 회원 페이지
+        // } else {
+        //   nav('/');       // 그 외 기본 페이지
+        // }
+
       }
     }
     catch (error) {
