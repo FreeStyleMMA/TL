@@ -1,80 +1,27 @@
-.NavbarLayout {
-  display: flex;
-  flex-direction: column;
-}
-
-.header {
-  background-color: beige;
-  height: 30px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding-left: 1200px;
-}
-
-
-/* .headerLeft{
-  
-}
-.headerMid{
-  
-} */
-/* .headerRight {
-  display: flex;
-  margin-right: 50px;
-  margin-top: 10px;
-  gap: 20px;
-  font-size: medium;
-} */
-
-.body {
-  font-size: 30px;
-  height: 100px;
-  display: flex;
-  /* height: 100px; */
-  gap: 30px;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-}
-
-.bodyLeft {
-  margin-left: 350px;
-  /* margin-right: auto; */
-}
-
-.bodyMid {
-  margin-left: 50px;
-  gap: 50px;
-  background-color: aliceblue;
-  /* width: 800px; */
-  display: flex;
-  justify-content: center;
-}
-
-.bodyRight {
+#nav_layout {
+  background-color: white;
   margin-left: auto;
+  margin-right: auto;
 }
 
-
-#nav {
-  background-color: beige;
-  height: 30px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding-left: 1200px;
-}
 
 #top {
-  background-color: white;
-  height: 200px;
+  background-color: beige;
+  height: 30px;
   display: flex;
-  /* 가로 정렬의 핵심 */
+  justify-content: flex-start;
   align-items: center;
-  /* 수직 가운데 정렬 */
+  padding-left: 1200px;
+}
+
+
+#body {
+  background-color: white;
+  height: 150px;
+  align-items: center;
   padding-left: 280px;
   gap: 60px;
+  display: flex;
 }
 
 #homepage_name {
@@ -84,26 +31,8 @@
   text-decoration: none;
 }
 
-#top_center {
+#bodyMid {
   font-size: 25px;
   display: flex;
   gap: 20px;
-}
-
-#top2 {
-  height: 50px;
-  background-color: white;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 20px;
-  padding-left: 280px;
-  border-top: 0.5px solid rgb(201, 201, 201);
-  border-bottom: 1px solid black;
-}
-
-#top_text {
-  font-size: 15px;
-  color: black;
-  text-decoration: none;
 }

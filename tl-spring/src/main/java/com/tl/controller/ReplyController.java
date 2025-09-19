@@ -43,4 +43,9 @@ public class ReplyController {
 		service.delete(request);
 	}
 
+	@GetMapping("/count")
+	public int getTotalReplys(@RequestParam Long originNo) {
+		log.info("댓글 갯수 요청 도착");
+		return service.getTotalReplys(originNo);
+	}
 }

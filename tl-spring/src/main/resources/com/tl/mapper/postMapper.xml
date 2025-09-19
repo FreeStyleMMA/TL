@@ -38,5 +38,22 @@
 	<delete id="delete">
 	DELETE FROM tl_post where no = #{no}
 	</delete>
+	<!-- DB에서 liked는 default 1 -->
+	<insert id="addLike">
+	INSERT INTO tl_like(memberId,postNo,liked)
+	VALUES(#{memberId},#{postNo},1)
+	</insert>
+	
+	<update id="handleLike">
+	UPDATE tl_like SET liked=#{liked} WHERE memberId=#{memberId} AND postNo=#{postNo}
+	</update>
+	
+	<select id="countLikes" resultType="int">
+	SELECT COUNT(*) FROM tl_like WHERE postNo=#{postNo} AND liked = 1
+	</select>
+	
+	<select id="getLike" resultType="com.tl.dto.LikeDTO">
+	SELECT*FROM tl_like where memberId=#{memberId} and postNo=#{postNo}
+	</select>
 	
 </mapper>

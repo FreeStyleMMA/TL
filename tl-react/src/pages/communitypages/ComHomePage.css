@@ -1,0 +1,217 @@
+#myLayout {
+  background-color: white;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+#story_container {
+  position: relative;
+  display: flex;
+  gap: 16px;
+  margin-top: 20px;
+  /* margin-left: 180px; */
+}
+
+#left {
+  color: gray;
+  width: 50px;
+  align-items: center;
+  margin: 100px 0px 100px 100px;
+  font-size: 40px;
+}
+
+.story_box {
+  background-color: grey;
+  position: relative;
+  width: 300px;
+  height: 250px;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.story_text1 {
+  position: absolute;
+  margin-left: 10px;
+  top: 50%;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.story_text2 {
+  position: absolute;
+  margin-left: 10px;
+  top: 65%;
+  color: white;
+  font-size: 18px;
+}
+
+#profile {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  /* 세로 중앙 정렬 */
+  gap: 12px;
+  /* 이미지와 텍스트 사이 간격 */
+  bottom: 20px;
+  left: 10px;
+}
+
+.p {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid black;
+  object-fit: cover
+}
+
+.p_name {
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+#right {
+  color: gray;
+  margin-top: 100px;
+  margin-left: 10px;
+  font-size: 40px;
+}
+
+#mid {
+  display: flex;
+  height: 2800px;
+}
+
+#mid_left {
+  width: 1300px;
+  background-color: white;
+}
+
+#post {
+  width: 750px;
+  height: 525px;
+  background-color: white;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+  margin: 50px 0px 0px 270px;
+}
+
+#post_profile {
+  display: flex;
+  align-items: center;
+  /* 세로 중앙 정렬 */
+  gap: 12px;
+  /* 이미지와 텍스트 사이 간격 */
+  margin: 10px 0px 0px 10px;
+}
+
+.p_i {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+.p_n {
+  color: black;
+
+}
+
+.p_b {
+  width: 60px;
+  height: 25px;
+  border-radius: 15px;
+  background-color: navy;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 420px;
+}
+
+.post_title {
+  font-size: 20px;
+  margin: 15px 0px 0px 10px;
+
+}
+
+.post_img {
+  width: 750px;
+  height: 400px;
+  margin: 10px 0px 0px 0px;
+  border-radius: 10px;
+}
+
+#react {
+  display: flex;
+  gap: 1px;
+}
+
+.re {
+  width: 60px;
+  height: 20px;
+  border-radius: 20px;
+  font-size: 13px;
+  color: white;
+  background-color: gray;
+  margin: 15px 0px 0px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#mid_right {
+  width: 400px;
+  height: 400px;
+  background-color: rgb(241, 241, 241);
+  border-radius: 10px;
+  margin: 30px 250px 0px 0px;
+
+  position: sticky;
+  top: 30px;
+}
+
+#p_title {
+  font-weight: bold;
+  color: gray;
+  margin: 10px 0px 0px 13px;
+}
+
+#p_profile {
+  display: flex;
+  align-items: center;
+  /* 세로 중앙 정렬 */
+  gap: 12px;
+  /* 이미지와 텍스트 사이 간격 */
+  margin: 25px 0px 0px 25px;
+}
+
+.p_p_i {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+.text_wrapper {
+  display: flex;
+  flex-direction: column;
+  /* 세로로 쌓기 */
+}
+
+.p_p_n {
+  color: black;
+}
+
+.p_p_t {
+  margin-top: 5px;
+  color: black;
+}
+
+#plus {
+  margin: 20px 0px 0px 13px;
+  font-size: 14px;
+  font-weight: bold;
+}

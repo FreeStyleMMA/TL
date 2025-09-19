@@ -45,15 +45,14 @@
 		<level value="warn" />
 	</logger>
 
-	<!-- TestController 컨트롤러 때문에 추가함 -->
 	<logger name="com.tl.dto">
-		<level value="info" />
+		<level value="warn" />
 	</logger>
 	<logger name="com.tl.controller">
 		<level value="info" />
 	</logger>
 	<logger name="com.tl.service">
-		<level value="info" />
+		<level value="warn" />
 	</logger>
 
 

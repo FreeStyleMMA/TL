@@ -19,4 +19,8 @@
 	<delete id = "delete">
 	DELETE FROM tl_reply where originNo = #{originNo}, no = #{no}
 	</delete>
+	
+	<select id = "getTotalReplys">
+	SELECT COUNT(*) FROM tl_reply where originNo=#{originNo}
+	</select>
 </mapper>

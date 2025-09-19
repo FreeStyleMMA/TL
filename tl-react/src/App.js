@@ -12,6 +12,7 @@ import TicketInfopage from './pages/ticketpages/TicketInfopage';
 
 // Comunitypage 연결 모음
 import ComNavbar from './components/ComNavbar';
+import ComHomePage from './pages/communitypages/ComHomePage';
 import ReviewBoard from './pages/communitypages/ReviewBoard';
 import FreeBoard from './pages/communitypages/FreeBoard';
 import PostWrite from './pages/communitypages/PostWrite';
@@ -19,11 +20,13 @@ import PostDetailPage from './pages/communitypages/PostDetailPage';
 
 //memberpage 연결 모음
 import SignIn from './pages/memberpages/SignInPage';
-import SignUp from './pages/memberpages/SignUpPage'
-
+import SignUp from './pages/memberpages/SignUpPage';
+import Favorite from './pages/memberpages/FavoritePage';
 import { AuthProvider } from './pages/auth/AuthContext';
 import ProtectedRoute from './pages/auth/ProtectedRoute';
 import { useAuth } from './pages/auth/AuthContext';
+import { ReplyCountProvider } from "./context/ReplyCountContext";
+import { LikeProvider } from './context/LikeContext';
 
 
 // ticket 레이 아웃 적용
@@ -53,11 +56,15 @@ function CommunityLayout() {
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        {/* 최상단 공통 Navbar */}
-        <Navbar />
-        <AppRoutes />
-      </BrowserRouter>
+      <LikeProvider>
+        <ReplyCountProvider>
+          <BrowserRouter>
+            {/* 최상단 공통 Navbar */}
+            <Navbar />
+            <AppRoutes />
+          </BrowserRouter>
+        </ReplyCountProvider>
+      </LikeProvider>
     </AuthProvider>
   );
 }
@@ -74,6 +81,7 @@ function AppRoutes() {
       <Route path="/" element={<Homepage />} />
       <Route path="signup" element={<SignUp />} />
       <Route path='signin' element={<SignIn />} />
+      <Route path='favorite' element={<Favorite />} />
 
       {/* Ticket 전용 레이아웃 */}
       <Route path="ticket" element={<TicketLayout />}>
@@ -86,7 +94,8 @@ function AppRoutes() {
 
       {/* Community 전용 레이아웃 */}
       <Route path="community" element={<CommunityLayout />}>
-        <Route index element={<Navigate to="reviewBoard" />} />
+        <Route index element={<ComHomePage />} />
+        <Route path="comHome" element={<ComHomePage />} />
         <Route path="reviewBoard" element={<ReviewBoard />} />
         <Route path="freeBoard" element={<FreeBoard />} />
         {/* 권한에 따른 접근 제한 예시 */}

@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 import com.tl.dto.LoginDTO;
 import com.tl.dto.LoginRequest;
 import com.tl.dto.LoginResponse;
-import com.tl.dto.MemberVO;
+import com.tl.dto.SignUpRequest;
+import com.tl.dto.SignUpResponse;
 import com.tl.mapper.MemberMapper;
 import com.tl.security.JwtTokenProvider;
 
@@ -24,10 +25,22 @@ public class MemberServiceImpl implements MemberService {
 	public JwtTokenProvider jwtProvider;
 	
 	//회원가입 처리
-
-	public MemberVO signUp(MemberVO member) {
-		return mapper.signUp(member);
+	public SignUpResponse signUp(SignUpRequest request) {
+	    LoginDTO existing = mapper.findByMemberId(request.getMemberId());
+		if(existing != null) {
+			return SignUpResponse.builder()
+					.SignUpSuccess(false)
+					.message("아이디 중복")
+					.build();
+		}else {
+			 mapper.signUp(request);
+			 return SignUpResponse.builder()
+						.SignUpSuccess(true)
+						.message("회원가입 성공!")
+						.build();
+		}
 	}
+	
 	@Setter(onMethod_ = @Autowired)
 	PasswordEncoder passwordEncoder;
 	
@@ -58,7 +71,6 @@ public class MemberServiceImpl implements MemberService {
 					.token(null)
 					.role(null)
 					.build();
-		
 		}
 	}
 

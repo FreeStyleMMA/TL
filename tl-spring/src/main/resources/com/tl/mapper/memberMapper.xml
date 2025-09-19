@@ -5,8 +5,8 @@
 <mapper namespace="com.tl.mapper.MemberMapper">
 	<!--  -->
 	<insert id="signUp">
-	INSERT INTO member (memberName,memberId,memberPw,role)
-	VALUES(#{memberName},#{memberId},#{memberPw},#{role})
+	INSERT INTO member (memberName,memberId,memberPw)
+	VALUES(#{memberName},#{memberId},#{memberPw})
 	</insert>
 	
 	<resultMap id="loginResultMap" type = "com.tl.dto.LoginDTO">

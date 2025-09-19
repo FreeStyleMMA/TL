@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import './TicketHomePage.css';
 
 export default function TicketHomepage() {
   const [performanceInfos, setPerformanceInfos] = useState([]); // 공연 데이터
@@ -8,10 +9,10 @@ export default function TicketHomepage() {
   const [recommendPerformanceInfos, setRecommendPerformanceInfos] = useState([]); // 추천 공연 데이터
   const [regionPerformanceInfos, setRegionPerformanceInfos] = useState([]); // 지역별 공연 데이터
   const [regionCode, setRegionCode] = useState("11"); // 서울 기본값
-  
+
   const [loading, setLoading] = useState(true);  // 데이터 불러오는 중인지 여부
   const [regionLoading, setRegionLoading] = useState(true); // 지역 데이터 로딩 여부
- 
+
   // 날짜를 YYYYMMDD 형식으로 변환
   function formatDate(date) {
     const year = date.getFullYear();
@@ -55,7 +56,7 @@ export default function TicketHomepage() {
         setRankPerformanceInfos(rankResponse.data); // 공연 랭킹 데이터 저장
         console.log(recommendResponse.data);
         setRecommendPerformanceInfos(recommendResponse.data); // 추천 공연 데이터 저장
-        
+
         setLoading(false); // loading 완료
       } catch (err) {
         console.error("api 불러오기 실패:", err);
@@ -64,7 +65,7 @@ export default function TicketHomepage() {
     };
     fetchData();
   }, []);
-   // 지역별 공연만 별도 useEffect
+  // 지역별 공연만 별도 useEffect
   useEffect(() => {
     const fetchRegionData = async () => {
       try {
@@ -96,43 +97,59 @@ export default function TicketHomepage() {
   if (loading) return <div>불러오는 중...</div>; // 로딩중일때 출력
 
   return (
-    <div>
-      <h2>전체 공연</h2>
-      <div style={{ display: "flex" }}>
+    <div id='myLayout'>
+
+      <div className="show_name_all">
+        <p >전체 공연</p>
+      </div>
+
+      <div className="perform_layout_white">
         {performanceInfos.map((performanceInfo, idx) => ( //전체 공연 정보 출력
-          <div key={idx} style={{width:"120px", height:"160px", ml:"15px", mr:"15px"}}>
-            <Link to="/ticket/info" state={{ performanceInfo }} style={{ display: "flex", flexDirection:"column", alignItems:"center" }}>
-              <img alt={performanceInfo.per_title} style={{ width: "100px", height: "120px" }} src={performanceInfo.per_poster} /> {/* 포스터 이미지 */}
-              <h6>{performanceInfo.per_title}</h6> {/* 공연 제목 */}
+          <div className="img_box" key={idx} >
+            <Link to="/ticket/info" state={{ performanceInfo }} >
+              <img className="img" alt={performanceInfo.per_title} src={performanceInfo.per_poster} /> {/* 포스터 이미지 */}
+              <p className="title">{performanceInfo.per_title}</p> {/* 공연 제목 */}
             </Link>
           </div>
         ))}
       </div>
-      <h2>공연 랭킹</h2>
-      <div style={{ display: "flex" }}>
-      {rankPerformanceInfos.map((performanceInfo, idx) => ( // 공연 랭킹 정보 출력
-          <div key={idx} style={{width:"120px", height:"160px", ml:"15px", mr:"15px"}}>
-            <Link to="/ticket/info" state={{ performanceInfo }} style={{ display: "flex", flexDirection:"column", alignItems:"center" }}>
-              <img alt={performanceInfo.per_title} style={{ width: "100px", height: "120px" }} src={performanceInfo.per_poster} /> {/* 포스터 이미지 */}
-              <h6>{performanceInfo.per_rank}등 : {performanceInfo.per_title}</h6> {/* 공연 등수, 제목 */}
+
+      <div className="show_name">
+        <h2>공연 랭킹</h2>
+      </div>
+
+      <div className="perform_layout_white">
+        {rankPerformanceInfos.map((performanceInfo, idx) => ( // 공연 랭킹 정보 출력
+          <div key={idx} className="img_box">
+            <Link to="/ticket/info" state={{ performanceInfo }} >
+              <img alt={performanceInfo.per_title} className="img" src={performanceInfo.per_poster} /> {/* 포스터 이미지 */}
+              <p className="title">{performanceInfo.per_rank}등 : {performanceInfo.per_title}</p> {/* 공연 등수, 제목 */}
             </Link>
           </div>
         ))}
       </div>
-      <h2>추천 공연</h2>
-      <div style={{ display: "flex" }}>
-      {recommendPerformanceInfos.map((performanceInfo, idx) => ( // 추천 공연 정보 출력
-          <div key={idx} style={{width:"120px", height:"160px", ml:"15px", mr:"15px"}}>
-            <Link to="/ticket/info" state={{ performanceInfo }} style={{ display: "flex", flexDirection:"column", alignItems:"center" }}>
-              <img alt={performanceInfo.per_title} style={{ width: "100px", height: "120px" }} src={performanceInfo.per_poster} /> {/* 포스터 이미지 */}
-              <h6>{performanceInfo.per_title}</h6> {/* 공연 제목 */}
+
+      <div className="show_name">
+        <h2>추천 공연</h2>
+      </div>
+
+      <div className="perform_layout_white">
+        {recommendPerformanceInfos.map((performanceInfo, idx) => ( // 추천 공연 정보 출력
+          <div key={idx} className="img_box">
+            <Link to="/ticket/info" state={{ performanceInfo }} >
+              <img alt={performanceInfo.per_title} className="img" src={performanceInfo.per_poster} /> {/* 포스터 이미지 */}
+              <p className="title">{performanceInfo.per_title}</p> {/* 공연 제목 */}
             </Link>
           </div>
         ))}
       </div>
-      <h2>지역별 공연</h2>
+
+      <div className="show_name">
+        <h2>지역별 공연</h2>
+      </div>
+
       {/* 지역 선택 버튼 */}
-      <div style={{ marginBottom: "10px" }}>
+      <div style={{ marginLeft: "270px", marginTop: "20px" }}>
         <button onClick={() => setRegionCode("11")}>서울</button>
         <button onClick={() => setRegionCode("28")}>인천</button>
         <button onClick={() => setRegionCode("26")}>부산</button>
@@ -147,12 +164,12 @@ export default function TicketHomepage() {
       {regionLoading ? (
         <div>지역 공연 불러오는 중...</div>
       ) : (
-        <div style={{ display: "flex" }}>
+        <div className="perform_layout_gray">
           {regionPerformanceInfos.map((performanceInfo, idx) => (
-            <div key={idx} style={{ width: "120px", height: "160px", margin: "0 15px" }}>
-              <Link to="/ticket/info" state={{ performanceInfo }} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <img alt={performanceInfo.per_title} style={{ width: "100px", height: "120px" }} src={performanceInfo.per_poster} />
-                <h6>{performanceInfo.per_title}</h6>
+            <div key={idx} className="img_box">
+              <Link to="/ticket/info" state={{ performanceInfo }}>
+                <img alt={performanceInfo.per_title} className="img" src={performanceInfo.per_poster} />
+                <p className="title">{performanceInfo.per_title}</p>
               </Link>
             </div>
           ))}

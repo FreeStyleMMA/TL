@@ -2,9 +2,12 @@ import { Link } from 'react-router-dom';
 import './Homepage.css';
 
 function Homepage() {
+
   return (
     <div>
-      홈페이지입니다
+      <div id="home">
+        <p>이미지</p>
+      </div>
     </div >
   )
 }

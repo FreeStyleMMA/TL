@@ -1,11 +1,11 @@
-
+import SignUp from './SignUp';
 export default function SignUpPage() {
 
 
   return (
 
     <>
-      회원가입
+      <SignUp />
     </>
   )
 }

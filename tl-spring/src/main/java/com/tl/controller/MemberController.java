@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tl.dto.LoginRequest;
 import com.tl.dto.LoginResponse;
-import com.tl.dto.MemberVO;
+import com.tl.dto.SignUpRequest;
+import com.tl.dto.SignUpResponse;
 import com.tl.security.JwtTokenProvider;
 import com.tl.service.MemberService;
 
@@ -32,9 +33,9 @@ public class MemberController {
 	public JwtTokenProvider jwtUtil;
 
 
-	@PostMapping("/signUp")
-	public MemberVO signUp(@RequestBody MemberVO member) {
-		return service.signUp(member);
+	@PostMapping(value="/signUp",produces = "application/json; charset=UTF-8")
+	public SignUpResponse signUp(@RequestBody SignUpRequest request) {
+		return service.signUp(request);
 	}
 
 	//로그인 처리

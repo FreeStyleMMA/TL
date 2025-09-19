@@ -10,12 +10,15 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.tl.dto.LikeDTO;
+import com.tl.dto.LikeRequest;
 import com.tl.dto.PostDto;
 import com.tl.service.PostService;
 
@@ -65,21 +68,42 @@ public class PostController {
 	
 	
 	@GetMapping("/getList") // 시작 no 받아와서 뒤에 3개?(한 페이지에 구현 할 갯수 정하고) 받아오기
-	public ArrayList<PostDto> getList(@RequestParam Long no) {
+	public ArrayList<PostDto> getList(@RequestParam long no) {
 		return service.getList(no);
 	}
 
 //	read는 no만 받아와서 select 문으로 넘기기
 	@GetMapping("/read")
-	public PostDto read(@RequestParam Long no) { 
+	public PostDto read(@RequestParam long no) { 
 		PostDto post =  service.read(no);
 		return post;
 	}
 	
 //	delete는 no만 받아와서 delete 문으로 넘기기
 	@GetMapping("/delete")
-	public void delete(@RequestParam Long no) {
+	public void delete(@RequestParam long no) {
 	service.delete(no);
 	}
+	
+	@PostMapping("/handleLike")
+	public LikeDTO handleLike(@RequestBody LikeRequest request) {
+		log.info("좋아요 요청 도착"+request);
+		int newLiked=service.handleLike(request);
+		int totalLikes = service.countLikes(request.getPostNo());
+		
+		return LikeDTO.builder()
+				.memberId(request.getMemberId())
+				.postNo(request.getPostNo())
+				.liked(newLiked)
+				.totalLikes(totalLikes)
+				.build();
+	}
+	
+	@GetMapping("/countLikes")
+	public int countLikes(@RequestParam int postNo) {
+		return service.countLikes(postNo);
+	}
+	
+	
 
 }

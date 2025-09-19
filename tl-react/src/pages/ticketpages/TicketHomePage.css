@@ -1,0 +1,66 @@
+#myLayout {
+  background-color: white;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.show_name_all {
+  font-size: 25px;
+  font-style: normal;
+  color: black;
+  margin-top: 80px;
+  margin-left: 260px;
+  /* font-weight: bold; */
+}
+
+.show_name {
+  font-size: 25px;
+  font-style: normal;
+  color: black;
+  margin-top: 150px;
+  margin-left: 260px;
+  /* font-weight: bold; */
+}
+
+.perform_layout_white {
+  margin-top: 20px;
+  background-color: white;
+  display: grid;
+  grid-template-columns: repeat(5, 200px);
+  margin-left: 250px;
+  gap: 20px 40px;
+}
+
+.perform_layout_gray {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(5, 200px);
+  margin-left: 250px;
+  gap: 20px 40px;
+}
+
+.img_box {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  margin: 20px 0px 0px 10px;
+}
+
+.img {
+  display: flex;
+  flex-direction: column;
+  /* 세로 방향으로 쌓기 */
+  width: 180px;
+  height: 230px
+}
+
+.title {
+  width: 200px;
+  font-size: 16px;
+  /* font-weight: bold; */
+  color: black;
+  margin: 20px 0px 7px 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
