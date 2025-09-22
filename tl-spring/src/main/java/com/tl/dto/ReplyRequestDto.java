@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data	
 public class ReplyRequestDto {
-	public int no;
-	public int originNo;
+	public Long no;
+	public Long originNo;
 }

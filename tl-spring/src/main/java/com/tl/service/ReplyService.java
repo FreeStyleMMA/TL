@@ -11,6 +11,6 @@ public interface ReplyService {
 	public void write(ReplyDto reply);
 	public ArrayList<ReplyDto> read(Long originNo);
 	public void delete(ReplyRequestDto request);
-	public int getTotalReplys(@RequestParam Long originNo);
+	public int getTotalReplys(Long originNo);
 
 }

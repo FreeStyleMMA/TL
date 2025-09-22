@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tl.dto.ReplyDto;
 import com.tl.dto.ReplyRequestDto;
@@ -31,7 +30,7 @@ public class ReplyServiceImpl implements ReplyService {
 	public void delete(ReplyRequestDto request) {
 		mapper.delete(request);
 	}
-	public int getTotalReplys(@RequestParam Long originNo) {
+	public int getTotalReplys( Long originNo) {
 		return mapper.getTotalReplys(originNo);
 	}
 }

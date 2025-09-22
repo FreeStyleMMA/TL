@@ -4,7 +4,7 @@ import './PostWrite.css';
 import { useAuth } from "../auth/AuthContext";
 
 export default function PostWrite() {
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("reviewBoard");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [memberId, setMemberId] = useState("");
@@ -57,8 +57,8 @@ export default function PostWrite() {
       <form className='postLayout' onSubmit={handlePost} >
         <label htmlFor='category'>카테고리</label>
         <select className='select' name='category' onChange={(e) => setCategory(e.target.value)}>
-          <option value='ReviewBoard'>후기게시판</option>
-          <option value='FreeBoard'>자유게시판</option>
+          <option value='reviewBoard'>후기게시판</option>
+          <option value='freeBoard'>자유게시판</option>
         </select>
         작성자 id:{memberId}
         <input className='titleBox' value={title} placeholder='제목을 입력하세요' onChange={(e) => setTitle(e.target.value)} />

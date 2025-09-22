@@ -7,53 +7,54 @@
 	<!-- 게시물 글쓰기  -->
 	<!-- REPLY, MEDIA 어떻게 처리하는지 고민 PAGE는 안넘기고 -->
 	<insert id = "write">
-	INSERT INTO tl_post(category, title, content, memberId,media )
+	INSERT INTO post(category, title, content, memberId,media )
 	values(#{category},#{title},#{content},#{memberId}, #{media})	
 	</insert>
 	
-	<!-- <select id = "getList" resultType ="com.tl.dto.PostDto">
-	SELECT*FROM tl_post WHERE no = #{no} LIMIT #{POSTS_ON_PAGE} OFFSET #{offset}
-	</select> -->
-	<select id="getList" resultType="com.tl.dto.PostDto">
-    SELECT * FROM tl_post
-    <choose> 
-    <when test="lastNo != 0">
-      WHERE no <![CDATA[ < ]]> #{lastNo}
-      </when>
-    </choose>
-    ORDER BY no DESC  LIMIT #{pageSize}
-  </select>
-  
 	
-	<select id="getTotalPosts" resultType="int">
-    SELECT COUNT(*) FROM tl_post
+	<select id="getReviewList" resultType="com.tl.dto.PostDto">
+  SELECT * FROM post 
+  WHERE category='reviewBoard'
+  <if test="lastNo != 0">
+    AND no <![CDATA[ < ]]> #{lastNo}
+  </if>
+  ORDER BY no DESC
+  LIMIT #{pageSize}
+</select>
+  
+  <select id="getFreeList" resultType="com.tl.dto.PostDto">
+    SELECT * FROM post where category='freeBoard'
+	</select>
+	
+	<select id="getTotalPosts" resultType="Long">
+    SELECT COUNT(*) FROM post
 </select>
 	
 	<!-- 게시물 클릭 하면 게시물 넘버로 셀렉트  -->
 	<select id="read" resultType ="com.tl.dto.PostDto">
-	SELECT*FROM tl_post where no = #{no}
+	SELECT*FROM post where no = #{no}
 	</select>
 	
 	<!-- 게시물 지우기하면 게시물 넘버로 셀렉트  -->
 	<delete id="delete">
-	DELETE FROM tl_post where no = #{no}
+	DELETE FROM post where no = #{no}
 	</delete>
 	<!-- DB에서 liked는 default 1 -->
 	<insert id="addLike">
-	INSERT INTO tl_like(memberId,postNo,liked)
+	INSERT INTO liked(memberId,postNo,liked)
 	VALUES(#{memberId},#{postNo},1)
 	</insert>
 	
 	<update id="handleLike">
-	UPDATE tl_like SET liked=#{liked} WHERE memberId=#{memberId} AND postNo=#{postNo}
+	UPDATE liked SET liked=#{liked} WHERE memberId=#{memberId} AND postNo=#{postNo}
 	</update>
 	
 	<select id="countLikes" resultType="int">
-	SELECT COUNT(*) FROM tl_like WHERE postNo=#{postNo} AND liked = 1
+	SELECT COUNT(*) FROM liked WHERE postNo=#{postNo} AND liked = 1
 	</select>
 	
 	<select id="getLike" resultType="com.tl.dto.LikeDTO">
-	SELECT*FROM tl_like where memberId=#{memberId} and postNo=#{postNo}
+	SELECT*FROM liked where memberId=#{memberId} and postNo=#{postNo}
 	</select>
 	
 </mapper>

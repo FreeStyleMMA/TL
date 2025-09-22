@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 
 public class LikeDTO {
     private String memberId;
-    private int postNo;
+    private Long postNo;
     private int liked;
     private int totalLikes;
 }

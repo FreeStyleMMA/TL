@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data	
 public class LikeRequest {
-	public int postNo;
+	public Long postNo;
 	public String memberId;
 }

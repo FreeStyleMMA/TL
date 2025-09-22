@@ -14,7 +14,7 @@ function Navbar() {
           {member ? (
             <>
               <button onClick={signOut}>&nbsp;로그아웃&nbsp;</button>
-              <Link to="../favorite" > &nbsp;장바구니&nbsp;</Link> {/*찐 장바구니로 수정해야함*/}
+              <Link to="../favorite" > &nbsp;마이페이지&nbsp;</Link> {/*찐 장바구니로 수정해야함*/}
             </>) : (
             <>
               <Link to="../signin">&nbsp;로그인&nbsp;|</Link>

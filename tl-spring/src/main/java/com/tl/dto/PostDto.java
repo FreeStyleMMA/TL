@@ -1,6 +1,6 @@
 package com.tl.dto;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import lombok.Data;
 
@@ -8,12 +8,12 @@ import lombok.Data;
 
 public class PostDto {
 
-	public long no;
+	public Long no;
 	public String category;
 	public String title;
 	public String content;
 	public String memberId;
-	public Date date;
+	public Timestamp date;
 //	public long page;
 	public String media;
 }

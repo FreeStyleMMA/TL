@@ -9,8 +9,8 @@ import { useAuth } from "../auth/AuthContext";
 
 
 export default function ReviewBoard() {
-  const { totalReplies, replyCount } = useContext(ReplyCountContext);
-  const { handleLike, totalLikes } = useContext(LikeContext);
+  const { totalReplies, setInitialReplies } = useContext(ReplyCountContext);
+  const { handleLike, totalLikes, setInitialLikes } = useContext(LikeContext);
   const { member } = useAuth();
   const [posts, setPosts] = useState([]);
   const [requestCursor, setRequestCursor] = useState(null); // 변경되면 fetch 트리거
@@ -29,20 +29,24 @@ export default function ReviewBoard() {
       setLoading(true);
       try {
         const url = requestCursor === 0
-          ? `http://localhost:8080/post/getList?no=0`
-          : `http://localhost:8080/post/getList?no=${requestCursor}`;
+          ? `http://localhost:8080/post/getReviewList?no=0`
+          : `http://localhost:8080/post/getReviewList?no=${requestCursor}`;
         const response = await axios.get(url, { signal: controller.signal });
-        const newPosts = response.data || [];
+        const newPosts = Array.isArray(response.data) ? response.data : [];
+
         if (!mounted) return;
 
         if (newPosts.length === 0) {
           setHasMore(false);
+          setInitialReplies(newPosts);
+          setInitialLikes(newPosts);
         } else {
           setPosts(prev => [...prev, ...newPosts]);
           const minNo = Math.min(...newPosts.map(post => post.no));
           nextCursorRef.current = minNo; // ref에 저장 (상태 아님)
           setHasMore(true);
-
+          setInitialReplies(newPosts);
+          setInitialLikes(newPosts);
         }
       } catch (error) {
         console.error("fetchPosts error", error);
@@ -59,6 +63,7 @@ export default function ReviewBoard() {
 
   useEffect(() => {
     setRequestCursor(0);
+
   }, []);
 
   useEffect(() => {
@@ -77,9 +82,8 @@ export default function ReviewBoard() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [loading, hasMore, requestCursor]);
 
-  useEffect(() => {
-    posts.forEach(post => replyCount(post.no));
-  }, [posts]);
+
+
 
   return (
     <div id="myLayout">
@@ -95,7 +99,7 @@ export default function ReviewBoard() {
               <div key={post.no} className="post">  <br />
                 <div className="post_profile">
                   <img className="p_i" src="/images/grey.jpg" />
-                  <div className="p_n">r/entertai등 커뮤이름이나 #언급? ____n시간 전</div>
+                  <div className="p_n">{new Date(post.date).toLocaleDateString()}</div>
                   {/* <div id="p_b">커뮤니티 가입</div> */}
                 </div>
                 <Link

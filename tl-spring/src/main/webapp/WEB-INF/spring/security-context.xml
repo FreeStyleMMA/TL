@@ -25,7 +25,7 @@
 		<security:intercept-url pattern="/post/**"
 			access="permitAll" />
 		<security:intercept-url pattern="/member/**"
-			access="hasRole('MEMBER')" />
+			access="permitAll" />
 		<security:intercept-url pattern="/admin/**"
 			access="hasRole('ADMIN')" />
 		<!-- jwt 방식 사용으로 csrf는 off -->

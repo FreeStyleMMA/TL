@@ -6,21 +6,21 @@
 	
 	<!-- replyDto로 받아와서 넣기. Date는 DB에서 자체 업데이트 하는 방향도 검토.  -->
 	<insert id="write">
-	INSERT INTO tl_reply(originNo,memberId,content)
+	INSERT INTO reply(originNo,memberId,content)
 	VALUES(#{originNo},#{memberId},#{content})
 	</insert>
 	
 	<!-- originNo로 reply 객체 받아서 조회하기.. ArrayList로 받아와야하나? 추후검토-->
-	<select id = "read">
-	SELECT*FROM tl_reply where originNo=#{originNo}
+	<select id = "read" resultType="com.tl.dto.ReplyDto">
+	SELECT*FROM reply where originNo=#{originNo}
 	</select>
 
 	<!-- originNO,no 모두 만족하는 데이터 지우기. -->
 	<delete id = "delete">
-	DELETE FROM tl_reply where originNo = #{originNo}, no = #{no}
+	DELETE FROM reply where originNo = #{originNo}, no = #{no}
 	</delete>
 	
-	<select id = "getTotalReplys">
-	SELECT COUNT(*) FROM tl_reply where originNo=#{originNo}
+	<select id = "getTotalReplys" resultType="int">
+	SELECT COUNT(*) FROM reply where originNo=#{originNo}
 	</select>
 </mapper>

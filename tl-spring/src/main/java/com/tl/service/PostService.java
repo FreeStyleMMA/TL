@@ -7,10 +7,11 @@ import com.tl.dto.PostDto;
 
 public interface PostService {
 	public void write(PostDto post);
-	public ArrayList<PostDto> getList(long no);
-	public PostDto read(long no);
-	public void delete(long no);
-	public int getTotalPosts();
+	public ArrayList<PostDto> getReviewList(Long no);
+	public ArrayList<PostDto> getFreeList(Long no);
+	public PostDto read(Long no);
+	public void delete(Long no);
+	public Long getTotalPosts();
 	public int handleLike( LikeRequest request);
-	public int countLikes(int postNo);	
+	public int countLikes(Long postNo);	
 }

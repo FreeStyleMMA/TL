@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.tl.dto.FavoriteDTO;
 import com.tl.dto.LoginDTO;
 import com.tl.dto.LoginRequest;
 import com.tl.dto.LoginResponse;
@@ -78,4 +79,6 @@ public class MemberServiceImpl implements MemberService {
 		return mapper.findByMemberId(memberId);
 	}
 	
+	
+
 }

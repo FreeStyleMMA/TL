@@ -1,6 +1,7 @@
 package com.tl.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tl.dto.CountDTO;
 import com.tl.dto.ReplyDto;
 import com.tl.dto.ReplyRequestDto;
 import com.tl.service.ReplyService;
@@ -29,7 +31,6 @@ public class ReplyController {
 	@PostMapping("/write")
 	public void write(@RequestBody ReplyDto reply) {
 		service.write(reply);
-
 	}
 
 	// 댓글 읽기. List 형식으로 데이터 전송.
@@ -45,7 +46,20 @@ public class ReplyController {
 
 	@GetMapping("/count")
 	public int getTotalReplys(@RequestParam Long originNo) {
-		log.info("댓글 갯수 요청 도착");
 		return service.getTotalReplys(originNo);
+	}
+	@GetMapping("/initialReplies")
+	public List<CountDTO> initialReplies(@RequestParam List<Long> postNos) {
+	     List<CountDTO> result = new ArrayList<>();
+	     log.info("postNos 배열:"+postNos);
+	        for (Long postNo : postNos) {
+	            int count = service.getTotalReplys(postNo);
+	            result.add(CountDTO.builder()
+	                    .postNo(postNo)
+	                    .count(count)
+	                    .build());
+	        }
+	        log.info("initialReplies"+result);
+	        return result; 
 	}
 }

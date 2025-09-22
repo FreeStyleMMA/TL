@@ -3,6 +3,7 @@ package com.tl.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.tl.dto.CountDTO;
 import com.tl.dto.LikeDTO;
 import com.tl.dto.LikeRequest;
 import com.tl.dto.PostDto;
@@ -41,7 +43,7 @@ public class PostController {
 	@PostMapping(value="/write", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public String write(@RequestPart("post") PostDto post,
 			@RequestPart("media") MultipartFile media) throws Exception {
-		log.info("포스팅 요청 도착");		
+		log.info("포스팅 요청 도착");
 		// 1. UUID 생성 + 확장자 추출
 		String uuid = UUID.randomUUID().toString(); // 파일 저장을 위한 고유 문자열 생성.
 		String originalFilename = media.getOriginalFilename(); // 원본 파일명 받아오기
@@ -67,21 +69,26 @@ public class PostController {
 	}
 	
 	
-	@GetMapping("/getList") // 시작 no 받아와서 뒤에 3개?(한 페이지에 구현 할 갯수 정하고) 받아오기
-	public ArrayList<PostDto> getList(@RequestParam long no) {
-		return service.getList(no);
+	@GetMapping("/getReviewList") // 시작 no 받아와서 뒤에 3개?(한 페이지에 구현 할 갯수 정하고) 받아오기
+	public ArrayList<PostDto> getReviewList(@RequestParam Long no) {
+		log.info("게시글 목록:" +service.getReviewList(no));
+		return service.getReviewList(no);
+	}
+	@GetMapping("/getFreeList") // 시작 no 받아와서 뒤에 3개?(한 페이지에 구현 할 갯수 정하고) 받아오기
+	public ArrayList<PostDto> getFreeList(@RequestParam Long no) {
+		return service.getFreeList(no);
 	}
 
 //	read는 no만 받아와서 select 문으로 넘기기
 	@GetMapping("/read")
-	public PostDto read(@RequestParam long no) { 
+	public PostDto read(@RequestParam Long no) { 
 		PostDto post =  service.read(no);
 		return post;
 	}
 	
 //	delete는 no만 받아와서 delete 문으로 넘기기
 	@GetMapping("/delete")
-	public void delete(@RequestParam long no) {
+	public void delete(@RequestParam Long no) {
 	service.delete(no);
 	}
 	
@@ -100,10 +107,24 @@ public class PostController {
 	}
 	
 	@GetMapping("/countLikes")
-	public int countLikes(@RequestParam int postNo) {
+	public int countLikes(@RequestParam Long postNo) {
+		log.info("countLikes"+service.countLikes(postNo));
 		return service.countLikes(postNo);
 	}
 	
+	 @GetMapping("/initialLikes")
+	    public List<CountDTO> initialLikes(@RequestParam List<Long> postNos) {
+	        List<CountDTO> result = new ArrayList<>();
+	        for (Long postNo : postNos) {
+	            int count = service.countLikes(postNo);
+	            result.add(CountDTO.builder()
+	                    .postNo(postNo)
+	                    .count(count)
+	                    .build());
+	        }
+	        return result; 
+	    }
+	}
 	
 
-}
+

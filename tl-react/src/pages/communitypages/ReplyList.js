@@ -20,7 +20,6 @@ export default function ReplyList({ no, refreshReply }) { // no ->reply의 no
     }
     replyCount(postNo);//총 댓글 수 세기
     fetchReply();
-
   }, [no, postNo, refreshReply]); // 게시물 번호가 바뀌거나 refreshReply 토글 상태가 바뀔 때 댓글 불러오기.
 
 
@@ -28,9 +27,9 @@ export default function ReplyList({ no, refreshReply }) { // no ->reply의 no
     <div className="replyLayout" >
       {replyList.map(reply => (
         <div key={reply.postNo}>
-          {reply.memberId}<br />
-          {reply.date}<br />
-          {reply.content}<br />
+          작성자: {reply.memberId}<br />
+          작성일: {new Date(reply.date).toLocaleString()}<br />
+          내용: {reply.content}<br />
         </div>
       ))}
 

@@ -17,6 +17,7 @@ export default function PostDetailPage() {
   const [memberId, setMemberId] = useState("");
   const [media, setMedia] = useState("");
   const [refreshReply, setRefreshReply] = useState([]);
+  const [date, setDate] = useState("")
 
   const [replies, setReplies] = useState({});  // { [postNo]: count }
   useEffect(() => {
@@ -28,6 +29,8 @@ export default function PostDetailPage() {
         setContent(response.data.content);
         setMemberId(response.data.memberId);
         setMedia(response.data.media);
+        setDate(new Date(response.data.date).toLocaleDateString());
+        console.log(new Date(response.data.date).toLocaleDateString());
       } catch (error) {
         console.log("서버에러", error);
       }
@@ -52,6 +55,7 @@ export default function PostDetailPage() {
         <div class='post_title'>
           <p>글번호: {postNo}</p>
           <h2>제목:{title}</h2><br />
+          작성일:{date}<br />
           작성자: {memberId}<hr />
           내용<br />
           {content}<br /><br />

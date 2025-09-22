@@ -55,10 +55,10 @@
 }
 
 .title {
-  width: 200px;
   font-size: 16px;
-  /* font-weight: bold; */
+  font-weight: bold;
   color: black;
+  width: 170px;
   margin: 20px 0px 7px 5px;
   white-space: nowrap;
   overflow: hidden;
