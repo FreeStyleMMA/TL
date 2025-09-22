@@ -32,7 +32,7 @@ export function ReplyCountProvider({ children }) {
       console.error(err);
       newPosts.forEach(p => { if (!(p.no in initialReplies)) initialReplies[p.no] = 0; }); // 없으면 기본값 0 세팅.
     }
-    setInitialReplies(prev => ({ ...prev, ...initialReplies }));
+    setTotalReplies(prev => ({ ...prev, ...initialReplies }));
   };
 
   return (
