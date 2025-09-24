@@ -4,6 +4,7 @@ import com.tl.dto.FavoriteDTO;
 import com.tl.dto.LoginDTO;
 import com.tl.dto.LoginRequest;
 import com.tl.dto.LoginResponse;
+import com.tl.dto.MyInfoResponse;
 import com.tl.dto.SignUpRequest;
 
 public interface MemberMapper {
@@ -13,4 +14,5 @@ public interface MemberMapper {
 	public LoginDTO findByMemberId(String memberId);
 	public FavoriteDTO getFavorite(String memberId,int liked);
 	public void handleFavorite(String memberId, Long per_id);
+	public MyInfoResponse getMyInfo(String memberId);
 }

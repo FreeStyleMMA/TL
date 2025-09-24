@@ -8,44 +8,62 @@
 #story_container {
   position: relative;
   display: flex;
-  gap: 16px;
+  gap: 20px;
   margin-top: 20px;
-  /* margin-left: 180px; */
-}
 
-#left {
-  color: gray;
-  width: 50px;
-  align-items: center;
-  margin: 100px 0px 100px 100px;
-  font-size: 40px;
 }
 
 .story_box {
-  background-color: grey;
-  position: relative;
   width: 300px;
   height: 250px;
+  position: relative;
+  border-radius: 25px;
   overflow: hidden;
-  border-radius: 15px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  /* 아래쪽 정렬 */
+  padding: 10px;
+  color: white;
+
 }
 
-.story_text1 {
-  position: absolute;
-  margin-left: 10px;
-  top: 50%;
+
+.story_box_link {
   color: white;
-  font-size: 24px;
-  font-weight: bold;
+  /* 글씨 색 */
+  text-decoration: none;
+  /* 밑줄 제거 */
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-overflow: ellipsis;
 }
 
-.story_text2 {
-  position: absolute;
-  margin-left: 10px;
-  top: 65%;
-  color: white;
-  font-size: 18px;
+.story_box_title {
+  position: relative;
+  width: 300px;
+  overflow: hidden;
+  font-size: 20px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
 }
+
+.story_box_content {
+  position: relative;
+  width: 300px;
+  overflow: hidden;
+  color: white;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 
 #profile {
   position: absolute;

@@ -11,7 +11,7 @@ export function LikeProvider({ children, postNo, memberId }) {
   const handleLike = async (memberId, postNo) => {
     try {
       const response = await axios.post(`http://localhost:8080/post/handleLike`,
-        { postNo: postNo, memberId: memberId }
+        { memberId: memberId, postNo: postNo }
       );
       setLiked(prev => ({ ...prev, [postNo]: response.data.newLiked }));
       console.log("liked: ", response.data.newLiked)

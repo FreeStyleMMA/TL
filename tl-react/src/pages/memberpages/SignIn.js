@@ -17,7 +17,7 @@ export default function Login({ onSignIn }) {
         memberId,
         memberPw
       }, { withCredentials: true });
-      console.log("login message: " + response.data.message);
+      console.log("login message: " + response.data.loginSuccess);
 
       //로그인 성공 시 로직
       if (response.data.loginSuccess) {

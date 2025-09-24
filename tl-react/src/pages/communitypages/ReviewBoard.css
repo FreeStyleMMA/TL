@@ -1,16 +1,10 @@
  #myLayout {
+
      background-color: white;
      margin-left: auto;
      margin-right: auto;
  }
 
- #posting_box {
-     width: auto;
-     color: black;
-     font-size: 20px;
-     font-style: normal;
-     font-weight: bold;
- }
 
  #postLayout {
      display: flex;
@@ -18,8 +12,29 @@
  }
 
  #left {
-     width: 1300px;
+     width: 1020px;
+     margin-top: 20px;
+     display: flex;
+     flex-direction: column;
  }
+
+ #posting {
+     display: inline-block;
+     width: 70px;
+     height: 30px;
+     color: black;
+     font-size: 20px;
+     font-style: normal;
+     font-weight: 400;
+     text-decoration: none;
+     border: 0.5px solid black;
+     border-radius: 5px;
+     box-sizing: border-box;
+     align-content: center;
+     text-align: center;
+     float: right;
+ }
+
 
  #posts {
      display: flex;
@@ -27,36 +42,42 @@
      gap: 5px;
  }
 
+
+
  .post {
      width: 750px;
-     height: 555px;
+     height: 600px;
      background-color: rgb(255, 255, 255);
      border-top: 1px solid grey;
      /* border-bottom: 1px solid gray; */
-     margin: 50px 0px 0px 270px;
+     margin: 40px 0px 0px 270px;
  }
 
  .post_profile {
      border-style: dotted;
      display: flex;
      font-size: 20px;
-     align-items: center;
-     /* 세로 중앙 정렬 */
+     align-items: flex-end;
      gap: 12px;
-     /* 이미지와 텍스트 사이 간격 */
      margin: 10px 0px 0px 10px;
  }
 
- .p_i {
+ .profile_image {
      width: 20px;
      height: 20px;
      border-radius: 50%;
      border: 1px solid black;
  }
 
- .p_n {
+ .p_writer {
      color: black;
+     font-size: 18px;
+     font-weight: 500;
+     margin-right: 20px;
+ }
 
+ .p_date {
+     font-size: 15px;
  }
 
  .p_b {
@@ -71,16 +92,19 @@
      margin-left: 420px;
  }
 
- .post_title {
-     font-size: 20px;
-     margin: 15px 0px 0px 10px;
+ .p_title {
 
+     font-size: 23px;
+     margin-top: 25px;
+     color: black;
+     text-decoration: none;
+     font-weight: 500;
  }
 
- .post_img {
-     width: 560px;
-     height: 400px;
-     margin: 10px 0px 0px 0px;
+ .p_image {
+     margin-top: 20px;
+     width: 600px;
+     height: 430px;
      border-radius: 10px;
  }
 
@@ -90,14 +114,16 @@
  }
 
  .re {
-     width: 60px;
-     height: 20px;
-     border-radius: 20px;
-     font-size: 13px;
-     color: white;
-     background-color: gray;
-     margin: 15px 0px 0px 10px;
-     display: flex;
-     align-items: center;
-     justify-content: center;
+     margin-top: 10px;
+     background-color: white;
+     border: 0.5px solid grey;
+     height: 25px;
+     width: 55px;
+     color: grey;
+     gap: 5px
+ }
+
+ .re_img {
+     width: 18px;
+     height: 18px;
  }

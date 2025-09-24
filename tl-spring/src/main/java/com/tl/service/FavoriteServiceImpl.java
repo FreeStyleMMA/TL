@@ -16,18 +16,17 @@ public class FavoriteServiceImpl implements FavoriteService {
 	@Setter(onMethod_ = @Autowired)
 	public FavoriteMapper mapper;
 
-	// 공연 좋아요 테이블
-	public FavoriteDTO checkFavorite(String memberId, Long per_id) {
+	public int checkFavorite(String memberId, Long per_id) {
 		return mapper.checkFavorite(memberId, per_id);
 	}
 
 	public void handleFavorite(String memberId, Long per_id) {
-		FavoriteDTO existing = mapper.checkFavorite(memberId, per_id);
+		FavoriteDTO existing = mapper.getFavorite(memberId, per_id);
 		if (existing == null) {
 			mapper.addFavorite(memberId, per_id);
 		} else {
 			int newLiked = existing.liked == 0 ? 1 : 0;
-			mapper.handleFavorite(memberId, per_id, newLiked);
+			mapper.checkFavorite(memberId, per_id, newLiked);
 		}
 	}
 

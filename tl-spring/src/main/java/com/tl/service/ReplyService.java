@@ -2,15 +2,14 @@ package com.tl.service;
 
 import java.util.ArrayList;
 
-import org.springframework.web.bind.annotation.RequestParam;
-
+import com.tl.dto.MyRepliesResponse;
 import com.tl.dto.ReplyDto;
-import com.tl.dto.ReplyRequestDto;
 
 public interface ReplyService {
 	public void write(ReplyDto reply);
 	public ArrayList<ReplyDto> read(Long originNo);
-	public void delete(ReplyRequestDto request);
+	public void delete(Long no,Long originNo);
 	public int getTotalReplys(Long originNo);
+	public ArrayList<MyRepliesResponse> getMyReplies(String memberId);
 
 }

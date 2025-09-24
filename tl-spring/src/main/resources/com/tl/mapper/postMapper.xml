@@ -3,58 +3,103 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tl.mapper.PostMapper">
-	
-	<!-- 게시물 글쓰기  -->
+
+	<!-- 게시물 글쓰기 -->
 	<!-- REPLY, MEDIA 어떻게 처리하는지 고민 PAGE는 안넘기고 -->
-	<insert id = "write">
-	INSERT INTO post(category, title, content, memberId,media )
-	values(#{category},#{title},#{content},#{memberId}, #{media})	
+	<insert id="write">
+		INSERT INTO post(category, title, content,
+		memberId,media )
+		values(#{category},#{title},#{content},#{memberId},
+		#{media})
 	</insert>
-	
-	
-	<select id="getReviewList" resultType="com.tl.dto.PostDto">
-  SELECT * FROM post 
-  WHERE category='reviewBoard'
-  <if test="lastNo != 0">
-    AND no <![CDATA[ < ]]> #{lastNo}
-  </if>
-  ORDER BY no DESC
-  LIMIT #{pageSize}
-</select>
-  
-  <select id="getFreeList" resultType="com.tl.dto.PostDto">
-    SELECT * FROM post where category='freeBoard'
+	<resultMap id="postDtoMap" type="com.tl.dto.PostDto">
+		<result property="no" column="no" />
+		<result property="category" column="category" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="memberId" column="memberId" />
+		<result property="media" column="media" />
+		<result property="createdAt" column="created_at" />
+	</resultMap>
+
+	<select id="getReviewList" resultMap="postDtoMap">
+		SELECT * FROM post
+		WHERE category='reviewBoard'
+		<if test="lastNo != 0">
+			AND no <![CDATA[ < ]]>
+			#{lastNo}
+		</if>
+		ORDER BY no DESC
+		LIMIT #{pageSize}
 	</select>
-	
-	<select id="getTotalPosts" resultType="Long">
-    SELECT COUNT(*) FROM post
-</select>
-	
-	<!-- 게시물 클릭 하면 게시물 넘버로 셀렉트  -->
-	<select id="read" resultType ="com.tl.dto.PostDto">
-	SELECT*FROM post where no = #{no}
+
+	<!-- 자유게시판 한 페이지당 게시물 10개 >> PAGE_SIZE_FREE -->
+	<select id="getFreeList" resultMap="postDtoMap">
+		SELECT * FROM post where
+		category='freeBoard'
+		ORDER BY date DESC LIMIT #{pageSize} OFFSET
+		#{offset}
 	</select>
-	
-	<!-- 게시물 지우기하면 게시물 넘버로 셀렉트  -->
+
+	<select id="getTotalFreePosts" resultType="int">
+		SELECT COUNT(*) FROM
+		post where category='FreeBoard'
+	</select>
+
+	<select id="getComHomeTop" resultMap="postDtoMap">
+		SELECT p.*,
+		COUNT(l.postNo)
+		AS likeCount
+		FROM post p
+		LEFT JOIN liked l ON p.no = l.postNo AND
+		l.liked = 1
+		WHERE p.category='reviewBoard'
+		GROUP BY p.no
+		ORDER BY likeCount DESC,p.no
+		DESC
+		LIMIT 4
+	</select>
+
+	<!-- 게시물 클릭 하면 게시물 넘버로 셀렉트 -->
+	<select id="read" resultMap="postDtoMap">
+		SELECT*FROM post where no = #{no}
+	</select>
+
+	<!-- 게시물 지우기하면 게시물 넘버로 셀렉트 -->
 	<delete id="delete">
-	DELETE FROM post where no = #{no}
+		DELETE FROM post where no = #{no}
 	</delete>
 	<!-- DB에서 liked는 default 1 -->
 	<insert id="addLike">
-	INSERT INTO liked(memberId,postNo,liked)
-	VALUES(#{memberId},#{postNo},1)
+		INSERT INTO liked(memberId,postNo,liked)
+		VALUES(#{memberId},#{postNo},1)
 	</insert>
-	
+
 	<update id="handleLike">
-	UPDATE liked SET liked=#{liked} WHERE memberId=#{memberId} AND postNo=#{postNo}
+		UPDATE liked SET liked=#{liked} WHERE
+		memberId=#{memberId} AND
+		postNo=#{postNo}
 	</update>
-	
+
 	<select id="countLikes" resultType="int">
-	SELECT COUNT(*) FROM liked WHERE postNo=#{postNo} AND liked = 1
+		SELECT COUNT(*) FROM liked
+		WHERE postNo=#{postNo} AND liked = 1
 	</select>
-	
+
 	<select id="getLike" resultType="com.tl.dto.LikeDTO">
-	SELECT*FROM liked where memberId=#{memberId} and postNo=#{postNo}
+		SELECT*FROM liked where
+		memberId=#{memberId} and postNo=#{postNo}
 	</select>
-	
+
+	<resultMap id="myPostResponseMap" type="com.tl.dto.MyPostResponse">
+    <result property="title" column="title" jdbcType="VARCHAR"/>
+    <result property="no" column="no" jdbcType="BIGINT"/>
+    <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+</resultMap>
+
+	<select id="getMyPost" resultMap="myPostResponseMap">
+		SELECT title, no, created_at
+		FROM post
+		WHERE memberId = #{memberId}
+	</select>
 </mapper>

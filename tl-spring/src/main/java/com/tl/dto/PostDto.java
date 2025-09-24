@@ -2,10 +2,11 @@ package com.tl.dto;
 
 import java.sql.Timestamp;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-
+@Builder
 public class PostDto {
 
 	public Long no;
@@ -13,7 +14,7 @@ public class PostDto {
 	public String title;
 	public String content;
 	public String memberId;
-	public Timestamp date;
-//	public long page;
+	public Timestamp createdAt;
+//	public int totalPages;
 	public String media;
 }

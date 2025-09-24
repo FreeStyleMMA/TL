@@ -20,5 +20,15 @@
         FROM member
         WHERE memberId = #{memberId}
     </select>
+    
+    	<resultMap id="myInfoMap" type = "com.tl.dto.MyInfoResponse">
+	<result property="memberName" column="memberName"/>
+	<result property="memberId" column="memberId"/>
+	<result property="createdAt" column="created_at"/>
+	</resultMap>
+	
+    <select id="getMyInfo" resultMap="myInfoMap">
+    SELECT memberId,memberName,created_at FROM member WHERE memberId = #{memberId}
+    </select>
   
 </mapper>

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tl.dto.CountDTO;
+import com.tl.dto.MyRepliesResponse;
 import com.tl.dto.ReplyDto;
-import com.tl.dto.ReplyRequestDto;
 import com.tl.service.ReplyService;
 
 import lombok.Setter;
@@ -39,9 +39,10 @@ public class ReplyController {
 		return service.read(originNo);
 	}
 
-	@GetMapping("/delete")
-	public void delete(@ModelAttribute ReplyRequestDto request) {
-		service.delete(request);
+	@DeleteMapping("/delete")
+	public void delete(@RequestParam("no") Long no,@RequestParam("originNo") Long originNo) {
+		log.info("삭제 요청 도착");
+		service.delete(no,originNo);
 	}
 
 	@GetMapping("/count")
@@ -51,7 +52,6 @@ public class ReplyController {
 	@GetMapping("/initialReplies")
 	public List<CountDTO> initialReplies(@RequestParam List<Long> postNos) {
 	     List<CountDTO> result = new ArrayList<>();
-	     log.info("postNos 배열:"+postNos);
 	        for (Long postNo : postNos) {
 	            int count = service.getTotalReplys(postNo);
 	            result.add(CountDTO.builder()
@@ -61,5 +61,9 @@ public class ReplyController {
 	        }
 	        log.info("initialReplies"+result);
 	        return result; 
+	}
+	@GetMapping("/getMyReplies")
+	public ArrayList<MyRepliesResponse> getMyReplies(@RequestParam String memberId){
+		return service.getMyReplies(memberId);
 	}
 }

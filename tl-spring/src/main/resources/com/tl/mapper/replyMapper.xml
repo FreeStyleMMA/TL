@@ -10,17 +10,44 @@
 	VALUES(#{originNo},#{memberId},#{content})
 	</insert>
 	
+	<resultMap id="ReplyDtoMap" type = "com.tl.dto.MyRepliesResponse">
+	<result property="no" column="no"/>
+	<result property="originNo" column="originNo"/>
+	<result property="content" column="content"/>
+	<result property="memberId" column="memberId"/>
+	<result property="createdAt" column="created_at"/>
+	</resultMap>
+	
 	<!-- originNo로 reply 객체 받아서 조회하기.. ArrayList로 받아와야하나? 추후검토-->
-	<select id = "read" resultType="com.tl.dto.ReplyDto">
-	SELECT*FROM reply where originNo=#{originNo}
+	<select id = "read" resultMap="ReplyDtoMap">
+	SELECT*FROM reply 
+	where originNo=#{originNo}
+	ORDER BY no DESC 
 	</select>
 
 	<!-- originNO,no 모두 만족하는 데이터 지우기. -->
 	<delete id = "delete">
-	DELETE FROM reply where originNo = #{originNo}, no = #{no}
+	DELETE FROM reply where originNo = #{originNo} AND no = #{no}
 	</delete>
 	
 	<select id = "getTotalReplys" resultType="int">
 	SELECT COUNT(*) FROM reply where originNo=#{originNo}
+	</select>
+	
+	<resultMap id="myRepliesMap" type = "com.tl.dto.MyRepliesResponse">
+	<result property="content" column="content"/>
+	<result property="originTitle" column="title"/>
+	<result property="createdAt" column="created_at"/>
+	</resultMap>
+	
+	<select id="getMyReplies" resultMap="myRepliesMap">
+	SELECT r.content,
+	r.created_at,
+	p.title
+	From reply r
+	LEFT JOIN post p ON p.no = r.originNo
+	WHERE r.memberId = #{memberId}
+	ORDER BY r.created_at DESC
+	Limit 10
 	</select>
 </mapper>

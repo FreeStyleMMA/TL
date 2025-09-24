@@ -2,12 +2,13 @@ package com.tl.mapper;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.tl.dto.FavoriteDTO;
 
 public interface FavoriteMapper {
 
-	public FavoriteDTO checkFavorite(String memberId,Long per_id);
-	public void handleFavorite(String memberId, Long per_id,int liked);
-	public void addFavorite(String memberId,Long per_id);
+	public void addFavorite(@Param("memberId")String memberId,@Param("per_id")Long per_id);
 	public ArrayList<FavoriteDTO> getFavorite(String memberId);
+	public int checkFavorite(@Param("memberId") String memberId,@Param("per_id")Long per_id);
 }

@@ -1,22 +1,27 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, } from "react-router-dom";
+import React, { useContext } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { useAuth } from '../auth/AuthContext';
+import { FavoriteContext } from "../../context/FavoriteContext";
 
 // 마커 아이콘 설정 (기본 아이콘이 깨질 수 있음)
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl:
-    "https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon-2x.png",
-  iconUrl: "https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png",
+    iconRetinaUrl:
+        "https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon-2x.png",
+    iconUrl: "https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png",
+    shadowUrl: "https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png",
 });
 
 export default function TicketInfopage() {
+    const { member } = useAuth();
+    const { handleFavorite } = useContext(FavoriteContext)
     const location = useLocation();
     const { performanceInfo } = location.state || {}; // 공연 상세 정보
     console.log(performanceInfo.per_latitude);
-    const position = {lat : Number(performanceInfo.per_latitude), lng : Number(performanceInfo.per_longitude) } // 위도, 경도
+    const position = { lat: Number(performanceInfo.per_latitude), lng: Number(performanceInfo.per_longitude) } // 위도, 경도
     return (
         <div> {/*공연 상세 정보 출력 */}
             <h4>공연 포스터</h4>
@@ -30,11 +35,18 @@ export default function TicketInfopage() {
             <h4>티켓 예약</h4>
             {performanceInfo.per_ticket.map((ticket, idx) => (
                 <div key={idx}>
-                    <input type="button" value={ticket.name} onClick={() => window.open(ticket.url, "_blank")} /> {/* 티켓 예약처 이름, 링크 */} 
+                    <input type="button" value={ticket.name} onClick={() => window.open(ticket.url, "_blank")} /> {/* 티켓 예약처 이름, 링크 */}
+                    <input
+                        className="favorite"
+                        type="button"
+                        value="좋아요"
+                        onClick={() => handleFavorite(member.memberId, performanceInfo.per_id)}
+                    />
                 </div>
+
             ))}
             <h4>지도</h4>
-                <MapContainer center={position} zoom={16} style={{ width: "500px", height: "400px" }}>
+            <MapContainer center={position} zoom={16} style={{ width: "500px", height: "400px" }}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -42,7 +54,7 @@ export default function TicketInfopage() {
                 <Marker position={position}> {/* 지도 마커 */}
                     <Popup>{performanceInfo.per_peace}</Popup> {/* 마커 팝업 */}
                 </Marker>
-                </MapContainer>
+            </MapContainer>
         </div>
     )
 }

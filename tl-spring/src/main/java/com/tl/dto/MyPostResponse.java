@@ -5,11 +5,8 @@ import java.sql.Timestamp;
 import lombok.Data;
 
 @Data
-public class ReplyDto {
-
+public class MyPostResponse {
 	public Long no;
-	public Long originNo;
-	public String memberId;
-	public String content;
+	public String title;
 	public Timestamp createdAt;
 }

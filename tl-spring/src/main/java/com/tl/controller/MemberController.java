@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tl.dto.FavoriteDTO;
 import com.tl.dto.LoginRequest;
 import com.tl.dto.LoginResponse;
+import com.tl.dto.MyInfoResponse;
 import com.tl.dto.SignUpRequest;
 import com.tl.dto.SignUpResponse;
 import com.tl.security.JwtTokenProvider;
@@ -59,5 +59,9 @@ public class MemberController {
 		
 	}
 	
+	@GetMapping("getMyInfo")
+	public  MyInfoResponse getMyInfo(@RequestParam String memberId){
+		return service.getMyInfo(memberId);
+	}
 
 }

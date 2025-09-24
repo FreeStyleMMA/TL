@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class FavoriteDTO {
-	public Long fav_id; // favorite 고유 key
+	public Long fav_id; // favorite 고유 key(no )
 	public String memberId;
 	public Long per_id;
 	public Date create_at;

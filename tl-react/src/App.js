@@ -19,15 +19,16 @@ import PostWrite from './pages/communitypages/PostWrite';
 import PostDetailPage from './pages/communitypages/PostDetailPage';
 
 //memberpage 연결 모음
-import SignIn from './pages/memberpages/SignInPage';
-import SignUp from './pages/memberpages/SignUpPage';
-import Favorite from './pages/memberpages/FavoritePage';
+import SignIn from './pages/memberpages/Signinpage';
+import SignUp from './pages/memberpages/Signuppage';
+import Mypage from './pages/memberpages/Mypage';
 import { AuthProvider } from './pages/auth/AuthContext';
 import ProtectedRoute from './pages/auth/ProtectedRoute';
 import { useAuth } from './pages/auth/AuthContext';
 import { ReplyCountProvider } from "./context/ReplyCountContext";
 import { LikeProvider } from './context/LikeContext';
-
+import { DeleteProvider } from './context/DeleteContext';
+import { FavoriteProvider } from './context/FavoriteContext';
 
 // ticket 레이 아웃 적용
 function TicketLayout() {
@@ -56,16 +57,21 @@ function CommunityLayout() {
 export default function App() {
   return (
     <AuthProvider>
-      <LikeProvider>
-        <ReplyCountProvider>
-          <BrowserRouter>
-            {/* 최상단 공통 Navbar */}
-            <Navbar />
-            <AppRoutes />
-          </BrowserRouter>
-        </ReplyCountProvider>
-      </LikeProvider>
+      <FavoriteProvider>
+        <DeleteProvider>
+          <LikeProvider>
+            <ReplyCountProvider>
+              <BrowserRouter>
+                {/* 최상단 공통 Navbar */}
+                <Navbar />
+                <AppRoutes />
+              </BrowserRouter>
+            </ReplyCountProvider>
+          </LikeProvider>
+        </DeleteProvider>
+      </FavoriteProvider>
     </AuthProvider>
+
   );
 }
 
@@ -81,7 +87,7 @@ function AppRoutes() {
       <Route path="/" element={<Homepage />} />
       <Route path="signup" element={<SignUp />} />
       <Route path='signin' element={<SignIn />} />
-      <Route path='favorite' element={<Favorite />} />
+      <Route path='mypage' element={<Mypage />} />
 
       {/* Ticket 전용 레이아웃 */}
       <Route path="ticket" element={<TicketLayout />}>
@@ -101,7 +107,10 @@ function AppRoutes() {
         {/* 권한에 따른 접근 제한 예시 */}
         <Route path="posting" element=
           {<ProtectedRoute member={member} allowedRoles={['ADMIN', 'MEMBER']}><PostWrite /></ProtectedRoute>} />
+
         <Route path="reviewBoard/posts/:no" element={<><PostDetailPage /></>} /> {/* PostDetailPage -- Review 컴포넌트들 동적 연결 */}
+        <Route path="freeBoard/posts/:no" element={<><PostDetailPage /></>} /> {/* PostDetailPage -- Review 컴포넌트들 동적 연결 */}
+        <Route path="comHome/posts/:no" element={<><PostDetailPage /></>} /> {/* PostDetailPage -- Review 컴포넌트들 동적 연결 */}
       </Route>
     </Routes>
   );

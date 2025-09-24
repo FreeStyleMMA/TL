@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tl.dto.MyRepliesResponse;
 import com.tl.dto.ReplyDto;
-import com.tl.dto.ReplyRequestDto;
 import com.tl.mapper.ReplyMapper;
 
 import lombok.Setter;
@@ -27,10 +27,13 @@ public class ReplyServiceImpl implements ReplyService {
 		return mapper.read(originNo);
 	}
 
-	public void delete(ReplyRequestDto request) {
-		mapper.delete(request);
+	public void delete(Long no, Long originNo) {
+		mapper.delete(no,originNo);
 	}
 	public int getTotalReplys( Long originNo) {
 		return mapper.getTotalReplys(originNo);
+	}
+	public ArrayList<MyRepliesResponse> getMyReplies(String memberId){
+		return mapper.getMyReplies(memberId);
 	}
 }

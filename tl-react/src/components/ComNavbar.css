@@ -9,10 +9,13 @@
   border-top: 0.5px solid rgb(201, 201, 201);
   border-bottom: 1px solid black;
   margin-bottom: 15px;
+  color: black;
+
 }
 
-#nav_text {
-  font-size: 15px;
+.nav_text {
   color: black;
+  font-weight: 400;
   text-decoration: none;
+  font-size: 19px;
 }

@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import './PostWrite.css';
 import { useAuth } from "../auth/AuthContext";
+import { useNavigate } from 'react-router-dom';
 
 export default function PostWrite() {
   const [category, setCategory] = useState("reviewBoard");
@@ -10,7 +11,6 @@ export default function PostWrite() {
   const [memberId, setMemberId] = useState("");
   const [media, setMedia] = useState("");
   const [preview, setPreview] = useState(null);
-
 
   const handleMediaChange = (e) => {
     const file = e.target.files[0];
@@ -37,19 +37,20 @@ export default function PostWrite() {
       memberId,
       //date,날짜는 DB나 서버에서.
     })], { type: "application/json" }));
-
-    formData.append("media", media);
-
-    const response = await axios.post('http://localhost:8080/post/write', formData)
-      .then(response => {
-        console.log("업로드 성공", formData);
-      })
-      .catch(error => {
-        console.error("업로드 실패", error);
-      })
+    if (media && media.size > 0) {
+      formData.append("media", media);
+    }
+    try {
+      const response = await axios.post('http://localhost:8080/post/write', formData)
+      console.log(response.data, formData);
+    }
+    catch (error) {
+      console.error("업로드 실패", error);
+    }
     console.log(formData.get("post")); // Blob 확인
     console.log(formData.get("media")); // File 확인
 
+    window.history.back();
   }
 
   return (

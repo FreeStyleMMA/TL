@@ -1,0 +1,56 @@
+#replyLayout {}
+
+.reply_container {
+  display: flex;
+  flex-direction: flex-end;
+  margin-bottom: 18px;
+}
+
+.reply_left {
+  width: 600px
+}
+
+.reply_top {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.memberId {
+  font-size: 14px;
+  font-weight: 550;
+}
+
+.date {
+  font-size: 12px;
+}
+
+.reply_mid {
+  margin-bottom: 15px;
+}
+
+.text {
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.delete_box {
+  background-color: white;
+  width: 60px;
+  font-size: 12px;
+  font-weight: 300;
+  border-radius: 5px;
+  border: 0.3px solid gray;
+  align-items: center;
+}
+
+.trashbin {
+  width: 18px;
+  height: 18px;
+}
+
+.reply_right {
+  /* margin-top: auto;
+  margin-bottom: 15px; */
+  margin: 10px 0 0px 60px;
+}

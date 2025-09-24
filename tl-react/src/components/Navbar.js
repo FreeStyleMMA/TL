@@ -14,11 +14,11 @@ function Navbar() {
           {member ? (
             <>
               <button onClick={signOut}>&nbsp;로그아웃&nbsp;</button>
-              <Link to="../favorite" > &nbsp;마이페이지&nbsp;</Link> {/*찐 장바구니로 수정해야함*/}
+              <Link to="../mypage" > &nbsp;마이페이지&nbsp;</Link> {/*찐 장바구니로 수정해야함*/}
             </>) : (
             <>
-              <Link to="../signin">&nbsp;로그인&nbsp;|</Link>
-              <Link to="../signup" > &nbsp;회원가입&nbsp;|</Link>
+              <Link to="../signin" className='top_text'>| &nbsp;로그인&nbsp; |</Link>
+              <Link to="../signup" className='top_text'>  &nbsp;회원가입&nbsp; |</Link>
             </>
           )}
         </div>
@@ -28,8 +28,8 @@ function Navbar() {
       <div id='body'>
         <Link id='homepage_name' to='/'>TL</Link>
         <div id='bodyMid'>
-          <Link id='body_text' to='/community'>커뮤니티</Link>
-          <Link id='body_text' to='/ticket'>공연/전시</Link>
+          <Link className='body_text' to='/community'>커뮤니티</Link>
+          <Link className='body_text' to='/ticket'>공연/전시</Link>
         </div>
         <hr />
       </div>

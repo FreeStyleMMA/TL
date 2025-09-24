@@ -1,20 +1,56 @@
-  #post {
-    width: 750px;
-    height: 525px;
-    background-color: white;
-    border-top: 1px solid gray;
-    border-bottom: 1px solid gray;
+  #pageLayout {
+    display: flex;
+    flex-direction: column;
     margin: 50px 0px 0px 270px;
   }
 
-  #post_profile {
+  #postLayout {
+    height: auto;
+    background-color: white;
     display: flex;
-    align-items: center;
-    /* 세로 중앙 정렬 */
-    gap: 12px;
-    /* 이미지와 텍스트 사이 간격 */
-    margin: 10px 0px 0px 10px;
+    flex-direction: column;
+    /* margin-bottom: 5px; */
+    border-bottom: 1px grey;
   }
+
+  #post_head {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  #post_writer {
+    font-size: 17px;
+    font-weight: 500;
+  }
+
+
+  #post_date {
+    font-weight: 350;
+    font-size: 14px;
+  }
+
+  #ph_1 {
+    display: flex;
+    gap: 30px;
+    font-size: 15px;
+    margin-bottom: 15px;
+  }
+
+  #post_title {
+    width: 500px;
+    font-size: 23px;
+    font-weight: 500;
+    margin: 15px 0px 15px 0px;
+
+  }
+
+  #post_body {
+    margin-bottom: 10px;
+  }
+
+
 
   .p_i {
     width: 20px;
@@ -51,4 +87,19 @@
     height: 400px;
     margin: 10px 0px 0px 0px;
     border-radius: 10px;
+  }
+
+  #react {
+    display: flex;
+    gap: 5px;
+  }
+
+  .re {
+    margin-top: 50px;
+    background-color: white;
+    border: 0.5px solid grey;
+    height: 25px;
+    width: 55px;
+    color: grey;
+    gap: 5px
   }

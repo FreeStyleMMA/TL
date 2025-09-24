@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import './PostWrite.css';
+import './ReplyWrite.css';
 import { useAuth } from "../auth/AuthContext";
 import { useParams } from "react-router-dom";
+import './reset.css';
 
 export default function ReplyWrite({ onReplyAdded }) { // onReplyAdded로 PostDetailPage에 댓글 추가 알림 세팅
   const [content, setContent] = useState("");
@@ -37,11 +38,11 @@ export default function ReplyWrite({ onReplyAdded }) { // onReplyAdded로 PostDe
 
   return (
     <div>
-      <form className='postLayout'  >
-        <h3>댓글작성</h3><br />
-        작성자 id:{memberId}
-        <textarea className='textBox' value={content} placeholder='내용을 입력하세요' onChange={(e) => setContent(e.target.value)}
-          style={{ width: 700, height: 50 }} />
+      <form className='Layout'  >
+        {/* <h3>댓글작성</h3><br /> */}
+        {/* 작성자 id:{memberId} */}
+        <textarea className='textBox' value={content} placeholder='댓글에 참여해보세요!' onChange={(e) => setContent(e.target.value)}
+        />
         <button value={onReplyAdded} className='submitButton' onClick={handleReply}>댓글달기</button>
       </form>
     </div >
