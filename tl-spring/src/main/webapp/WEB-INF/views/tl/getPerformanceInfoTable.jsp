@@ -32,15 +32,15 @@
 		<tbody>
 			<c:forEach var="info" items="${performanceInfoList}">
 				<tr>
-					<td>${info.per_title}</td>
-					<td>${info.per_startD}~${info.per_endD}</td>
-					<td>${info.per_peace}</td>
-					<td>${info.per_runT}</td>
-					<td>${info.per_sche}</td>
-					<td>${info.per_genre}</td>
-					<td><img src="${info.per_poster}"
+					<td>${info.perTitle}</td>
+					<td>${info.perStartD}~${info.perEndD}</td>
+					<td>${info.perPlace}</td>
+					<td>${info.perRunT}</td>
+					<td>${info.perSche}</td>
+					<td>${info.perGenre}</td>
+					<td><img src="${info.perPoster}"
 						style="width: 100px; height: 120px"></td>
-					<td><c:forEach var="ticket" items="${info.per_ticket}">
+					<td><c:forEach var="ticket" items="${info.perTicket}">
 							<a href="${ticket.url}" target="_blank">${ticket.name}</a>
 							<br />
 						</c:forEach></td>

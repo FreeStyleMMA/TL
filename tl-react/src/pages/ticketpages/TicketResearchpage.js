@@ -71,11 +71,11 @@ export default function TicketResearchpage() {
                 style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
               >
                 <img
-                  alt={performanceInfo.per_title}
+                  alt={performanceInfo.perTitle}
                   style={{ width: "100px", height: "120px" }}
-                  src={performanceInfo.per_poster}
+                  src={performanceInfo.perPoster}
                 />
-                <h6>{performanceInfo.per_title}</h6>
+                <h6>{performanceInfo.perTitle}</h6>
               </Link>
             </div>
           ))}

@@ -32,65 +32,64 @@ public class PerformanceInfoProcessor {
 	private ArrayList<PerformancePeaceDto> performancePeaceList = new ArrayList<PerformancePeaceDto>(); // 공연장 상세 정보
 	private PerformanceStatusListDto performanceStatusList = new PerformanceStatusListDto();
 	public ArrayList<PerformanceInfoDto> performanceInfoList = new ArrayList<PerformanceInfoDto>(); // 사용할 것만 정리한 공연 상세
-																								// 정보
+	// 정보
 
 	public PerformanceInfoProcessor(PerformanceRequestDto prd) { // 생성자 함수
 		setPerformanceList(prd);
 		setPerformanceDetailList(prd);
 		setPerformancePeaceList(performanceDetailList);
 
-		if(isBoxOfficeRequest(prd)) { // 공연, 랭킹 요청일 때
-			setPerformanceInfo(performanceDetailList, performancePeaceList, performanceStatusList.getBoxof());			
-		} else {			
-			setPerformanceInfo(performanceDetailList, performancePeaceList);
+		if (isBoxOfficeRequest(prd)) { // 공연, 랭킹 요청일 때
+			setPerformanceInfo(performanceDetailList, performancePeaceList, performanceStatusList.getBoxof(), prd);
+		} else {
+			setPerformanceInfo(performanceDetailList, performancePeaceList, prd);
 		}
 	}
 
 	// kopis에서 공연 목록 api 받아오는 함수
 	private void setPerformanceList(PerformanceRequestDto prd) {
-		// restTemplate은 spring에서 제공하는 http와의 통신 도구
 		RestTemplate restTemplate = new RestTemplate();
-		// 한글 깨짐 방지를 위한 UTF-8 교체
 		restTemplate.getMessageConverters().add(0, new StringHttpMessageConverter(StandardCharsets.UTF_8));
-		XmlMapper xmlMapper = new XmlMapper(); // 데이터가 XML데이터기 때문에 xmlmapper 사용
+		XmlMapper xmlMapper = new XmlMapper();
 
 		try {
 			Thread.sleep(110); // 0.11초 지연
-			log.info(prd.requestType);
+			log.info(prd.getPerRequestT());
+
 			// 추천, 랭킹 공연 목록을 요청 받았을 때
-			if (isBoxOfficeRequest(prd)) { // 공연, 랭킹 요청일 때
-				String API_URL = String.format( // apiKey, prd 사용해서 api url 생성
-						"http://kopis.or.kr/openApi/restful/boxoffice?service=%s&stdate=%s&eddate=%s&catecode=%s", apiKey,
-						prd.startdate, prd.enddate, prd.shcate);
+			if (isBoxOfficeRequest(prd)) {
+				String API_URL = String.format(
+						"http://kopis.or.kr/openApi/restful/boxoffice?service=%s&stdate=%s&eddate=%s&catecode=%s",
+						apiKey, prd.getStartdate(), prd.getEnddate(), prd.getShcate());
 				String xmlResponse = restTemplate.getForObject(API_URL, String.class);
-				//전체 리스트 받아오기
 				PerformanceStatusListDto temp = xmlMapper.readValue(xmlResponse, PerformanceStatusListDto.class);
-				// 랭킹 공연 목록일 때만 섞기
-				if (prd.requestType.equals("recommend")) {
-		            Collections.shuffle(temp.getBoxof());
-		        }
-				// cpage, rows 값을 계산해서 요청한만큼 performanceStatusList에 저장
-				if (temp != null && temp.getBoxof() != null && prd.cpage != null && prd.rows != null) {
-					int start = (Integer.parseInt(prd.cpage) - 1)*Integer.parseInt(prd.rows);
-					int limit = Math.min(start + Integer.parseInt(prd.rows), temp.getBoxof().size());
-					log.info(start +"---"+ limit);
-					performanceStatusList.getBoxof().clear(); // 기존 데이터 초기화
+				// 추천 공연 일때 배열 무작위로 섞기
+				if ("recommend".equals(prd.getPerRequestT())) {
+					Collections.shuffle(temp.getBoxof());
+				}
+				// 공연 시작 인덱스, 가져올 개수 정하기
+				if (temp != null && temp.getBoxof() != null && prd.getCpage() != null && prd.getRows() != null) {
+					int start = (Integer.parseInt(prd.getCpage()) - 1) * Integer.parseInt(prd.getRows());
+					int limit = Math.min(start + Integer.parseInt(prd.getRows()), temp.getBoxof().size());
+
+					performanceStatusList.getBoxof().clear();
 					performanceStatusList.getBoxof().addAll(temp.getBoxof().subList(start, limit));
 				}
 			} else { // 이외 공연 목록
-				String API_URL = String.format( // apiKey, prd 사용해서 api url 생성
+				String API_URL = String.format(
 						"http://kopis.or.kr/openApi/restful/pblprfr?service=%s&stdate=%s&eddate=%s&cpage=%s&"
 								+ "rows=%s&shprfnm=%s&shprfnmfct=%s&shcate=%s&prfplccd=%s&"
 								+ "signgucode=%s&signgucodesub=%s&kidstate=%s&prfstate=%s&openrun=%s&afterdate=%s",
-						apiKey, prd.startdate, prd.enddate, prd.cpage, prd.rows, prd.shprfnm, prd.shprfnmfct,
-						prd.shcate, prd.prfplccd, prd.signgucode, prd.signgucodesub, prd.kidstate, prd.prfstate,
-						prd.openrun, prd.afterdate);
+						apiKey, prd.getStartdate(), prd.getEnddate(), prd.getCpage(), prd.getRows(), prd.getShprfnm(),
+						prd.getShprfnmfct(), prd.getShcate(), prd.getPrfplccd(), prd.getSigngucode(),
+						prd.getSigngucodesub(), prd.getKidstate(), prd.getPrfstate(), prd.getOpenrun(),
+						prd.getAfterdate());
 
 				String xmlResponse = restTemplate.getForObject(API_URL, String.class);
 				performanceList = xmlMapper.readValue(xmlResponse, PerformanceListDto.class);
 			}
 
-		} catch (Exception e) { // 예외 처리
+		} catch (Exception e) {
 			e.printStackTrace();
 			log.info("setPerformanceList 실패");
 		}
@@ -185,21 +184,24 @@ public class PerformanceInfoProcessor {
 			}
 		}
 	}
+
 	// 받아온 공연 상세 정보 api 정리
 	private void setPerformanceInfo(ArrayList<PerformanceDetailDto> detailList,
-			ArrayList<PerformancePeaceDto> peaceList) {
+			ArrayList<PerformancePeaceDto> peaceList, PerformanceRequestDto prd) {
 		int size = Math.min(detailList.size(), peaceList.size()); // 두 리스트 중 작은 크기까지만 반복
 
 		for (int i = 0; i < size; i++) {
 			PerformanceDetailDto detail = detailList.get(i);
 			PerformancePeaceDto peace = peaceList.get(i);
 
-			performanceInfoList.add(new PerformanceInfoDto(detail, peace));
+			performanceInfoList.add(new PerformanceInfoDto(detail, peace, prd));
 		}
 	}
+
 	// 받아온 공연 상세 정보 api 정리
 	private void setPerformanceInfo(ArrayList<PerformanceDetailDto> detailList,
-			ArrayList<PerformancePeaceDto> peaceList, List<PerformanceStatusDto> statusList) {
+			ArrayList<PerformancePeaceDto> peaceList, List<PerformanceStatusDto> statusList,
+			PerformanceRequestDto prd) {
 		// 세 리스트 중 작은 크기까지만 반복
 		int size = Math.min(detailList.size(), Math.min(peaceList.size(), statusList.size()));
 
@@ -207,14 +209,16 @@ public class PerformanceInfoProcessor {
 			PerformanceDetailDto detail = detailList.get(i);
 			PerformancePeaceDto peace = peaceList.get(i);
 			PerformanceStatusDto status = statusList.get(i);
-			
-			performanceInfoList.add(new PerformanceInfoDto(detail, peace, status));
+
+			performanceInfoList.add(new PerformanceInfoDto(detail, peace, status, prd));
 		}
 	}
+
 	// 추천, 랭킹 공연 요청인지 확인
 	private boolean isBoxOfficeRequest(PerformanceRequestDto prd) {
-	    return "recommend".equals(prd.requestType) || "rank".equals(prd.requestType);
+		return "recommend".equals(prd.getPerRequestT()) || "rank".equals(prd.getPerRequestT());
 	}
+
 	// getter
 	public PerformanceListDto getPerformanceList() {
 		return performanceList;

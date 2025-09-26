@@ -9,11 +9,6 @@
 <title>Home</title>
 </head>
 <body>
-<<<<<<< HEAD
-<h1>
-Theatre Link Project!!
-</h1>
-=======
 	<h1>Kopis api</h1>
 	<hr>
 	<h2>공연 목록 보기</h2>
@@ -89,9 +84,6 @@ GGGA 뮤지컬
 36 세종특별자치시   3611 세종특별자치시
 41 경기도           4111 경기도 수원시 장안구
                     4114 경기도 수원시 권선구
->>>>>>> feature/KopisApi
-
-
 </pre>
 </body>
 </html>

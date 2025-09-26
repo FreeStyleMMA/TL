@@ -16,6 +16,7 @@ import com.tl.dto.PerformancePeaceDto;
 import com.tl.dto.PerformanceRequestDto;
 import com.tl.dto.PerformanceStatusListDto;
 import com.tl.service.ApiService;
+import com.tl.service.TicketService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -28,23 +29,34 @@ import lombok.extern.log4j.Log4j;
 public class ApiController {
 
 	ApiService service;
-
-	// 호출 시 getPerformanceInfo.jsp로 이동(api 정보 테스트용)
-	@RequestMapping("/getPerformanceInfoTable")
-	public String getPerformanceInfoTable(PerformanceRequestDto requestDto, Model model) {
-		// performanceInfoList 전달
-		model.addAttribute("performanceInfoList", service.getPIP(requestDto).performanceInfoList);
-
-		return "tl/getPerformanceInfoTable";
-	}
+	TicketService dbService;
+	
 
 	// 호출 시 PerformanceInfoProcessor 반환(실제 사용할 반환용)
 	@GetMapping(value = "/getPerformanceInfo", produces = "application/json")
 	@ResponseBody
 	// react의 매개변수 요청을 자동으로 바꿔주기 위해 ModelAttribute 사용
 	public ArrayList<PerformanceInfoDto> getPerformanceInfo(@ModelAttribute PerformanceRequestDto requestDto) {
-		log.info("getPerformanceInfo 실행");
-		return service.getPIP(requestDto).performanceInfoList; // performanceInfoList만 가져오기
+		ArrayList<PerformanceInfoDto> pfmList = new ArrayList<PerformanceInfoDto>();
+		// db에서 찾아보고 조건에 부합하는 데이터가 없거나 부족할 시 api에서 호출 받아오기
+		pfmList = dbService.getPerformance(requestDto);
+		if(pfmList.size() < Integer.parseInt(requestDto.getRows())) {			
+			log.info("api 받아오기");
+			pfmList = service.getPIP(requestDto).performanceInfoList;
+			dbService.addPerformance(pfmList);			
+		} else {
+			log.info("db에서 받아오기");			
+		}
+		return pfmList;
+	}
+
+	// 호출 시 getPerformanceInfo.jsp로 이동(api 정보 테스트용)
+	@RequestMapping("/getPerformanceInfoTable")
+	public String getPerformanceInfoTable(PerformanceRequestDto requestDto, Model model) {
+		// performanceInfoList 전달
+		model.addAttribute("performanceInfoList", service.getPIP(requestDto).performanceInfoList);
+		
+		return "tl/getPerformanceInfoTable";
 	}
 	
 	// 테스트용(performanceList 출력)
@@ -79,4 +91,6 @@ public class ApiController {
 		log.info("getPerformanceStatusList 실행");
 		return service.getPIP(requestDto).getPerformanceStatusList(); // performanceStatusList만 가져오기
 	}
+	
+	
 }

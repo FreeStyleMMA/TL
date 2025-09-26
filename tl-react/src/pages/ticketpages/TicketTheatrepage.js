@@ -125,10 +125,10 @@ export default function TicketTheatrepage() { // 연극 페이지 (장르 코드
             <Link to="/ticket/info" state={{ performanceInfo }} // 공연 상세 정보 페이지로 이동
               style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
             >
-              <img alt={performanceInfo.per_title} src={performanceInfo.per_poster} //공연 포스터
+              <img alt={performanceInfo.perTitle} src={performanceInfo.perPoster} //공연 포스터
                 style={{ width: "100px", height: "120px" }}
               />
-              <h6>{performanceInfo.per_title}</h6> {/* 공연 제목 */}
+              <h6>{performanceInfo.perTitle}</h6> {/* 공연 제목 */}
             </Link>
           </div>
         ))}
