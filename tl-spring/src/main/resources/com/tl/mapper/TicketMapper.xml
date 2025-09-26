@@ -72,7 +72,21 @@
 	<!-- 조건과 일치하는 공연 데이터 반환 -->
 	<select id="getPerformance"
 		parameterType="com.tl.dto.PerformanceRequestDto" resultMap="PerformanceResultMap">
-		SELECT * FROM performance WHERE per_requestD = #{perRequestD}
+		SELECT * FROM performance     
+		<where>
+        <if test="perRequestD != null and perRequestD != ''">
+            per_requestD = #{perRequestD}
+        </if>
+        <if test="perRequestT != null and perRequestT != ''">
+            AND per_requestT = #{perRequestT}
+        </if>
+        <if test="shcate != null and shcate != ''">
+            AND per_genreC = #{shcate}
+        </if>
+        <if test="signgucode != null and signgucode != ''">
+            AND per_regionC = #{signgucode}
+        </if>
+    </where>
 	</select>
 	<!-- per_num이 일치하는 예매처 데이터 반환 -->
 	<select id="getTicket" parameterType="java.lang.Long" resultMap="TicketResultMap">
