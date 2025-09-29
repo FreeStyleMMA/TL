@@ -31,12 +31,12 @@ public class FavoriteController {
 	}
 	
 	@GetMapping("checkFavorite")// favorite테이블 liked 확인 (1 or 0)
-	public int checkFavorite(@RequestParam String memberId,@RequestParam Long per_id) {
+	public Integer checkFavorite(@RequestParam String memberId,@RequestParam Long per_id) {
 		return service.checkFavorite(memberId, per_id);
 	}
 	@GetMapping("getFavorite")
 	public ArrayList<FavoriteDTO> getFavorite(@RequestParam String memberId) {
-		return service.getFavorite(memberId);
+		return service.getFavoriteList(memberId);
 	}
 	
 }

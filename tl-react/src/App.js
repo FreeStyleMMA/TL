@@ -29,7 +29,7 @@ import { ReplyCountProvider } from "./context/ReplyCountContext";
 import { LikeProvider } from './context/LikeContext';
 import { DeleteProvider } from './context/DeleteContext';
 import { FavoriteProvider } from './context/FavoriteContext';
-
+export default function App() {
 // ticket 레이 아웃 적용
 function TicketLayout() {
   return (
@@ -54,7 +54,6 @@ function CommunityLayout() {
   );
 }
 
-export default function App() {
   return (
     <AuthProvider>
       <FavoriteProvider>
@@ -71,9 +70,8 @@ export default function App() {
         </DeleteProvider>
       </FavoriteProvider>
     </AuthProvider>
-
   );
-}
+
 
 //함수 호출을 위한 Route 페이지 분기
 function AppRoutes() {
@@ -116,4 +114,5 @@ function AppRoutes() {
   );
 
 
+}
 }

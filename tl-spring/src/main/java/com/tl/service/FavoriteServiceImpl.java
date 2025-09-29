@@ -16,21 +16,22 @@ public class FavoriteServiceImpl implements FavoriteService {
 	@Setter(onMethod_ = @Autowired)
 	public FavoriteMapper mapper;
 
-	public int checkFavorite(String memberId, Long per_id) {
+	public Integer checkFavorite(String memberId, Long per_id) {
 		return mapper.checkFavorite(memberId, per_id);
 	}
-
+	
 	public void handleFavorite(String memberId, Long per_id) {
-		FavoriteDTO existing = mapper.getFavorite(memberId, per_id);
+		Integer existing= mapper.checkFavorite(memberId, per_id);
+		
 		if (existing == null) {
 			mapper.addFavorite(memberId, per_id);
 		} else {
-			int newLiked = existing.liked == 0 ? 1 : 0;
-			mapper.checkFavorite(memberId, per_id, newLiked);
+			int newLiked = existing == 0 ? 1 : 0;
+			mapper.handleFavorite(memberId, per_id,newLiked);
 		}
 	}
 
-	public ArrayList<FavoriteDTO> getFavorite(String memberId) {
+	public ArrayList<FavoriteDTO> getFavoriteList(String memberId) {
 		return mapper.getFavorite(memberId);
 	}
 

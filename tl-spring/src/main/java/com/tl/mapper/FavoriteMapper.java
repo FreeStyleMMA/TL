@@ -10,5 +10,6 @@ public interface FavoriteMapper {
 
 	public void addFavorite(@Param("memberId")String memberId,@Param("per_id")Long per_id);
 	public ArrayList<FavoriteDTO> getFavorite(String memberId);
-	public int checkFavorite(@Param("memberId") String memberId,@Param("per_id")Long per_id);
+	public Integer checkFavorite(@Param("memberId") String memberId,@Param("per_id")Long per_id);
+	public void handleFavorite(@Param("memberId")String memberId,@Param("per_id")Long per_id,@Param("newLiked") int newLiked);
 }

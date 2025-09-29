@@ -5,13 +5,13 @@
 <mapper namespace="com.tl.mapper.FavoriteMapper">
 
 	<select id="checkFavorite" resultType="com.tl.dto.FavoriteDTO">
-		SELECT*FROM favorite where memberId=#{memberId} AND per_id=#{per_id}
+		SELECT liked from favorite where memberId=#{memberId} AND per_id=#{per_id}
 	</select>
 
-	<insert id="handleFavorite">
-		INSERT INTO favorite (memberId,per_id,liked)
-		VALUES(#{memberId},#{per_id},#{liked})
-	</insert>
+	<update id="handleFavorite">
+`	UPDATE favorite
+	SET liked=#{liked} where memberId=#{memberId} AND per_id=#{per_id}`
+	</update>
 	
 	<insert id="addFavorite">
 	INSERT INTO favorite (memberId,per_id,liked)

@@ -2,7 +2,7 @@ import SignIn from './SignIn';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 
-export default function SignInPage() {
+export default function Signinpage() {
   const nav = useNavigate();
   const location = useLocation();
   const { loginComplete } = useAuth();
@@ -22,4 +22,4 @@ export default function SignInPage() {
       <SignIn onSignIn={handleLogin} />
     </>
   )
-}''
+}
