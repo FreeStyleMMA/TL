@@ -42,7 +42,7 @@ public class PostController {
 // 	write는 post 객체 전체를 받아오기	
 	@PostMapping(value = "/write", consumes = MediaType.MULTIPART_FORM_DATA_VALUE )
 	public String write(@RequestPart("post") PostDto post, @RequestPart(value="media",required=false) MultipartFile media) throws Exception {
-		log.info("포스팅 요청 도착");
+		log.info("포스팅 요청 도착"+post);
 
 		if (media == null || media.isEmpty()) {
 			System.out.println("첨부 파일 없음");

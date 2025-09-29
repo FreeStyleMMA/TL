@@ -62,7 +62,7 @@ export default function Mypage() {
             <div id="info_image">  이미지 </div>
           </div>
           <div id="info_right">
-            <div id="info_name">이름 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {myInfo.memberName}</div>
+            <div id="info_name">회원 이름 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {myInfo.memberName}</div>
             <div id="info_date">가입일 &nbsp;{new Date(myInfo.createdAt).toLocaleDateString}</div>
           </div>
         </div>
@@ -71,25 +71,26 @@ export default function Mypage() {
 
           {myPosts.map(post =>
             <div className="m_post" key={post.no}>
-              <div className="m_post_title">·&nbsp;{post.title}</div>
-              {/* <div className="m_post_no">글번호{post.no}</div> */}
-              {/* <div className="m_post_date">작성일{new Date(post.createdAt).toLocaleDateString}</div> */}
+              <div className="m_post_title">·제목: &nbsp;{post.title}</div>
+              {/* <div className="m_post_no">글번호&nbsp;&nbsp;{post.no}</div> */}
+              <div className="m_post_date">작성일&nbsp;&nbsp;{new Date(post.createdAt).toLocaleDateString}</div>
             </div>
           )}
         </div>
-        <div id="m_reply">
+        <div id="reply_container">
           {myReplies.map(reply =>
-            <div id="m_reply" key={reply.originTitle}>
-              <div id="reply_content">내용{reply.content}</div>
-              <div id="replyt_no">원글제목{reply.originTitle}</div>
-              <div id="reply_date">작성일{new Date(reply.createdAt).toLocaleDateString}</div>
+            <div className="m_reply" key={reply.originTitle}>
+              <div className="reply_content">내용{reply.content}</div>
+              <div className="replyt_no">원글제목{reply.originTitle}</div>
+              <div className="reply_date">작성일{new Date(reply.createdAt).toLocaleDateString}</div>
             </div>
           )}
         </div>
+        
         <div id="m_favorite">
-          <div id="favorite_title">공연이름</div>
-          <div id="favorite_poster">공연포스터</div>
-          <div id="favorite_run_date">상영일자</div>
+          <div className="favorite_title">공연이름</div>
+          <div className="favorite_poster">공연포스터</div>
+          <div className="favorite_run_date">상영일자</div>
         </div>
       </div>
     </div>

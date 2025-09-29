@@ -19,6 +19,7 @@ L.Icon.Default.mergeOptions({
 export default function TicketInfopage() {
       const {handleFavorite} =useContext(FavoriteContext);
   const {member} = useAuth();
+
   
     const location = useLocation();
     const { performanceInfo } = location.state || {}; // 공연 상세 정보
@@ -43,7 +44,7 @@ export default function TicketInfopage() {
                         className="favorite"
                         type="button"
                         value="좋아요"
-                        onClick={() => handleFavorite(member.memberId, performanceInfo.per_id)}
+                        onClick={() => handleFavorite(member.memberId, performanceInfo.perId)}
                     />
                 </div>
 

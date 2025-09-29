@@ -58,8 +58,8 @@ export default function PostWrite() {
       <form className='postLayout' onSubmit={handlePost} >
         <label htmlFor='category'>카테고리</label>
         <select className='select' name='category' onChange={(e) => setCategory(e.target.value)}>
-          <option value='reviewBoard'>후기게시판</option>
-          <option value='freeBoard'>자유게시판</option>
+          <option value='reviewBoard'>리뷰</option>
+          <option value='freeBoard'>잡담</option>
         </select>
         작성자 id:{memberId}
         <input className='titleBox' value={title} placeholder='제목을 입력하세요' onChange={(e) => setTitle(e.target.value)} />

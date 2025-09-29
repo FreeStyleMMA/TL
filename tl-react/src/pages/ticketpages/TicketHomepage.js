@@ -1,14 +1,11 @@
-import { useEffect, useState,useContext } from "react";
+import { useEffect, useState , useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import './TicketHomePage.css';
-import { FavoriteContext } from "../../context/FavoriteContext";
-import {useAuth} from '../auth/AuthContext';
+import FavoriteContext from '../../context/FavoriteContext'
 
 export default function TicketHomepage() {
-  const {handleFavorite} =useContext(FavoriteContext);
-  const {member} = useAuth();
-
+  const {handleFavorite} = useContext(FavoriteContext);
+  
   const [performanceInfos, setPerformanceInfos] = useState([]);
   const [rankPerformanceInfos, setRankPerformanceInfos] = useState([]);
   const [recommendPerformanceInfos, setRecommendPerformanceInfos] = useState([]);
