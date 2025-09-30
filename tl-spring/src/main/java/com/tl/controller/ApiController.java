@@ -39,14 +39,9 @@ public class ApiController {
 	public ArrayList<PerformanceInfoDto> getPerformanceInfo(@ModelAttribute PerformanceRequestDto requestDto) {
 		ArrayList<PerformanceInfoDto> pfmList = new ArrayList<PerformanceInfoDto>();
 		// db에서 찾아보고 조건에 부합하는 데이터가 없거나 부족할 시 api에서 호출 받아오기
-		pfmList = dbService.getPerformance(requestDto);
-		if(pfmList.size() < Integer.parseInt(requestDto.getRows())) {			
-			log.info("api 받아오기");
 			pfmList = service.getPIP(requestDto).performanceInfoList;
-			dbService.addPerformance(pfmList);			
-		} else {
-			log.info("db에서 받아오기");			
-		}
+//			dbService.addPerformance(pfmList);	
+			log.info("api 받아온 데이터: "+pfmList);
 		return pfmList;
 	}
 

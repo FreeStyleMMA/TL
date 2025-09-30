@@ -26,13 +26,15 @@ public class FavoriteController {
 	public FavoriteService service;
 	
 	@PostMapping("handleFavorite")
-	public void handleFavorite(@RequestParam String memberId, @RequestParam Long per_id) {
-		service.handleFavorite(memberId,per_id);
+	public int handleFavorite(@RequestParam String memberId, @RequestParam String perId) {
+		log.info("핸들 요청 도착0");
+		service.handleFavorite(memberId,perId);
+		return service.checkFavorite(memberId,perId);
 	}
 	
 	@GetMapping("checkFavorite")// favorite테이블 liked 확인 (1 or 0)
-	public Integer checkFavorite(@RequestParam String memberId,@RequestParam Long per_id) {
-		return service.checkFavorite(memberId, per_id);
+	public Integer checkFavorite(@RequestParam String memberId,@RequestParam String perId) {
+		return service.checkFavorite(memberId, perId);
 	}
 	@GetMapping("getFavorite")
 	public ArrayList<FavoriteDTO> getFavorite(@RequestParam String memberId) {

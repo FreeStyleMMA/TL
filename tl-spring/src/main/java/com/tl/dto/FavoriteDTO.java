@@ -5,9 +5,13 @@ import lombok.Data;
 
 @Data
 public class FavoriteDTO {
-	public Long fav_id; // favorite 고유 key(no )
+	public Long favId; // favorite 고유 key(no )
 	public String memberId;
-	public Long per_id;
-	public Date create_at;
+	public String perId;
+	public String perTitle;
+	public String perPoster;
+	public String perStartD;
+	public String perEndD;
+	public Date createdAt;
 	public int liked; // 토글로 좋아요 상태 관리
 }

@@ -11,8 +11,8 @@
 	</insert>
 	
 	<resultMap id="ReplyDtoMap" type = "com.tl.dto.MyRepliesResponse">
-	<result property="no" column="no"/>
-	<result property="originNo" column="originNo"/>
+<!-- 	<RESULT PROPERTY="NO" COLUMN="NO"/> -->
+<!-- 	<RESULT PROPERTY="ORIGINNO" COLUMN="ORIGINNO"/> -->
 	<result property="content" column="content"/>
 	<result property="memberId" column="memberId"/>
 	<result property="createdAt" column="created_at"/>

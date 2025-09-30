@@ -14,6 +14,8 @@ export default function Mypage() {
   const [myInfo, setMyInfo] = useState({});
   const [myPosts, setMyPosts] = useState([]);
   const [myReplies, setMyReplies] = useState([]);
+  const [myFavorite, setMyFavorite] = useState([]);
+
 
 
   const getMyInfo = async () => {
@@ -43,6 +45,14 @@ export default function Mypage() {
 
     }
   }
+  const getMyFavorite = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/favorite/getFavorite?memberId=${member.memberId}`)
+      setMyFavorite(response.data); //[{content:oo , originTitle:00, createdAt:yyyy.mm.dd.time}] 의 ArrayList 형태. map으로
+    } catch (error) {
+
+    }
+  }
   useEffect(() => {
     getMyInfo();
     getMyPosts();
@@ -59,7 +69,7 @@ export default function Mypage() {
         <div id="m_info">
           <div id="info_left">
             <div id="info_title"> 내정보</div>
-            <div id="info_image">  이미지 </div>
+            <div id="info_image">  <img id='img' src='/images/grey.jpg' /> </div>
           </div>
           <div id="info_right">
             <div id="info_name">이름 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {myInfo.memberName}</div>
@@ -77,20 +87,25 @@ export default function Mypage() {
             </div>
           )}
         </div>
-        <div id="m_reply">
+        <div id="reply_container">
+          <div id="reply_name">내가 쓴 댓글</div>
           {myReplies.map(reply =>
             <div id="m_reply" key={reply.originTitle}>
-              <div id="reply_content">내용{reply.content}</div>
-              <div id="replyt_no">원글제목{reply.originTitle}</div>
-              <div id="reply_date">작성일{new Date(reply.createdAt).toLocaleDateString}</div>
+              <div id="reply_content">·&nbsp;내용&nbsp;&nbsp;&nbsp;{reply.content}</div>
+              <div id="reply_no">원글제목&nbsp;&nbsp;&nbsp;{reply.originTitle}</div>
+              {/* <div id="reply_date">작성일{new Date(reply.createdAt).toLocaleDateString}</div> */}
             </div>
           )}
         </div>
-        <div id="m_favorite">
-          <div id="favorite_title">공연이름</div>
-          <div id="favorite_poster">공연포스터</div>
-          <div id="favorite_run_date">상영일자</div>
-        </div>
+        {myFavorite.map(favorite =>
+          <div className="m_favorite" key={favorite.favId}>
+            <div className="favorite_title">공연이름{favorite.perTitle}</div>
+            <div className="favorite_poster">공연포스터<img alt={favorite.perTitle} src={favorite.perPoster} //공연 포스터
+              style={{ width: "100px", height: "120px" }}
+            /></div>
+            <div className="favorite_run_date">상영일자{favorite.perStartD}~{favorite.perEndD}</div>
+          </div>
+        )}
       </div>
     </div>
   )

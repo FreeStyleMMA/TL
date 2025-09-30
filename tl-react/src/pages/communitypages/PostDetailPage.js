@@ -62,7 +62,7 @@ export default function PostDetailPage() {
           <div id="post_title">{title}<br /></div>
         </div>
         <div id="post_body">
-          {media && <img class="post_img" src={`http://localhost:8080${media}`} alt="media" />}<br /><br />
+          {media && <img className="post_img" src={`http://localhost:8080${media}`} alt="media" />}<br /><br />
           <div id="post_content"> {content}</div>
         </div>
 

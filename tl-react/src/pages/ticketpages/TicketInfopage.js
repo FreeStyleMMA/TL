@@ -1,11 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import {useContext } from "react";
+import { useContext } from "react";
 
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { FavoriteContext } from "../../context/FavoriteContext";
-import {useAuth} from '../auth/AuthContext';
+import { useAuth } from '../auth/AuthContext';
 
 // 마커 아이콘 설정 (기본 아이콘이 깨질 수 있음)
 delete L.Icon.Default.prototype._getIconUrl;
@@ -17,9 +17,9 @@ L.Icon.Default.mergeOptions({
 });
 
 export default function TicketInfopage() {
-      const {handleFavorite} =useContext(FavoriteContext);
-  const {member} = useAuth();
-  
+    const { handleFavorite, liked } = useContext(FavoriteContext);
+    const { member } = useAuth();
+
     const location = useLocation();
     const { performanceInfo } = location.state || {}; // 공연 상세 정보
     console.log(performanceInfo.perLatitude);
@@ -36,15 +36,18 @@ export default function TicketInfopage() {
             <h4>공연 일정 : {performanceInfo.perSche}</h4>
             <h4>공연 장르 : {performanceInfo.perGenre}</h4>
             <h4>티켓 예약</h4>
+            <button
+                onClick={() => handleFavorite(member.memberId, performanceInfo.perId)}
+                id="re">
+                <img
+                    src={liked[performanceInfo.perId] === 1 ? "/images/like.png" : "/images/like_grey.png"}
+                    // alt={liked[performanceInfo.perId] ? "좋아요 취소" : "좋아요"}
+                    id="re_img" style={{ width: 50, height: 50 }}
+                />
+            </button>
             {performanceInfo.perTicket.map((ticket, idx) => (
                 <div key={idx}>
                     <input type="button" value={ticket.name} onClick={() => window.open(ticket.url, "_blank")} /> {/* 티켓 예약처 이름, 링크 */}
-                    <input
-                        className="favorite"
-                        type="button"
-                        value="좋아요"
-                        onClick={() => handleFavorite(member.memberId, performanceInfo.per_id)}
-                    />
                 </div>
 
             ))}

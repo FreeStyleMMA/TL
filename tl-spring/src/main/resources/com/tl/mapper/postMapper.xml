@@ -37,7 +37,7 @@
 	<select id="getFreeList" resultMap="postDtoMap">
 		SELECT * FROM post where
 		category='freeBoard'
-		ORDER BY date DESC LIMIT #{pageSize} OFFSET
+		ORDER BY created_at DESC LIMIT #{pageSize} OFFSET
 		#{offset}
 	</select>
 

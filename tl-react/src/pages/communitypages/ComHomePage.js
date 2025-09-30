@@ -31,6 +31,8 @@ export default function ComeHomePage() {
       const response = await axios.get("http://localhost:8080/post/getReviewList?no=0")
       const newPosts = Array.isArray(response.data) ? response.data : [];
       setMiddlePosts(newPosts);
+      setInitialReplies(newPosts);
+      setInitialLikes(newPosts);
     } catch (error) {
       console.log("comhomepage fetchMiddle", error);
 
@@ -99,10 +101,10 @@ export default function ComeHomePage() {
 
                 <div className="react">
                   <button onClick={() => handleLike(member.memberId, post.no)} className="re">
-                    좋아요 {totalLikes[post.no] ?? 0}
+                    <img src="/images/like.png" alt="댓글" className="re_img" /> {totalLikes[post.no] ?? 0}
                   </button>
-                  <div className="re">댓글 {totalReplies[post.no] ?? 0}</div>
-                  <div className="re">공유</div>
+                  <div className="re"><img src="/images/reply.png" alt="댓글" className="re_img" /> {totalReplies[post.no] ?? 0}</div>
+                  {/* <div className="re">공유</div> */}
                 </div>
               </div>
             ))}

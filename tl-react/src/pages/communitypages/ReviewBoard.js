@@ -121,7 +121,7 @@ export default function ReviewBoard() {
                     <img src="/images/like.png" alt="댓글" className="re_img" /> {totalLikes[post.no] ?? 0}
                   </button>
                   <div className="re"><img src="/images/reply.png" alt="댓글" className="re_img" /> {totalReplies[post.no] ?? 0}</div>
-                  <div className="re">공유</div>
+                  {/* <div className="re">공유</div> */}
                 </div>
               </div>
             ))}
