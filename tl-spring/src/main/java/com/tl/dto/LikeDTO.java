@@ -15,4 +15,5 @@ public class LikeDTO {
     private Long postNo;
     private int liked;
     private int totalLikes;
+    private String perId;
 }

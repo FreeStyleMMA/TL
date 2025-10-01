@@ -19,24 +19,24 @@ public class TicketServiceImpl implements TicketService {
 	@Setter(onMethod_ = @Autowired)
 	public TicketMapper mapper;
 
-	//api¿¡¼­ ¹Þ¾Æ¿Â °ø¿¬ µ¥ÀÌÅÍ db¿¡ ÀúÀå
+	//apiï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ dbï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@Override
 	public void addPerformance(ArrayList<PerformanceInfoDto> pfmInfo) {
-		// perId°ªÀ¸·Î ÀÏÄ¡ÇÏ´Â °ø¿¬ ÀÖ´ÂÁö È®ÀÎ ÈÄ ¾øÀ¸¸é db¿¡ ÀúÀå
+		// perIdï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ dbï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		for (PerformanceInfoDto info : pfmInfo) {
 			if (mapper.checkPerformance(info) == 0) {
-				// performance ÀúÀå(perNum »ý¼º)
+				// performance ï¿½ï¿½ï¿½ï¿½(perNum ï¿½ï¿½ï¿½ï¿½)
 				mapper.addPerformance(info);
-				// Æ¼ÄÏ¿¡ perNum ¼¼ÆÃ
+				// Æ¼ï¿½Ï¿ï¿½ perNum ï¿½ï¿½ï¿½ï¿½
 				if (info.getPerTicket() != null) {
 					for (TicketDto ticket : info.getPerTicket()) {
 						ticket.setPerNum(info.getPerNum());
 					}
-					// Æ¼ÄÏ ÀúÀå
+					// Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 					mapper.addTicket(info.getPerTicket());
 				}
 			} else {
-				log.info("ÀÌ¹Ì Á¸ÀçÇÏ´Â °ø¿¬");
+				log.info("ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			}
 		}
 	}
@@ -49,5 +49,9 @@ public class TicketServiceImpl implements TicketService {
 			info.setPerTicket(tickets);
 		}
 		return infos;
+	}
+	
+	public ArrayList<PerformanceInfoDto> getHomePerform(){
+		return mapper.getHomePerform();
 	}
 }

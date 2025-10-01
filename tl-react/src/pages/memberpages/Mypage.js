@@ -57,6 +57,7 @@ export default function Mypage() {
     getMyInfo();
     getMyPosts();
     getMyReplies();
+    getMyFavorite();
   }, []);
 
   return (
@@ -76,36 +77,46 @@ export default function Mypage() {
             <div id="info_date">가입일 &nbsp;{new Date(myInfo.createdAt).toLocaleDateString}</div>
           </div>
         </div>
+        <div id="favorite_container">
+          <div id="favorite_container_name">좋아요 공연 목록</div>
+          <div id="favorite_list">
+            {myFavorite.map(favorite =>
+              <div className="favorite_box" key={favorite.favId}>
+                <div className="favorite_poster"><img className="favorite_poster_img" alt={favorite.perTitle} src={favorite.perPoster} //공연 포스터
+                /></div>
+                <div className="favorite_contents">
+                  <div className="favorite_title">&nbsp;{favorite.perTitle}</div>
+                  <div className="favorite_run_date">
+                    &nbsp;&nbsp;{favorite.perStartD}&nbsp;~
+                    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{favorite.perEndD}</div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
         <div id="post_container">
           <div id="post_name">내가 쓴 글</div>
-
           {myPosts.map(post =>
-            <div className="m_post" key={post.no}>
-              <div className="m_post_title">·&nbsp;{post.title}</div>
+            <div className="my_post" key={post.no}>
+              <div className="my_post_title">·&nbsp;{post.title}</div>
               {/* <div className="m_post_no">글번호{post.no}</div> */}
               {/* <div className="m_post_date">작성일{new Date(post.createdAt).toLocaleDateString}</div> */}
             </div>
           )}
         </div>
+
         <div id="reply_container">
           <div id="reply_name">내가 쓴 댓글</div>
           {myReplies.map(reply =>
             <div id="m_reply" key={reply.originTitle}>
-              <div id="reply_content">·&nbsp;내용&nbsp;&nbsp;&nbsp;{reply.content}</div>
-              <div id="reply_no">원글제목&nbsp;&nbsp;&nbsp;{reply.originTitle}</div>
+              <div id="reply_origin">·&nbsp;{reply.originTitle}</div>
+              <div id="reply_content">-&nbsp;&nbsp;&nbsp;{reply.content}</div>
               {/* <div id="reply_date">작성일{new Date(reply.createdAt).toLocaleDateString}</div> */}
             </div>
           )}
         </div>
-        {myFavorite.map(favorite =>
-          <div className="m_favorite" key={favorite.favId}>
-            <div className="favorite_title">공연이름{favorite.perTitle}</div>
-            <div className="favorite_poster">공연포스터<img alt={favorite.perTitle} src={favorite.perPoster} //공연 포스터
-              style={{ width: "100px", height: "120px" }}
-            /></div>
-            <div className="favorite_run_date">상영일자{favorite.perStartD}~{favorite.perEndD}</div>
-          </div>
-        )}
+
       </div>
     </div>
   )

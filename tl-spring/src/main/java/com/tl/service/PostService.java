@@ -17,4 +17,5 @@ public interface PostService {
 	public int handleLike( LikeRequest request);
 	public int countLikes(Long postNo);	
 	public ArrayList<MyPostResponse> getMyPost(String memberId);
+	public ArrayList<PostDto> getHomePosts();
 }

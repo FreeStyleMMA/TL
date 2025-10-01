@@ -49,7 +49,6 @@ export default function ComeHomePage() {
       <div id="story">
 
         <div id="story_container">
-
           {topPosts.map(post =>
             <Link to={`./posts/${post.no}`} style={{ position: 'relative' }} key={post.no}>
               <div className="story_box">
@@ -66,7 +65,8 @@ export default function ComeHomePage() {
                     zIndex: 0
                   }}
                 />
-                <div className='story_box_link' style={{ position: 'relative', zIndex: 1, padding: 10 }}>
+                <div className='story_box_link'
+                  style={{ position: 'relative', zIndex: 1, padding: 10 }}>
                   <div className='story_box_title'>{post.title}</div>
                   <div className='story_box_content'>{post.content}</div>
                   {/* <div className='story_box_text'>{new Date(post.date).toLocaleDateString()}</div> */}
@@ -76,42 +76,57 @@ export default function ComeHomePage() {
           )}
         </div>
       </div>
+      <div id='mid'>
+        <div id='mid_left'>
 
-      <div id='postLayout'>
-        <div id="left">
-          <div id="posts">
-            {middlePosts.map(post => (
-
-              <div key={post.no} className="post">  <br />
-                <div className="post_profile">
-                  <img className="p_i" src="/images/grey.jpg" />
-                  <div className="p_n">{new Date(post.createdAt).toLocaleDateString()}</div>
-                  {/* <div id="p_b">커뮤니티 가입</div> */}
-                </div>
-                <Link
-                  to={`./posts/${post.no}`}
-                >
-                  <div className="post_title">
-                    <h3>{post.title}</h3>
+        </div>
+        <div id='mid_right'>
+          <div id='postLayout'>
+            <div id="comhome__post_box">
+              {middlePosts.map(post => (
+                <div key={post.no} className="comhome_post">  <br />
+                  <div className="comhome_post_profile">
+                    <img className="comhome_profile_image" src="/images/grey.jpg" />
+                    <div className="comhome_post_date">
+                      {new Date(post.createdAt).toLocaleDateString()}</div>
+                    {/* <div id="p_b">커뮤니티 가입</div> */}
                   </div>
-                  {/* <p>{post.content}</p> */}
-                  <br />
-                  {post.media && <img className="post_img" src={`http://localhost:8080${post.media}`} alt="media" />}
-                </Link>
+                  <Link className="comhome_post_title"
+                    to={`./posts/${post.no}`}
+                  >
+                    <div >
+                      <h3>{post.title}</h3>
+                    </div>
+                    {/* <p>{post.content}</p> */}
+                    <br />
+                    {post.media &&
+                      <img className="comhome_post_img"
+                        src={`http://localhost:8080${post.media}`}
+                        alt="media" />}
+                  </Link>
 
-                <div className="react">
-                  <button onClick={() => handleLike(member.memberId, post.no)} className="re">
-                    <img src="/images/like.png" alt="댓글" className="re_img" /> {totalLikes[post.no] ?? 0}
-                  </button>
-                  <div className="re"><img src="/images/reply.png" alt="댓글" className="re_img" /> {totalReplies[post.no] ?? 0}</div>
-                  {/* <div className="re">공유</div> */}
+                  <div className="comhome_react">
+                    <button onClick={() => handleLike(member.memberId, post.no)}
+                      className="comhome_re">
+                      <img src="/images/like.png"
+                        alt="댓글"
+                        className="comhome_re_img" />
+                      &nbsp;&nbsp;{totalLikes[post.no] ?? 0}
+                    </button>
+                    <div className="comhome_re">
+                      <img src="/images/reply.png"
+                        alt="댓글"
+                        className="comhome_re_img" />
+                      &nbsp;&nbsp;{totalReplies[post.no] ?? 0}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
-
       </div>
-    </div >
+
+    </div>
   );
 }

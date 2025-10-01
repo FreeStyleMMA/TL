@@ -32,8 +32,7 @@ import lombok.extern.log4j.Log4j;
 @RestController
 @Log4j
 @RequestMapping("/post/*")
-@CrossOrigin(value = "http://localhost:3000", allowCredentials = "true")
-
+@CrossOrigin(value = "http://localhost:3000")
 public class PostController {
 
 	@Setter(onMethod_ = @Autowired)
@@ -132,5 +131,9 @@ public class PostController {
 	@GetMapping("/getMyPost")
 	public ArrayList<MyPostResponse> getMyPost(@RequestParam String memberId) {
 		return service.getMyPost(memberId);
+	}
+	@GetMapping("/getHomePosts")
+	public ArrayList<PostDto> getHomePosts(){
+		return service.getHomePosts();
 	}
 }

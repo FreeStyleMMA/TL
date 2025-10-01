@@ -62,21 +62,34 @@ export default function PostDetailPage() {
           <div id="post_title">{title}<br /></div>
         </div>
         <div id="post_body">
-          {media && <img className="post_img" src={`http://localhost:8080${media}`} alt="media" />}<br /><br />
+          {media && <img className="post_img"
+            src={`http://localhost:8080${media}`}
+            alt="media" />}<br /><br />
           <div id="post_content"> {content}</div>
         </div>
 
-        <div id="react">
-          <button onClick={() => { handleLike(member.memberId, postNo) }} className="re">
-            <img src="/images/like.png" alt="삭제" className="trashbin" />
+        <div id="pdp_react">
+          <button onClick={() => { handleLike(member.memberId, postNo) }}
+            className="pdp_re">
+            <img src="/images/like.png"
+              alt="삭제"
+              className="pdp_re_img" />
             {totalLikes[postNo] ?? 0}
           </button>
-          <div className="re">
-            <img src="/images/reply.png" alt="삭제" className="trashbin" />
+          <div className="pdp_re">
+            <img src="/images/reply.png"
+              alt="삭제"
+              className="pdp_re_img" />
             {totalReplies[postNo] ?? 0}
           </div>
           {member.memberId === memberId ?
-            < button onClick={() => { handlePostDelete(postNo) }} className="re"> 게시물 삭제</button> : null}
+            < button onClick={() => { handlePostDelete(postNo) }}
+              className="pdp_re">
+              <img src="/images/trashbin.png"
+                alt="삭제"
+                className="pdp_re_img" />
+
+            </button> : null}
         </div>
         {/* {content}<br /> */}
       </div >

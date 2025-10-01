@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 public class MyRepliesResponse {
 	public String content;
-	public String memberId;
+//	public String memberId;
+	public String originTitle;
 	public Timestamp createdAt;	
 }

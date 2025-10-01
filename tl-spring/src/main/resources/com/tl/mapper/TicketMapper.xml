@@ -92,5 +92,11 @@
 	<select id="getTicket" parameterType="java.lang.Long" resultMap="TicketResultMap">
 		SELECT * FROM performance_ticket WHERE per_num = #{perNum}
 	</select>
-
+	<select id="getHomePerform" resultMap="PerformanceResultMap">
+	SELECT*FROM performance
+	ORDER BY per_startD DESC,
+	per_requestD DESC,
+	per_title ASC
+	LIMIT 5
+	</select>
 </mapper>

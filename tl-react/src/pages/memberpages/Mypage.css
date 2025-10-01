@@ -70,10 +70,75 @@
   padding-bottom: 10px;
 }
 
-#post_container {
+#favorite_container {
+  /* background-color: aqua; */
   border-bottom: 0.7px solid grey;
   width: 600px;
+  height: 300px;
+  display: flex;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+#favorite_container_name {
+  font-size: 20px;
+  font-weight: 500;
+  padding-top: 20px;
+}
+
+#favorite_list {
+  display: flex;
+}
+
+.favorite_box {
+  width: 170px;
   height: 200px;
+  /* display: flex; */
+  gap: 20px;
+}
+
+.favorite_poster {
+  border: 0.7px solid grey;
+  width: 130px;
+  align-items: center;
+  justify-items: center;
+}
+
+.favorite_poster_img {
+  align-items: center;
+  justify-items: center;
+  width: 130px;
+  height: 150px;
+}
+
+.favorite_contents {
+  margin-top: auto;
+  border: 0.7px solid grey;
+  width: 130px;
+  height: 57px;
+}
+
+.favorite_title {
+  margin-top: 3px;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 125px;
+}
+
+.favorite_run_date {
+  font-size: 14px;
+}
+
+#post_container {
+  /* background-color: aqua; */
+  border-bottom: 0.7px solid grey;
+  width: 600px;
+  height: 170px;
   /* display: flex; */
   gap: 20px;
 }
@@ -85,8 +150,16 @@
   padding-bottom: 10px;
 }
 
+.my_post_title {
+  width: 280;
+  font-size: 17px;
+  font-weight: 450;
+  margin-top: 5px;
+}
+
 #reply_container {
-  border-bottom: 0.7px solid grey;
+  /* background-color: brown; */
+  /* border-bottom: 0.7px solid grey; */
   width: 600px;
   height: 200px;
   /* display: flex; */
@@ -103,7 +176,15 @@
 }
 
 #m_reply {
-  display: flex
+  display: flex;
+  padding-top: 4px;
+}
+
+#reply_origin {
+  width: 250px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 #reply_content {
@@ -111,19 +192,4 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-
-#reply_no {
-  width: 250px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.m_favorite {
-  border-bottom: 0.7px solid grey;
-  width: 600px;
-  height: 300px;
-  /* display: flex; */
-  gap: 20px;
 }

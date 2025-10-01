@@ -11,7 +11,7 @@ import lombok.extern.log4j.Log4j;
 public class ApiServiceImpl implements ApiService{
 	
 	@Override
-	public PerformanceInfoProcessor getPIP(PerformanceRequestDto prd) { // °ø¿¬ Á¤º¸ ¹ÝÈ¯
+	public PerformanceInfoProcessor getPIP(PerformanceRequestDto prd) { // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
 		PerformanceInfoProcessor pip = new PerformanceInfoProcessor(prd); 
 			
 		return pip;

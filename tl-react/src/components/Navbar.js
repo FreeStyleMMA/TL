@@ -13,8 +13,8 @@ function Navbar() {
         <div className='nav_content'>
           {member ? (
             <>
-              <button onClick={signOut}>&nbsp;로그아웃&nbsp;</button>
-              <Link to="../mypage" > &nbsp;마이페이지&nbsp;</Link> {/*찐 장바구니로 수정해야함*/}
+              <button onClick={signOut} className='top_text'>| &nbsp;로그아웃&nbsp; |</button>
+              <Link to="../mypage" className='top_text' > &nbsp;마이페이지&nbsp;|</Link> {/*찐 장바구니로 수정해야함*/}
             </>) : (
             <>
               <Link to="../signin" className='top_text'>| &nbsp;로그인&nbsp; |</Link>
@@ -23,8 +23,6 @@ function Navbar() {
           )}
         </div>
       </div>
-      {/* nav body 홈페이지 로고 들어가고 커뮤니티/티켓 분기해주는 보통 아이콘 같은 
-    글씨로 관리되는 부분 >> 일단 링크는 달 걸어둠*/}
       <div id='body'>
         <Link id='homepage_name' to='/'>TL</Link>
         <div id='bodyMid'>

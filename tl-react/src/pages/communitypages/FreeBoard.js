@@ -49,8 +49,8 @@ export default function FreeBoard() {
 
   return (
     <div id="myLayout">
-      <div id="posting">
-        <Link id="posting_box" to='../posting'>글쓰기</Link>
+      <div id='posting_loc'>
+        <Link id="posting" to='../posting'>글쓰기</Link>
       </div>
       <div id="freeBoardNav">
         <div >번호</div>
@@ -96,8 +96,7 @@ export default function FreeBoard() {
             다음 &gt;
           </button>
         </div>
-
       </div >
-    </div >
+    </div>
   );
 }

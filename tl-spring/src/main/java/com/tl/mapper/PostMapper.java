@@ -24,4 +24,5 @@ public interface PostMapper {
 	public int addLike(LikeRequest request);
 	public int countLikes(Long postNo);
 	public ArrayList<MyPostResponse> getMyPost(String memberId);
+	public ArrayList<PostDto> getHomePosts();
 }

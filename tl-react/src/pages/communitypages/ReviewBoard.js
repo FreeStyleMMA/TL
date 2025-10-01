@@ -87,50 +87,65 @@ export default function ReviewBoard() {
 
   return (
     <div id="myLayout">
-
       <div id='postLayout'>
         <div id="left">
+          <></>
+        </div>
+        <div id="right">
           <div>
             <Link id="posting" to='../posting'>글쓰기</Link>
           </div>
           <div id="posts">
             {posts.map(post => (
 
-              <div key={post.no} className="post">  <br />
+              <div key={post.no} className="rb_post">  <br />
                 <div className="post_profile">
-                  <img className="profile_image" src="/images/grey.jpg" />
-                  <div className="p_writer">{post.memberId}</div>
-                  <div className="p_date">{new Date(post.createdAt).toLocaleDateString()}</div>
+                  <img
+                    className="profile_image"
+                    src="/images/grey.jpg" />
+                  <div className="p_writer">
+                    {post.memberId}
+                  </div>
+                  <div
+                    className="p_date">
+                    {new Date(post.createdAt).toLocaleDateString()}
+                  </div>
                   {/* <div id="p_b">커뮤니티 가입</div> */}
                 </div>
-                <Link
+                <Link className="p_title"
                   to={`./posts/${post.no}`}
                 >
-                  <div className="p_title">
+                  <div >
                     <h3>{post.title}</h3>
                   </div>
                   {/* <p>{post.content}</p> */}
                   <div className="image_box">
-                    {post.media && <img className="p_image" src={`http://localhost:8080${post.media}`} alt="media" />}
+                    {post.media &&
+                      <img className="p_image"
+                        src={`http://localhost:8080${post.media}`}
+                        alt="media" />}
                   </div>
 
                 </Link>
 
                 <div className="react">
                   <button onClick={() => handleLike(member.memberId, post.no)} className="re">
-                    <img src="/images/like.png" alt="댓글" className="re_img" /> {totalLikes[post.no] ?? 0}
+                    <img src="/images/like.png"
+                      alt="댓글" className="re_img" />
+                    {totalLikes[post.no] ?? 0}
                   </button>
-                  <div className="re"><img src="/images/reply.png" alt="댓글" className="re_img" /> {totalReplies[post.no] ?? 0}</div>
+                  <div className="re">
+                    <img src="/images/reply.png"
+                      alt="댓글"
+                      className="re_img" />
+                    {totalReplies[post.no] ?? 0}
+                  </div>
                   {/* <div className="re">공유</div> */}
                 </div>
               </div>
             ))}
           </div>
         </div>
-        <div className='review_right' >
-
-        </div>
-
       </div>
     </div >
   )

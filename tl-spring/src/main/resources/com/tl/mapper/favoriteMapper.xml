@@ -10,15 +10,23 @@
 
 	<update id="handleFavorite">
 `	UPDATE favorite
-	SET liked=#{newLiked} where memberId=#{memberId} AND per_id=#{perId}
+	SET liked=#{newLiked} 
+	where memberId=#{memberId} 
+	AND per_id=#{perId}
 	</update>
+	
+	<select id="countFavorite" resultType="int">
+	SELECT COUNT(*) 
+	FROM favorite 
+	WHERE memberId=#{memberId}
+	</select>
 	
 	<insert id="addFavorite">
 	INSERT INTO favorite (memberId,per_id,liked)
 			VALUES(#{memberId},#{perId},1)
 	</insert>
 	
-	<resultMap id="favoriteResultMap" type="com.tl.dto.FavoriteDTO">
+	<resultMap id="favoriteResultMap" type="com.tl.dto.FavoritePostDTO">
 	<result property = "favId" column="fav_id"/>
 	<result property = "memberId" column="memberId"/>
 	<result property = "perId" column="per_id"/>

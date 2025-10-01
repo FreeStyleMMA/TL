@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../auth/AuthContext';
+import './SignIn.css'
 
 export default function Login({ onSignIn }) {
   const location = useLocation();
@@ -36,16 +37,22 @@ export default function Login({ onSignIn }) {
   }
   return (
     <div>
-      <form className="pageLayout" onSubmit={handleLogin}>
-        <div>
-          ID:
-          <input className="loginBox" type="text" placeholder="id를 입력하세요" value={memberId} onChange={(e) => setMemberId(e.target.value)} />
+      <form id="myLayout" onSubmit={handleLogin}>
+        <div id="loginLayout">
+          <div>
+            <input id="id_box"
+              type="text"
+              placeholder="아이디"
+              value={memberId} onChange={(e) => setMemberId(e.target.value)} />
+          </div>
+          <div>
+            <input id="pw_box"
+              type="password"
+              placeholder="비밀번호"
+              value={memberPw} onChange={(e) => setMemberPw(e.target.value)} />
+          </div>
+          <button type="submit" id="login_button" >로그인</button>
         </div>
-        <div>
-          pw:
-          <input className="loginBox" type="password" placeholder="패스워드를 입력하세요" value={memberPw} onChange={(e) => setMemberPw(e.target.value)} />
-        </div>
-        <button type="submit" className="button" >로그인</button>
       </form>
     </div>
   )
