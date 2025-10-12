@@ -36,19 +36,21 @@ public class PostServiceImpl implements PostService {
 	}
 
 	// 페이지에 보여줄 리스트 처리
-	public ArrayList<PostDto> getFreeList( int currentPage) {
+	public ArrayList<PostDto> getFreeList(int currentPage) {
 		int offset = (currentPage - 1) * PAGE_SIZE_FREE;
-		return mapper.getFreeList( PAGE_SIZE_FREE, offset);
+		return mapper.getFreeList(PAGE_SIZE_FREE, offset);
 	}
 
 //	DB에서 총 게시물 갯수 받아오기
 	public int getTotalFreePosts() {
-		return  mapper.getTotalFreePosts();
-		
+		return mapper.getTotalFreePosts();
+
 	}
-	public ArrayList<PostDto> getComHomeTop(){
+
+	public ArrayList<PostDto> getComHomeTop() {
 		return mapper.getComHomeTop();
 	}
+
 //		
 	public PostDto read(@RequestParam Long no) {
 		return mapper.read(no);
@@ -72,11 +74,18 @@ public class PostServiceImpl implements PostService {
 			return newLiked;
 		}
 	}
-
+	
 	public int countLikes(Long postNo) {// 총 좋아요 갯수 select count(*) 구문으로 liked가 1인 갯수
 		return mapper.countLikes(postNo);
 	}
+	public LikeDTO getLike(String memberId, Long postNo) {
+		return mapper.getLike(memberId, postNo);
+	}
 	public ArrayList<MyPostResponse> getMyPost(String memberId) {
 		return mapper.getMyPost(memberId);
+	}
+
+	public ArrayList<PostDto> getHomePosts() {
+		return mapper.getHomePosts();
 	}
 }

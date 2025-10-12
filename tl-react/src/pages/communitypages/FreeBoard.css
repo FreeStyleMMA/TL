@@ -1,37 +1,28 @@
- #myLayout {
+ #free_my_layout {
    background-color: white;
-   margin-left: 200px;
-   margin-right: 200px;
+   padding-left: 200px;
+   padding-right: 200px;
    display: flex;
    flex-direction: column;
-
  }
+
+
 
  #posting {
-   display: inline-flex;
-   /* flex로 변경 */
-   justify-content: center;
-   /* 가로 중앙 */
-   align-items: center;
-   /* 세로 중앙 */
    width: 70px;
    height: 30px;
-   font-size: 20px;
-   /* 글자 크기 */
-   font-weight: 400;
-   /* 굵기 */
-   font-style: normal;
-   /* 기울임 없음 */
-   font-family: Arial, sans-serif;
-   /* 폰트 지정 */
-   color: black;
-   text-decoration: none;
    border: 0.5px solid black;
-   border-radius: 5px;
-   box-sizing: border-box;
+   border-radius: 10px;
+   text-decoration: none;
+   color: black;
+   text-align: center;
+   line-height: 30px;
+   font-size: 18px;
+   font-weight: 500;
+   float: right;
  }
 
- #freeBoardLayout {
+ #free_layout {
    display: flex;
    flex-direction: column;
    border: 1px solid #ccc;
@@ -40,14 +31,13 @@
 
  }
 
- #freeBoardNav {
+ #free_nav {
    display: grid;
    grid-template-columns: 80px 700px 120px 150px 100px 100px;
    font-weight: bold;
    padding: 10px 0;
    border-bottom: 2px solid #ccc;
    text-align: center;
-
  }
 
  #fb_nav_no {
@@ -62,7 +52,7 @@
  }
 
 
- .List {
+ .free_List {
    display: grid;
    grid-template-columns: 80px 700px 120px 150px 100px 100px;
    /* 번호, 제목, 작성자, 날짜, 좋아요, 댓글 */
@@ -82,6 +72,5 @@
 
  .free_title {
    text-align: left;
-
    font-weight: 500;
  }

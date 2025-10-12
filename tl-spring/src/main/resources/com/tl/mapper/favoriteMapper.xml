@@ -4,21 +4,53 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tl.mapper.FavoriteMapper">
 
-	<select id="checkFavorite" resultType="com.tl.dto.FavoriteDTO">
-		SELECT liked from favorite where memberId=#{memberId} AND per_id=#{per_id}
+	<select id="checkFavorite" resultType="java.lang.Integer">
+		SELECT liked from favorite where memberId=#{memberId} AND per_id=#{perId}
 	</select>
 
 	<update id="handleFavorite">
-`	UPDATE favorite
-	SET liked=#{liked} where memberId=#{memberId} AND per_id=#{per_id}`
+	UPDATE favorite
+	SET liked=#{newLiked} 
+	where memberId=#{memberId} 
+	AND per_id=#{perId}
 	</update>
+	
+	<select id="countFavorite" resultType="int">
+	SELECT COUNT(*) 
+	FROM favorite 
+	WHERE memberId=#{memberId}
+	</select>
 	
 	<insert id="addFavorite">
 	INSERT INTO favorite (memberId,per_id,liked)
-			VALUES(#{memberId},#{per_id},1)
+			VALUES(#{memberId},#{perId},1)
 	</insert>
 	
-	<select id="getFavorite" resultType = "com.tl.dto.FavoriteDTO">
-			SELECT*FROM favorite where memberId=#{memberId} AND liked=1
+	<resultMap id="favoriteResultMap" type="com.tl.dto.FavoritePostDTO">
+	<result property = "favId" column="fav_id"/>
+	<result property = "memberId" column="memberId"/>
+	<result property = "perId" column="per_id"/>
+	<result property = "perTitle" column="per_title"/>
+	<result property = "perPoster" column="per_poster"/>
+	<result property = "perStartD" column="per_startD"/>
+	<result property = "perEndD" column="per_endD"/>
+	<result property = "createdAt" column="created_at"/>
+	<result property = "liked" column="liked"/>
+	</resultMap>
+	
+	<select id="getFavorite" resultMap = "favoriteResultMap">
+			SELECT 
+			p.per_id		AS per_id,
+			p.per_title		AS per_title, 
+			p.per_poster	AS per_poster,
+			p.per_startD	AS per_startD,
+			p.per_endD		AS per_endD,
+			f.fav_id		AS fav_id,
+			f.memberId		AS memberId, 
+			f.liked			AS liked,
+			f.created_at 	AS created_at
+			FROM favorite f
+			JOIN performance p ON f.per_id = p.per_id
+			where f.memberId=#{memberId} AND liked=1
 	</select>
 </mapper>

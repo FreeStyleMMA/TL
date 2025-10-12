@@ -31,19 +31,21 @@ public class JwtFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		
-	
+		String cookieName="refreshToken";
 		// 요청 header의 쿠키에서 token 추출
-		String token = jwtUtil.getJwtFromCookie(request);
-		
+		String token = jwtUtil.extractTokenFromCookie(request,cookieName);
+//		System.out.println("Filter에 찍히는 token:"+token);
 		// token에서 memberId 추출
 		if(token != null) {
 			String memberId = jwtUtil.extractMemberId(token);
-			
+//			System.out.println("extractMEmberId 동ㅈ작 확인:"+memberId);
+
 			//memberId에 Authntication 세팅이 안되어있으면 userDetails 가져오기
 			if (memberId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 				UserDetails userDetails = userDetailsService.loadUserByUsername(memberId);
-				
-				if (jwtUtil.validateToken(token, userDetails)) {
+				System.out.println("Filter에 찍히는 userDetails:"+userDetails);
+
+				if (jwtUtil.validateToken(token)) {
 					UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken
 							(userDetails,null, userDetails.getAuthorities());
 					authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

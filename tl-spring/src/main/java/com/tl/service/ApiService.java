@@ -3,5 +3,5 @@ package com.tl.service;
 import com.tl.dto.PerformanceRequestDto;
 
 public interface ApiService {
-	public PerformanceInfoProcessor getPIP(PerformanceRequestDto prd); // °ø¿¬ Á¤º¸ ¹ÝÈ¯
+	public PerformanceInfoProcessor getPIP(PerformanceRequestDto prd); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
 }

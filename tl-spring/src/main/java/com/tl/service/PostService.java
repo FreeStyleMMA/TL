@@ -2,6 +2,7 @@ package com.tl.service;
 
 import java.util.ArrayList;
 
+import com.tl.dto.LikeDTO;
 import com.tl.dto.LikeRequest;
 import com.tl.dto.MyPostResponse;
 import com.tl.dto.PostDto;
@@ -16,5 +17,7 @@ public interface PostService {
 	public int getTotalFreePosts();
 	public int handleLike( LikeRequest request);
 	public int countLikes(Long postNo);	
+	public LikeDTO getLike(String memberId, Long postNo);
 	public ArrayList<MyPostResponse> getMyPost(String memberId);
+	public ArrayList<PostDto> getHomePosts();
 }

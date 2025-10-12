@@ -8,5 +8,6 @@ import lombok.Data;
 public class MyPostResponse {
 	public Long no;
 	public String title;
+	public String content;
 	public Timestamp createdAt;
 }

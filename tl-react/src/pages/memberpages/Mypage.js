@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../auth/AuthContext';
 import './Mypage.css';
-import '../reset.css';
+import './reset.css';
 
 
 export default function Mypage() {
@@ -14,6 +14,8 @@ export default function Mypage() {
   const [myInfo, setMyInfo] = useState({});
   const [myPosts, setMyPosts] = useState([]);
   const [myReplies, setMyReplies] = useState([]);
+  const [myFavorite, setMyFavorite] = useState([]);
+
 
 
   const getMyInfo = async () => {
@@ -43,54 +45,69 @@ export default function Mypage() {
 
     }
   }
+  const getMyFavorite = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/favorite/getFavorite?memberId=${member.memberId}`)
+      setMyFavorite(response.data); //[{content:oo , originTitle:00, createdAt:yyyy.mm.dd.time}] 의 ArrayList 형태. map으로
+      console.log(response.data)
+    } catch (error) {
+
+    }
+  }
   useEffect(() => {
     getMyInfo();
     getMyPosts();
     getMyReplies();
+    getMyFavorite();
   }, []);
 
   return (
     <div id="myLayout">
-      <div id="mypageLayout">
-
-        <div id="m_title">
-          <div id="title_layout"> 마이페이지</div>
-        </div>
-        <div id="m_info">
-          <div id="info_left">
-            <div id="info_title"> 내정보</div>
-            <div id="info_image">  이미지 </div>
-          </div>
-          <div id="info_right">
-            <div id="info_name">회원 이름 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {myInfo.memberName}</div>
-            <div id="info_date">가입일 &nbsp;{new Date(myInfo.createdAt).toLocaleDateString}</div>
+      <div id="my_top">
+      </div>
+      <div id="my_mid">
+        <div id="my_mid_left">
+          <div id="m_info_container">
+            <div id="info_name"> {myInfo.memberName}</div>
+            <div id="info_date">가입&nbsp; {new Date(myInfo.createdAt).toLocaleDateString()}</div>
           </div>
         </div>
-        <div id="post_container">
-          <div id="post_name">내가 쓴 글</div>
-
-          {myPosts.map(post =>
-            <div className="m_post" key={post.no}>
-              <div className="m_post_title">·제목: &nbsp;{post.title}</div>
-              {/* <div className="m_post_no">글번호&nbsp;&nbsp;{post.no}</div> */}
-              <div className="m_post_date">작성일&nbsp;&nbsp;{new Date(post.createdAt).toLocaleDateString}</div>
+        <div id="my_mid_right">
+          <div id="favorite_container">
+            <div className="my_container_name">나의 좋아요</div>
+            <div id="favorite_list">
+              {myFavorite.map(favorite =>
+                <div className="favorite_box" key={favorite.favId}>
+                  <div className="favorite_poster"><img className="favorite_poster_img" alt={favorite.perTitle} src={favorite.perPoster} //공연 포스터
+                  /></div>
+                  <div className="favorite_contents">
+                    <div className="favorite_title">&nbsp;{favorite.perTitle}</div>
+                    <div className="favorite_run_date">
+                      &nbsp;&nbsp;{favorite.perStartD}&nbsp;~
+                      <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;  {favorite.perEndD}</div>
+                  </div>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-        <div id="reply_container">
-          {myReplies.map(reply =>
-            <div className="m_reply" key={reply.originTitle}>
-              <div className="reply_content">내용{reply.content}</div>
-              <div className="replyt_no">원글제목{reply.originTitle}</div>
-              <div className="reply_date">작성일{new Date(reply.createdAt).toLocaleDateString}</div>
+          </div>
+          <div id="post_container">
+            <div id="post_container_name">내가 쓴 글</div>
+            <div id="post_title_layout">
+              <div id="post_top_date">작성일</div>
+              <div id="post_top_title">제목</div>
+              <div id="post_top_content">내용</div>
             </div>
-          )}
-        </div>
-        
-        <div id="m_favorite">
-          <div className="favorite_title">공연이름</div>
-          <div className="favorite_poster">공연포스터</div>
-          <div className="favorite_run_date">상영일자</div>
+            {myPosts.map(post =>
+              <div className="my_post_mid">
+                <div className="my_post_date">{new Date(post.createdAt).toLocaleDateString()}</div>
+                <div className="my_post" key={post.no} >
+                  <div className="my_post_title">·&nbsp;{post.title}</div>
+                  <div className="my_post_content">{post.content}</div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

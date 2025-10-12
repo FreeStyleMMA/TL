@@ -20,8 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.tl.dto.CountDTO;
 import com.tl.dto.FreeBoardResponse;
-import com.tl.dto.LikeDTO;
 import com.tl.dto.LikeRequest;
+import com.tl.dto.LikeResponse;
 import com.tl.dto.MyPostResponse;
 import com.tl.dto.PostDto;
 import com.tl.service.PostService;
@@ -32,8 +32,7 @@ import lombok.extern.log4j.Log4j;
 @RestController
 @Log4j
 @RequestMapping("/post/*")
-@CrossOrigin(value = "http://localhost:3000", allowCredentials = "true")
-
+@CrossOrigin(value = "http://localhost:3000")
 public class PostController {
 
 	@Setter(onMethod_ = @Autowired)
@@ -105,13 +104,16 @@ public class PostController {
 	}
 
 	@PostMapping("/handleLike")//좋아요 토글(1 or 0) 상태 관리
-	public LikeDTO handleLike(@RequestBody LikeRequest request) {
-		log.info("좋아요 요청 도착" + request);
+	public LikeResponse handleLike(@RequestBody LikeRequest request) {
 		int newLiked = service.handleLike(request);
 		int totalLikes = service.countLikes(request.getPostNo());
 
-		return LikeDTO.builder().memberId(request.getMemberId()).postNo(request.getPostNo()).liked(newLiked)
-				.totalLikes(totalLikes).build();
+		return LikeResponse.builder()
+				.memberId(request.getMemberId())
+				.postNo(request.getPostNo())
+				.liked(newLiked)
+				.totalLikes(totalLikes)
+				.build();
 	}
 
 	@GetMapping("/countLikes") // 좋아요 누른 이후 숫자 계산 (+1 or -1)
@@ -120,11 +122,16 @@ public class PostController {
 	}
 
 	@GetMapping("/initialLikes") //첫 마운팅 시 좋아요 초기값(count)반납.
-	public List<CountDTO> initialLikes(@RequestParam List<Long> postNos) {
+	public List<CountDTO> initialLikes(@RequestParam List<Long> postNos,@RequestParam String memberId) {
 		List<CountDTO> result = new ArrayList<>();
 		for (Long postNo : postNos) {
+			int liked = service.getLike(memberId,postNo).getLiked();
 			int count = service.countLikes(postNo);
-			result.add(CountDTO.builder().postNo(postNo).count(count).build());
+			result.add(CountDTO.builder()
+					.postNo(postNo)
+					.count(count)
+					.liked(liked)
+					.build());
 		}
 		return result;
 	}
@@ -132,5 +139,9 @@ public class PostController {
 	@GetMapping("/getMyPost")
 	public ArrayList<MyPostResponse> getMyPost(@RequestParam String memberId) {
 		return service.getMyPost(memberId);
+	}
+	@GetMapping("/getHomePosts")
+	public ArrayList<PostDto> getHomePosts(){
+		return service.getHomePosts();
 	}
 }

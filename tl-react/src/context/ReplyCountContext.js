@@ -24,7 +24,6 @@ export function ReplyCountProvider({ children }) {
     try {
       const response = await axios.get(`http://localhost:8080/reply/initialReplies?postNos=${postNos.join(",")}`)
       // response.data = [{ postNo: 1, totalLikes: 5 }, ...] 형태로 받아오기
-      console.log("initialCount 실행 되나", response.data)
       response.data.forEach(item => {
         initialReplies[item.postNo] = item.count;
       });

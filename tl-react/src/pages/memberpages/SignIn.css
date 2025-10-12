@@ -1,0 +1,65 @@
+#myLayout {
+  background-color: white;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#loginLayout {
+  padding-top: 150px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+#id_box {
+  font-size: 25px;
+  font-weight: 500;
+  height: 70px;
+  width: 400px;
+  border-radius: 15px;
+  border: 0.5px solid rgb(221, 221, 221);
+  margin-bottom: 15px;
+  padding-left: 25px;
+  /* ← 왼쪽 여백 */
+}
+
+#id_box::placeholder {
+  color: rgb(180, 180, 180);
+}
+
+#pw_box {
+  font-size: 35px;
+  height: 70px;
+  width: 400px;
+  border-radius: 15px;
+  border: 0.5px solid rgb(221, 221, 221);
+  justify-content: center;
+  padding-left: 25px;
+  /* ← 왼쪽 여백 */
+}
+
+#pw_box::placeholder {
+  font-size: 20px;
+  color: rgb(180, 180, 180);
+}
+
+#login_button {
+  background-color: red;
+  margin-top: 30px;
+  /* all: unset; */
+  appearance: none;
+  cursor: pointer;
+  width: 400px;
+  height: 50px;
+  border-radius: 20px;
+  border: 1.5px solid black;
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
