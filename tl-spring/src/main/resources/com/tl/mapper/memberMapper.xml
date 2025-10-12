@@ -3,32 +3,55 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tl.mapper.MemberMapper">
-	<!--  -->
+	<!-- -->
 	<insert id="signUp">
-	INSERT INTO member (memberName,memberId,memberPw,role)
-	VALUES(#{memberName},#{memberId},#{memberPw},'MEMBER')
+		INSERT INTO member (memberName,memberId,memberPw,role)
+		VALUES(#{memberName},#{memberId},#{memberPw},'MEMBER')
 	</insert>
-	
-	<resultMap id="loginResultMap" type = "com.tl.dto.LoginDTO">
-	<id property="username" column="memberId"/>
-	<result property="password" column="memberPw"/>
-	<result property="authorities" column="role"/>
+
+	<resultMap id="loginResultMap" type="com.tl.dto.MemberVO">
+		<id property="memberId" column="memberId" />
+		<result property="memberPw" column="memberPw" />
+		<result property="role" column="role" />
+		<result property="memberName" column="memberName" />
+		<result property="createdAt" column="created_at" />
 	</resultMap>
-	
-	 <select id="findByMemberId"  resultMap="loginResultMap">
-        SELECT memberId, memberPw, role
-        FROM member
-        WHERE memberId = #{memberId}
-    </select>
-    
-    	<resultMap id="myInfoMap" type = "com.tl.dto.MyInfoResponse">
-	<result property="memberName" column="memberName"/>
-	<result property="memberId" column="memberId"/>
-	<result property="createdAt" column="created_at"/>
+
+	<select id="findByMemberId" resultMap="loginResultMap">
+		SELECT memberId, memberPw, role, memberName, created_at
+		FROM member
+		WHERE memberId = #{memberId} 
+	</select>
+
+<!-- memberId와 일치하는 정보 추출 -->
+	<!-- <select id="findByMemberId" resultType="com.tl.dto.MemberVO">
+		SELECT memberId, memberName, role
+		FROM member
+		WHERE memberId=#{memberId}
+	</select> -->
+
+<!-- refreshToken DB에 저장  -->
+	<insert id="saveOrUpdate">
+	INSERT into refresh_token 
+	(memberId, token, expiration)
+	values(#{memberId},#{refreshToken},#{expiration})
+	</insert>
+
+	<select id="checkRefreshToken" resultType="String">
+	SELECT token FROM refresh_token
+	WHERE memberId=#{memberId}
+	</select>
+<!-- myPage에서 활용할 정보 추출 -->
+	<resultMap id="myInfoMap" type="com.tl.dto.MyInfoResponse">
+		<result property="memberName" column="memberName" />
+		<result property="memberId" column="memberId" />
+		<result property="createdAt" column="created_at" />
 	</resultMap>
-	
-    <select id="getMyInfo" resultMap="myInfoMap">
-    SELECT memberId,memberName,created_at FROM member WHERE memberId = #{memberId}
-    </select>
-  
+
+	<select id="getMyInfo" resultMap="myInfoMap">
+		SELECT memberId,memberName,created_at
+		FROM member
+		WHERE memberId = #{memberId}
+	</select>
+
 </mapper>

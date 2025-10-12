@@ -33,12 +33,14 @@ export default function Homepage() {
   return (
     <div id="home_layout">
       <div id="home_top">
-        탑 이미지 영역
+        <div id="home_top_image_container">
+          <img id="home_top_image" src="/images/home3.jpg" />
+        </div>
       </div>
       <div id="home_mid">
         <div id="home_mid1">
           <div className="mid_title">
-            신규 오픈
+            신규오픈
           </div>
           <div id="perform_list">
             {performances.map(perform =>
@@ -87,9 +89,28 @@ export default function Homepage() {
             ))}
           </div>
         </div>
+        <div id="home_mid3">
+          <div id="r1">
+            <p className="r_text">뮤지컬&lt;보더라인&gt;</p>
+            <p className="sub_text3">2025.07.15~2025.10.12</p>
+          </div>
+          <img className="r_img" src="/images/borderline.jpg" />
+          <div id="r2">
+            <div className="r_text2">뮤지컬&lt;보더라인&gt;</div>
+            <div className="r_text2">뮤지컬 &lt;위대한개츠비&gt;(The Great Gatsby)</div>
+            <div className="r_text2">뮤지컬&lt;레드북&gt;</div>
+            <div className="r_text2">뮤지컬&lt;브로드웨이 42번가&gt;</div>
+            <div className="r_text2">뮤지컬&lt;트레드밀&gt;</div>
+          </div>
+        </div>
       </div>
       <div id="bottom">
+        <div id="bottom_left">
 
+        </div>
+        <div id="bottom_right">
+          Theater-Link
+        </div>
       </div>
     </div>
   )

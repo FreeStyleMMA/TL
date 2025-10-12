@@ -8,8 +8,8 @@ import lombok.Data;
 public class LoginResponse {
 	//로그인 성공 여부
 	public boolean loginSuccess;
-	public String token;
+	public String accessToken;
+	public String refreshToken;
 	//에러 메세지
 	public String message;
-	public String role;
 }

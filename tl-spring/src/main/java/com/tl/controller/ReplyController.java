@@ -47,6 +47,7 @@ public class ReplyController {
 
 	@GetMapping("/count")
 	public int getTotalReplys(@RequestParam Long originNo) {
+		log.info("reply count 요청 도착");
 		return service.getTotalReplys(originNo);
 	}
 	@GetMapping("/initialReplies")

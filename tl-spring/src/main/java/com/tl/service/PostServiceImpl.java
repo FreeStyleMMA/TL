@@ -74,11 +74,13 @@ public class PostServiceImpl implements PostService {
 			return newLiked;
 		}
 	}
-
+	
 	public int countLikes(Long postNo) {// 총 좋아요 갯수 select count(*) 구문으로 liked가 1인 갯수
 		return mapper.countLikes(postNo);
 	}
-
+	public LikeDTO getLike(String memberId, Long postNo) {
+		return mapper.getLike(memberId, postNo);
+	}
 	public ArrayList<MyPostResponse> getMyPost(String memberId) {
 		return mapper.getMyPost(memberId);
 	}

@@ -28,6 +28,7 @@
 			access="permitAll" />
 		<security:intercept-url pattern="/admin/**"
 			access="hasRole('ADMIN')" />
+			
 		<!-- jwt 방식 사용으로 csrf는 off -->
 		<security:csrf disabled="true" />
 		<!-- 맨 처음으로 JWT 필터 등록 -->

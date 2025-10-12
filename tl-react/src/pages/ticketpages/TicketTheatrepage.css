@@ -1,0 +1,113 @@
+#my_layout {
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#tt_layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tt_perform_list {
+    background-color: white;
+    height: 400px;
+    margin-bottom: 100px;
+    margin-top: 50px;
+}
+
+/* 리스트 제목 영역 레이아웃*/
+.list_title {
+    display: flex;
+    align-items: flex-end;
+}
+
+.list_name {
+    font-size: 27px;
+    font-style: normal;
+    color: black;
+    font-weight: 600;
+}
+
+/* 전체보기 */
+.show_all {
+    text-decoration: none;
+    color: black;
+    font-size: 15px;
+    font-weight: 500;
+    /* margin-left:auto;
+  padding-right:200px; */
+    padding-left: 20px;
+
+}
+
+.perform_layout {
+    margin-top: 20px;
+    background-color: white;
+    display: grid;
+    grid-template-columns: repeat(5, 240px);
+    height: 350px;
+    gap: 15px;
+    overflow: hidden;
+}
+
+.perform_container {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    margin: 20px 0px 0px 0px;
+}
+
+.img {
+    display: flex;
+    flex-direction: column;
+    /* 세로 방향으로 쌓기 */
+    width: 220px;
+    height: 260px;
+    border-radius: 15px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 500;
+    color: black;
+    width: 200px;
+    margin: 30px 0px 7px 5px;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 지역 키 */
+#region_list {
+    margin-top: 40px;
+    margin-right: auto;
+}
+
+.region_button {
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    /* border-top: 0;                
+  border-bottom: 0;             
+  border-left: 0.5px solid gray; 
+  border-right: 0.5px solid gray; */
+    border: 1px solid gray;
+    border-radius: 15px;
+    ;
+    width: 65px;
+    height: 33px;
+    /* gap:5px; */
+    cursor: pointer;
+    margin-right: 8px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.region_button.active {
+    background-color: rgb(87, 87, 87);
+    color: white;
+}

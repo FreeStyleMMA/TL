@@ -1,13 +1,14 @@
-import { useEffect, useState,useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import './TicketHomePage.css';
 import { FavoriteContext } from "../../context/FavoriteContext";
-import {useAuth} from '../auth/AuthContext';
+import { useAuth } from '../auth/AuthContext';
 
 export default function TicketHomepage() {
-  const {handleFavorite} =useContext(FavoriteContext);
-  const {member} = useAuth();
+  const { handleFavorite } = useContext(FavoriteContext);
+  const { member } = useAuth();
+  const navigate = useNavigate();
 
   const [performanceInfos, setPerformanceInfos] = useState([]);
   const [rankPerformanceInfos, setRankPerformanceInfos] = useState([]);
@@ -139,109 +140,138 @@ export default function TicketHomepage() {
     if (loading) return <div>불러오는 중...</div>
 
     return (
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
+      <div className="perform_layout"
+      >
         {data?.map((performanceInfo, idx) => (
-          <div key={idx} style={{ width: "120px", height: "160px", margin: "0 10px" }}>
+          <div key={idx}
+            className="perform_container"
+          >
             <Link to="/ticket/info" state={{ performanceInfo }} // 공연 상세 정보 페이지로 이동
-              style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
             >
-              <img alt={performanceInfo.perTitle} src={performanceInfo.perPoster} //공연 포스터
-                style={{ width: "100px", height: "120px" }}
+              <img
+                // alt={performanceInfo.perTitle} 
+                className="img"
+                src={performanceInfo.perPoster} //공연 포스터
               />
-              <h6>{performanceInfo.perTitle}</h6> {/* 공연 제목 */}
+              <div className="title">
+                {performanceInfo.perTitle} {/* 공연 제목 */}                </div>
             </Link>
           </div>
         ))}
       </div>
     );
   }
-
+  // 검색어 폼 핸들링
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    navigate("./research", { state: { searchQuery, page: 1 } });
+  }
   return (
-    <div>
-      {/* 검색창 */}
-      <form onSubmit={(e) => e.preventDefault()} style={{ marginBottom: "20px", display: "flex", justifyContent: "center" }}>
-        <input
-          type="text"
-          placeholder="공연명을 검색하세요"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          style={{ width: "300px", padding: "8px" }}
-        />
-        <Link
-          to="/ticket/research"
-          state={{ searchQuery, page: 1 }}
-          style={{ marginLeft: "10px", padding: "8px 15px", background: "#ddd", textDecoration: "none" }}
-        >
-          검색
-        </Link>
-      </form>
+    <div id="my_layout">
+      <div id="th_layout">
+        <div id="th_header">
+          <div>
+            {/* 검색창 */}
+            <form
+              id="search_container"
+              onSubmit={handleSearchSubmit} >
+              <input
+                id="search_box"
+                type="text"
+                placeholder="검색어를 입력하세요"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button
+                id="search_button"
+                type="submit">
+                <img
+                  id="search_img"
+                  src="/images/search.png" />
+              </button>
+            </form>
+          </div>
+        </div>
+        <div id="th_body">
+          {/* 상단 광고 이미지 영역 */}
+          <div id="th_body1">
+            {/* <div id="th_main_inform">
+                <div id="main_inform_inform">MUSICAL | 서울</div>
+                <div id="main_inform_title">영웅</div>
+                <div id="main_inform_date">2025.09.04~2025.11.23</div>
+              </div> */}
+            <div id="th_main_poster">
+              <img id="th_poster_img" src="/images/musical_poster.jpg" />
+            </div>
+          </div>
+          {/* 공연 랭킹 */}
+          <div className="th_perform_list">
+            <div className="list_title">
+              <div className="list_name">랭킹</div>
+              <Link // 모두 보기 버튼
+                className="show_all"
+                to="/ticket/list"
+                state={{ type: "rank" }}
+              >
+                |&nbsp;전체 보기&nbsp;|
+              </Link>
+            </div>
+            <PerformanceList data={rankPerformanceInfos} loading={statusLoading} />
+          </div>
 
-      {/* 공연 랭킹 */}
-      <div style={{ display: "flex", alignItems: "center", margin: "20px" }}>
-        <h2>공연 랭킹</h2>
-        <Link to="/ticket/list" state={{ type: "rank" }} // 모두 보기 버튼
-          style={{ margin: "5px", border: "1px, solid, black", }}
-        >
-          모두 보기
-        </Link>
-      </div>
-      <PerformanceList data={rankPerformanceInfos} loading={statusLoading} />
-      {/* 추천 공연 */}
-      <h2>추천 공연</h2>
-      <PerformanceList data={recommendPerformanceInfos} loading={statusLoading} />
+          {/* 추천 공연 */}
+          <div className="th_grey_container">
+            <div className="th_perform_list">
+              <div className="list_title">
+                <div className="list_name">추천 공연</div>
+              </div>
+              <PerformanceList data={recommendPerformanceInfos} loading={statusLoading} />
+            </div>
+          </div>
 
-      {/* 달력 + 커밋 버튼 */}
-      {/* <div style={{ margin: "30px", textAlign: "center" }}>
-        <label>
-          시작일:{" "}
-          <input
-            type="date"
-            value={tempStartDate}
-            onChange={(e) => setTempStartDate(e.target.value)}
-          />
-        </label>
-        <label style={{ marginLeft: "15px" }}>
-          종료일:{" "}
-          <input
-            type="date"
-            value={tempEndDate}
-            onChange={(e) => setTempEndDate(e.target.value)}
-          />
-        </label>
-        <button onClick={handleCommit} style={{ marginLeft: "20px", padding: "5px 15px" }}>
-          적용
-        </button>
-      </div> */}
+          {/* 전체 공연 */}
+          <div className="th_perform_list">
+            <div className="list_title">
+              <div className="list_name">전체 공연</div>
+              <Link
+                className="show_all"
+                to="/ticket/list" // 모두 보기 버튼
+              >
+                |&nbsp;전체 보기&nbsp;|
+              </Link>
+            </div>
+            <PerformanceList data={performanceInfos} loading={loading} />
+          </div>
 
-      {/* 전체 공연 */}
-      <div style={{ display: "flex", alignItems: "center", margin: "20px" }}>
-        <h2>전체 공연</h2>
-        <Link to="/ticket/list" // 모두 보기 버튼
-          style={{ margin: "5px", border: "1px, solid, black", }}
-        >
-          모두 보기
-        </Link>
-      </div>
-      <PerformanceList data={performanceInfos} loading={loading} />
-
-      {/* 지역별 공연 */}
-      <div style={{ display: "flex", alignItems: "center", margin: "20px" }}>
-        <h2>지역별 공연</h2>
-        <Link to="/ticket/list" state={{ region: regionCode }} // 모두 보기 버튼
-          style={{ margin: "5px", border: "1px, solid, black", }}
-        >
-          모두 보기
-        </Link>
-      </div>
-      <div style={{ marginBottom: "10px" }}>
-        {regions.map((region) => (
-          <button key={region.code} onClick={() => setRegionCode(region.code)}>
-            {region.name}
-          </button>
-        ))}
-      </div>
-
-      <PerformanceList data={regionPerformanceInfos} loading={regionLoading} />
+          {/* 지역별 공연 */}
+          <div className="th_grey_container">
+            <div className="th_perform_list">
+              <div className="list_title">
+                <div className="list_name">지역별 공연</div>
+                <Link
+                  className="show_all"
+                  to="/ticket/list"
+                  state={{ region: regionCode }} // 모두 보기 버튼
+                >
+                  |&nbsp;전체 보기&nbsp;|
+                </Link>
+              </div>
+              <div id="region_list">
+                {regions.map((region) => (
+                  <button
+                    className={`region_button ${regionCode === region.code ? "active" : ""}`}
+                    key={region.code}
+                    onClick={() => setRegionCode(region.code)}>
+                    {region.name}
+                  </button>
+                ))}
+              </div>
+              <PerformanceList data={regionPerformanceInfos} loading={regionLoading} />
+            </div>
+          </div>
+        </div>
+      </div >
     </div>
   );
 }

@@ -16,7 +16,7 @@ export function FavoriteProvider({ children, memberId, perId }) {
         null,
         { params: { memberId, perId } }
       );
-      setLiked(prev => ({ ...prev, [perId]: response.data.newLiked }));
+      setLiked(prev => ({ ...prev, [perId]: response.data.liked }));
       console.log("liked: ", response.data.newLiked)
       setTotalLikes("totalLikes: ", response.data.totalLikes)
     } catch (error) {

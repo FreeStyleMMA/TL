@@ -1,0 +1,144 @@
+#my_layout {
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 상단 기본 정보 표시 여역 */
+#ti_top {
+    margin-top: 70px;
+    width: 100%;
+    height: 470px;
+    display: flex;
+}
+
+/* 상단 좌측 포스터 영역 */
+#ti_top_left {
+    width: 26%;
+    height: 100%;
+    margin-left: 200px;
+}
+
+/* 포스터 설정 */
+#ti_top_img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+/* 상단 좌측 기본 정보 영역 상하 4칸*/
+#ti_top_right {
+    width: 40%;
+    height: 100%;
+    margin-left: 70px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 장르/제목 순으로 표시 */
+#ti_top_right1 {
+    width: 100%;
+    border-bottom: 1px solid black;
+    display: flex;
+    align-items: center;
+    height: 15%;
+}
+
+#ti_ganre {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+#ti_title {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+
+
+.ti_top_text {
+    font-size: 15px;
+    font-weight: 500;
+    height: 25px;
+    margin-top: 15px;
+    color: rgb(70, 70, 70);
+}
+
+#ti_top_right2 {
+    width: 100%;
+    border-bottom: 1px solid lightgray;
+    display: flex;
+    height: 30%;
+}
+
+#ti_top_right2_l {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 45%;
+}
+
+#ti_top_right2_r {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 5%;
+    width: 45%;
+}
+
+
+#ti_top_right3 {
+    margin-top: 20px;
+    ;
+    width: 100%;
+    /* border-bottom: 1px solid lightgray; */
+    display: flex;
+    height: 55%;
+}
+
+#ti_top_right3_l {
+    width: 100%;
+
+}
+
+
+#ti_top_right4 {
+    width: 100%;
+    /* border-bottom: 1px solid lightgray; */
+    display: flex;
+    /* justify-content: flex-end; */
+    padding-right: 20px;
+}
+
+#ti_top_right4_l {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 80%
+}
+
+#ti_top_right4_r {}
+
+.ti_button {
+    width: 130px;
+    height: 40px;
+    color: rgb(255, 255, 255);
+    border: 2px solid rgb(246, 246, 246);
+    border-radius: 10px;
+    float: right;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: red;
+    cursor: pointer;
+}
+
+#ti_mid {
+    margin-top: 200px;
+    margin-left: 50%;
+    height: 500px;
+}
+
+#ti_map {
+    width: 300px;
+    height: 300px;
+}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import './TicketTheatrepage.css'
 export default function TicketTheatrepage() { // 연극 페이지 (장르 코드 : AAAA)
   const [performanceInfos, setPerformanceInfos] = useState([]);
   const [rankPerformanceInfos, setRankPerformanceInfos] = useState([]);
@@ -119,16 +119,23 @@ export default function TicketTheatrepage() { // 연극 페이지 (장르 코드
     if (loading) return <div>불러오는 중...</div>
 
     return (
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
+      <div className="perform_layout">
         {data?.map((performanceInfo, idx) => (
-          <div key={idx} style={{ width: "120px", height: "160px", margin: "0 10px" }}>
-            <Link to="/ticket/info" state={{ performanceInfo }} // 공연 상세 정보 페이지로 이동
-              style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+          <div
+            key={idx}
+            className="perform_container"
+          >
+            <Link
+              to="/ticket/info"
+              state={{ performanceInfo }} // 공연 상세 정보 페이지로 이동
+
             >
-              <img alt={performanceInfo.perTitle} src={performanceInfo.perPoster} //공연 포스터
-                style={{ width: "100px", height: "120px" }}
+              <img
+                alt={performanceInfo.perTitle}
+                src={performanceInfo.perPoster} //공연 포스터
+                className="img"
               />
-              <h6>{performanceInfo.perTitle}</h6> {/* 공연 제목 */}
+              <div className="title">{performanceInfo.perTitle}</div> {/* 공연 제목 */}
             </Link>
           </div>
         ))}
@@ -137,50 +144,65 @@ export default function TicketTheatrepage() { // 연극 페이지 (장르 코드
   }
 
   return (
-    <div>
-      {/* 공연 랭킹 */}
-      <div style={{ display: "flex", alignItems: "center", margin: "20px" }}>
-        <h2>공연 랭킹</h2>
-        <Link to="/ticket/list" state={{ type: "rank", genre: "AAAA" }} // 모두 보기 버튼
-          style={{ margin: "5px", border: "1px, solid, black", }}
-        >
-          모두 보기
-        </Link>
-      </div>
-      <PerformanceList data={rankPerformanceInfos} loading={statusLoading} />
-      {/* 추천 공연 */}
-      <h2>추천 공연</h2>
-      <PerformanceList data={recommendPerformanceInfos} loading={statusLoading} />
+    <div id="my_layout">
+      <div id="tt_layout">
+        {/* 공연 랭킹 */}
+        <div className="tt_perform_list">
+          <div className="list_title">
+            <div className="list_name">공연 랭킹</div>
+            <Link
+              to="/ticket/list"
+              state={{ type: "rank", genre: "AAAA" }} // 모두 보기 버튼
+              className="show_all"
+            >
+              모두 보기
+            </Link>
+          </div>
+          <PerformanceList data={rankPerformanceInfos} loading={statusLoading} />
+        </div>
+        {/* 추천 공연 */}
+        <div className="tt_perform_list">
+          <div className="list_name">추천 공연</div>
+          <PerformanceList data={recommendPerformanceInfos} loading={statusLoading} />
+        </div>
+        {/* 전체 공연 */}
+        <div className="tt_perform_list">
+          <div className="list_title">
+            <div className="list_name">전체 공연</div>
+            <Link
+              to="/ticket/list"
+              state={{ genre: "AAAA" }} // 모두 보기 버튼
+              className="show_all"
+            >
+              모두 보기
+            </Link>
+          </div>
+          <PerformanceList data={performanceInfos} loading={loading} />
+        </div>
 
-      {/* 전체 공연 */}
-      <div style={{ display: "flex", alignItems: "center", margin: "20px" }}>
-        <h2>전체 공연</h2>
-        <Link to="/ticket/list" state={{ genre: "AAAA" }} // 모두 보기 버튼
-          style={{ margin: "5px", border: "1px, solid, black", }}
-        >
-          모두 보기
-        </Link>
+        {/* 지역별 공연 */}
+        <div className="tt_perform_list">
+          <div className="list_title">
+            <div className="list_name">지역별 공연</div>
+            <Link to="/ticket/list" state={{ region: regionCode, genre: "AAAA" }} // 모두 보기 버튼
+              className="show_all"
+            >
+              모두 보기
+            </Link>
+          </div>
+          <div id="region_list">
+            {regions.map((region) => (
+              <button
+                className={`region_button ${regionCode === region.code ? "active" : ""}`}
+                key={region.code}
+                onClick={() => setRegionCode(region.code)}>
+                {region.name}
+              </button>
+            ))}
+          </div>
+          <PerformanceList data={regionPerformanceInfos} loading={regionLoading} />
+        </div>
       </div>
-      <PerformanceList data={performanceInfos} loading={loading} />
-
-      {/* 지역별 공연 */}
-      <div style={{ display: "flex", alignItems: "center", margin: "20px" }}>
-        <h2>지역별 공연</h2>
-        <Link to="/ticket/list" state={{ region: regionCode, genre: "AAAA" }} // 모두 보기 버튼
-          style={{ margin: "5px", border: "1px, solid, black", }}
-        >
-          모두 보기
-        </Link>
-      </div>
-      <div style={{ marginBottom: "10px" }}>
-        {regions.map((region) => (
-          <button key={region.code} onClick={() => setRegionCode(region.code)}>
-            {region.name}
-          </button>
-        ))}
-      </div>
-
-      <PerformanceList data={regionPerformanceInfos} loading={regionLoading} />
-    </div>
+    </div >
   );
 }

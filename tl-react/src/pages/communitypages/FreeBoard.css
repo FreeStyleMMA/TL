@@ -1,4 +1,4 @@
- #myLayout {
+ #free_my_layout {
    background-color: white;
    padding-left: 200px;
    padding-right: 200px;
@@ -22,7 +22,7 @@
    float: right;
  }
 
- #freeBoardLayout {
+ #free_layout {
    display: flex;
    flex-direction: column;
    border: 1px solid #ccc;
@@ -31,14 +31,13 @@
 
  }
 
- #freeBoardNav {
+ #free_nav {
    display: grid;
    grid-template-columns: 80px 700px 120px 150px 100px 100px;
    font-weight: bold;
    padding: 10px 0;
    border-bottom: 2px solid #ccc;
    text-align: center;
-
  }
 
  #fb_nav_no {
@@ -53,7 +52,7 @@
  }
 
 
- .List {
+ .free_List {
    display: grid;
    grid-template-columns: 80px 700px 120px 150px 100px 100px;
    /* 번호, 제목, 작성자, 날짜, 좋아요, 댓글 */

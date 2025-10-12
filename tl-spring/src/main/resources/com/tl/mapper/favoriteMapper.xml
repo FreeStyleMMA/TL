@@ -9,7 +9,7 @@
 	</select>
 
 	<update id="handleFavorite">
-`	UPDATE favorite
+	UPDATE favorite
 	SET liked=#{newLiked} 
 	where memberId=#{memberId} 
 	AND per_id=#{perId}

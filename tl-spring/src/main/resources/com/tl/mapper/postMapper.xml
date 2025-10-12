@@ -93,12 +93,13 @@
 
 	<resultMap id="myPostResponseMap" type="com.tl.dto.MyPostResponse">
     <result property="title" column="title" jdbcType="VARCHAR"/>
+    <result property="content" column="content" jdbcType="VARCHAR"/>
     <result property="no" column="no" jdbcType="BIGINT"/>
     <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
 </resultMap>
 
 	<select id="getMyPost" resultMap="myPostResponseMap">
-		SELECT title, no, created_at
+		SELECT title, no,content, created_at
 		FROM post
 		WHERE memberId = #{memberId}
 	</select>

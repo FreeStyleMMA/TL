@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tl.dto.FavoritePostDTO;
-import com.tl.dto.LikeDTO;
+import com.tl.dto.LikeResponse;
 import com.tl.service.FavoriteService;
 
 import lombok.Setter;
@@ -26,11 +26,10 @@ public class FavoriteController {
 	public FavoriteService service;
 	
 	@PostMapping("handleFavorite")
-	public LikeDTO handleFavorite(@RequestParam String memberId, @RequestParam String perId) {
-		log.info("핸들 요청 도착");
+	public LikeResponse handleFavorite(@RequestParam String memberId, @RequestParam String perId) {
 		int newLiked = service.handleFavorite(memberId,perId);
 		int totalFavorite = service.countFavorite(memberId);
-		return LikeDTO.builder()
+		return LikeResponse.builder()
 				.memberId(memberId)
 				.perId(perId)
 				.liked(newLiked)

@@ -18,16 +18,12 @@ export default function Login({ onSignIn }) {
         memberId,
         memberPw
       }, { withCredentials: true });
-      console.log("login message: " + response.data.loginSuccess);
-
-      //로그인 성공 시 로직
-      if (response.data.loginSuccess) {
-        const role = response.data.role
-        // console.log("authorities: ", role);
-        // console.log("멤버아이디:", memberId)
-
-        loginComplete({ memberId: memberId, role: role })//세션이 로그인 정보 저장
-        onSignIn && onSignIn({ memberId, role }); // 로그인 이전 페이지로 이동
+      console.log("로그인 응답 데이터:", response.data);
+      //로그인 성공 시 로직c
+      const accessToken = response.data.accessToken
+      if (accessToken) {
+        loginComplete(accessToken)//세션이 로그인 정보 저장
+        onSignIn && onSignIn(accessToken); // 로그인 이전 페이지로 이동
       }
     }
     catch (error) {

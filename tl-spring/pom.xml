@@ -175,6 +175,7 @@
 			<version>1.16</version>
 		</dependency>
 		<!-- 내가 추가(8/8) -->
+		
 		<!-- 롬복 -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -182,6 +183,7 @@
 			<version>1.18.0</version>
 			<scope>provided</scope>
 		</dependency>
+		
 			<!-- jaxkson xml -->
 		<dependency>
 		    <groupId>com.fasterxml.jackson.dataformat</groupId>
@@ -189,6 +191,7 @@
 		    <version>2.15.2</version>
 		</dependency>
 		<!-- ////////////////// 내가 추가 (끝) ////////////////////// -->
+		
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -226,7 +229,7 @@
 		</dependency>
 
 
-		<!-- jjwt 라이브러리 추가 -->
+		<!-- jwt 라이브러리 추가 -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
@@ -258,6 +261,11 @@
 			<artifactId>jaxb-core</artifactId>
 			<version>2.3.0</version>
 		</dependency>
+		
+		
+		
+		
+		
 	</dependencies>
 	<build>
 		<plugins>
