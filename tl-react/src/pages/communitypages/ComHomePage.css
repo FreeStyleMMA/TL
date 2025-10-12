@@ -1,21 +1,33 @@
-#myLayout {
+#comhome_my_layout {
   background-color: white;
   margin-left: auto;
   margin-right: auto;
 }
 
+/* 상위 스토리 영역 전체 */
+#story {
+  margin-left: 150px;
+  height: 270px;
+  width: 1000px;
+}
 
+#story_title {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* 스토리 표현 영역 */
 #story_container {
   position: relative;
   display: flex;
   gap: 20px;
   margin-top: 20px;
-
+  overflow: hidden;
 }
 
 .story_box {
-  width: 300px;
-  height: 250px;
+  width: 210px;
+  height: 170px;
   position: relative;
   border-radius: 25px;
   overflow: hidden;
@@ -27,10 +39,9 @@
   /* 아래쪽 정렬 */
   padding: 10px;
   color: white;
-
 }
 
-
+/* 스토리 텍스트 */
 .story_box_link {
   color: white;
   /* 글씨 색 */
@@ -40,196 +51,147 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  /* gap: px; */
   text-overflow: ellipsis;
 }
 
 .story_box_title {
   position: relative;
-  width: 300px;
+  width: 200px;
   overflow: hidden;
-  font-size: 20px;
-  font-weight: 600;
   white-space: nowrap;
   text-overflow: ellipsis;
-
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 5px;
 }
 
 .story_box_content {
   position: relative;
   width: 300px;
-  overflow: hidden;
+  font-size: 12px;
   color: white;
+  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  margin-bottom: auto;
 }
 
+/* 본문 스크롤 영역 */
+#comehome_mid {
+  display: flex;
+  flex-direction: column;
+  height: 2800px;
+  width: 100%;
 
+}
+
+#comehome_mid_title {
+  font-size: 18px;
+  font-weight: 500;
+  padding-left: 250px;
+}
+
+#comehome_mid_body {
+  display: flex;
+  margin-top: 20px;
+}
+
+/* 좌측 빈 공간 */
+#comehome_mid_left {
+  width: 250px;
+}
+
+/* 우측 컨텐츠 영역 */
+#comehome_mid_right {
+  width: 750px;
+}
+
+/* 프로필 정보 영역 */
 #profile {
   position: absolute;
   display: flex;
   align-items: center;
-  /* 세로 중앙 정렬 */
   gap: 12px;
-  /* 이미지와 텍스트 사이 간격 */
   bottom: 20px;
-  left: 10px;
 }
 
-.p {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 1px solid black;
-  object-fit: cover
-}
-
-.p_name {
-  color: white;
-  font-weight: bold;
-  font-size: 16px;
-}
-
-#right {
-  color: gray;
-  margin-top: 100px;
-  margin-left: 10px;
-  font-size: 40px;
-}
-
-#mid {
-  display: flex;
-  height: 2800px;
-}
-
-#mid_left {
-  width: 1300px;
+/* 포스트 박스 */
+.comhome_post {
+  width: 650px;
+  height: 600px;
   background-color: white;
+
+  border-top: 1px solid rgb(196, 196, 196);
+  /* margin: 50px 0px 0px 270px; */
 }
 
-#post {
-  width: 750px;
-  height: 525px;
-  background-color: white;
-  border-top: 1px solid gray;
-  border-bottom: 1px solid gray;
-  margin: 50px 0px 0px 270px;
-}
-
-#post_profile {
+/* 포스트 박스 프로필 영역 */
+.comhome_post_profile {
   display: flex;
   align-items: center;
-  /* 세로 중앙 정렬 */
   gap: 12px;
-  /* 이미지와 텍스트 사이 간격 */
-  margin: 10px 0px 0px 10px;
+  margin-left: 10px;
+  /* margin: 10px 0px 0px 10px; */
+  font-size: 14px;
 }
 
-.p_i {
+/* 프로필 이미지 샘플은 회색 */
+.comhome_profile_image {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+/* 포스트 날짜 글자  */
+.comhome_post_date {
+  color: black;
+  font-size: 13px;
+}
+
+/* 포스트 제목 */
+.comhome_post_title {
+  font-size: 17px;
+  font-weight: 600;
+  color: black;
+  margin: 15px 0px 0px 10px;
+  text-decoration: none;
+}
+
+/* 포스트 이미지 */
+.comhome_post_img {
+  width: 650px;
+  height: 450px;
+  border-radius: 30px;
+}
+
+/* 좋아요, 댓글 전체 구간 */
+.comhome_react {
+  display: flex;
+  height: 30px;
+}
+
+/* 좋아요 댓글 각각 */
+.comhome_re {
+  all: unset;
+  appearance: none;
+  cursor: pointer;
+  width: 50px;
+  height: 25px;
+  border-radius: 20px;
+  border: 1px solid black;
+  font-size: 13px;
+  font-weight: 400;
+  color: black;
+  margin: 10px 0px 0px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 좋아요, 댓글 이미지 */
+.comhome_re_img {
   width: 20px;
   height: 20px;
-  border-radius: 50%;
-  border: 1px solid black;
-}
-
-.p_n {
-  color: black;
-
-}
-
-.p_b {
-  width: 60px;
-  height: 25px;
-  border-radius: 15px;
-  background-color: navy;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 420px;
-}
-
-.post_title {
-  font-size: 20px;
-  margin: 15px 0px 0px 10px;
-
-}
-
-.post_img {
-  width: 750px;
-  height: 400px;
-  margin: 10px 0px 0px 0px;
-  border-radius: 10px;
-}
-
-#react {
-  display: flex;
-  gap: 1px;
-}
-
-.re {
-  width: 60px;
-  height: 20px;
-  border-radius: 20px;
-  font-size: 13px;
-  color: white;
-  background-color: gray;
-  margin: 15px 0px 0px 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#mid_right {
-  width: 400px;
-  height: 400px;
-  background-color: rgb(241, 241, 241);
-  border-radius: 10px;
-  margin: 30px 250px 0px 0px;
-
-  position: sticky;
-  top: 30px;
-}
-
-#p_title {
-  font-weight: bold;
-  color: gray;
-  margin: 10px 0px 0px 13px;
-}
-
-#p_profile {
-  display: flex;
-  align-items: center;
-  /* 세로 중앙 정렬 */
-  gap: 12px;
-  /* 이미지와 텍스트 사이 간격 */
-  margin: 25px 0px 0px 25px;
-}
-
-.p_p_i {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  border: 1px solid black;
-}
-
-.text_wrapper {
-  display: flex;
-  flex-direction: column;
-  /* 세로로 쌓기 */
-}
-
-.p_p_n {
-  color: black;
-}
-
-.p_p_t {
-  margin-top: 5px;
-  color: black;
-}
-
-#plus {
-  margin: 20px 0px 0px 13px;
-  font-size: 14px;
-  font-weight: bold;
 }

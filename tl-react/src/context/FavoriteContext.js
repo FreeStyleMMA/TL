@@ -7,15 +7,18 @@ export const FavoriteContext = createContext();
 export function FavoriteProvider({ children, memberId, perId }) {
 
   const [liked, setLiked] = useState({});
+  const [totalLIkes, setTotalLikes] = useState(0);
 
 
-  const handleFavorite = async (memberId, per_id) => {
+  const handleFavorite = async (memberId, perId) => {
     try {
       const response = await axios.post(`http://localhost:8080/favorite/handleFavorite`,
-        { memberId, per_id }
+        null,
+        { params: { memberId, perId } }
       );
-      setLiked(prev => ({ ...prev, [per_id]: response.data.newLiked }));
+      setLiked(prev => ({ ...prev, [perId]: response.data.liked }));
       console.log("liked: ", response.data.newLiked)
+      setTotalLikes("totalLikes: ", response.data.totalLikes)
     } catch (error) {
       console.log(error)
     }
@@ -25,13 +28,15 @@ export function FavoriteProvider({ children, memberId, perId }) {
     const fetchLiked = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/favorite/checkFavorite?memberId=${memberId}&perId=${perId}`);
-        setLiked(response.data); // 서버에서 { per_id: true/false } 형태로 반환
+        setLiked(response.data);
       } catch (error) {
         console.log(error);
       }
     }
     fetchLiked();
   }, [memberId]);
+
+
 
   return (
     <FavoriteContext.Provider value={{ handleFavorite, liked }}>

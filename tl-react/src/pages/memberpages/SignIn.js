@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../auth/AuthContext';
+import './SignIn.css'
 
 export default function Login({ onSignIn }) {
   const location = useLocation();
@@ -17,16 +18,12 @@ export default function Login({ onSignIn }) {
         memberId,
         memberPw
       }, { withCredentials: true });
-      console.log("login message: " + response.data.loginSuccess);
-
-      //로그인 성공 시 로직
-      if (response.data.loginSuccess) {
-        const role = response.data.role
-        // console.log("authorities: ", role);
-        // console.log("멤버아이디:", memberId)
-
-        loginComplete({ memberId: memberId, role: role })//세션이 로그인 정보 저장
-        onSignIn && onSignIn({ memberId, role }); // 로그인 이전 페이지로 이동
+      console.log("로그인 응답 데이터:", response.data);
+      //로그인 성공 시 로직c
+      const accessToken = response.data.accessToken
+      if (accessToken) {
+        loginComplete(accessToken)//세션이 로그인 정보 저장
+        onSignIn && onSignIn(accessToken); // 로그인 이전 페이지로 이동
       }
     }
     catch (error) {
@@ -36,16 +33,22 @@ export default function Login({ onSignIn }) {
   }
   return (
     <div>
-      <form className="pageLayout" onSubmit={handleLogin}>
-        <div>
-          ID:
-          <input className="loginBox" type="text" placeholder="id를 입력하세요" value={memberId} onChange={(e) => setMemberId(e.target.value)} />
+      <form id="myLayout" onSubmit={handleLogin}>
+        <div id="loginLayout">
+          <div>
+            <input id="id_box"
+              type="text"
+              placeholder="아이디"
+              value={memberId} onChange={(e) => setMemberId(e.target.value)} />
+          </div>
+          <div>
+            <input id="pw_box"
+              type="password"
+              placeholder="비밀번호"
+              value={memberPw} onChange={(e) => setMemberPw(e.target.value)} />
+          </div>
+          <button type="submit" id="login_button" >로그인</button>
         </div>
-        <div>
-          pw:
-          <input className="loginBox" type="password" placeholder="패스워드를 입력하세요" value={memberPw} onChange={(e) => setMemberPw(e.target.value)} />
-        </div>
-        <button type="submit" className="button" >로그인</button>
       </form>
     </div>
   )

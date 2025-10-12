@@ -13,4 +13,5 @@ public interface TicketMapper {
 	public int checkPerformance(PerformanceInfoDto info);
 	public ArrayList<PerformanceInfoDto> getPerformance(PerformanceRequestDto request);
 	public ArrayList<TicketDto> getTicket(Long perNum);
+	public ArrayList<PerformanceInfoDto> getHomePerform();
 }

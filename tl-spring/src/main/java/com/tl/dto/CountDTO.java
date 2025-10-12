@@ -8,4 +8,5 @@ import lombok.Data;
 public class CountDTO {
 	public Long postNo;
 	public int count;
+	public int liked;
 }

@@ -91,6 +91,11 @@ public class ApiController {
 		log.info("getPerformanceStatusList 실행");
 		return service.getPIP(requestDto).getPerformanceStatusList(); // performanceStatusList만 가져오기
 	}
-	
+	@GetMapping("getHomePerform")
+	@ResponseBody
+	public ArrayList<PerformanceInfoDto> getHomePerform() {
+		log.info("홈 공연"+dbService.getHomePerform());
+		return dbService.getHomePerform();
+	}
 	
 }

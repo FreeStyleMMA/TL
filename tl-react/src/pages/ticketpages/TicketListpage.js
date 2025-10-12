@@ -1,6 +1,8 @@
 import { useLocation, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import './TicketListpage.css';
+import './reset.css';
 
 export default function TicketResearchpage() {
   const location = useLocation();
@@ -12,11 +14,11 @@ export default function TicketResearchpage() {
   const [performanceInfos, setPerformanceInfos] = useState([]); // 공연 데이터
   const [loading, setLoading] = useState(true);  // 데이터 불러오는 중인지 여부
   const [hasNextPage, setHasNextPage] = useState(false); // 다음 페이지 존재 여부
-  
+
   // 날짜를 YYYYMMDD 형식으로 변환
   function formatDate(date) {
     const d = typeof date === "string" ? new Date(date) : date;
-    
+
     const year = d.getFullYear();
     const month = String(d.getMonth() + 1).padStart(2, "0");
     const day = String(d.getDate()).padStart(2, "0");
@@ -39,13 +41,13 @@ export default function TicketResearchpage() {
 
         // 현재 페이지 데이터
         const response = await axios.get('http://localhost:8080/tl/getPerformanceInfo', {
-          params: { startdate: startDate, enddate: endDate, cpage: page, rows: 10, signgucode: region, requestType : type, shcate : genre }
+          params: { startdate: startDate, enddate: endDate, cpage: page, rows: 10, signgucode: region, requestType: type, shcate: genre }
         });
         setPerformanceInfos(response.data);
 
         // 다음 페이지 존재 여부 확인
         const nextResponse = await axios.get('http://localhost:8080/tl/getPerformanceInfo', {
-          params: { startdate: startDate, enddate: endDate, cpage: page + 1, rows: 10, signgucode: region, requestType : type, shcate : genre }
+          params: { startdate: startDate, enddate: endDate, cpage: page + 1, rows: 10, signgucode: region, requestType: type, shcate: genre }
         });
         setHasNextPage(nextResponse.data.length > 0);
 
@@ -61,66 +63,80 @@ export default function TicketResearchpage() {
   if (loading) return <div>불러오는 중...</div>; // 로딩중일때 출력
 
   return (
-    <div>
-      <h2>전체 결과</h2>
-
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
-          {performanceInfos.map((performanceInfo, idx) => (
-            <div key={idx} style={{ width: "120px", height: "160px", margin: "0 15px 15px 0" }}>
-              <Link
-                to="/ticket/info"
-                state={{ performanceInfo }}
-                style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-              >
-                <img
-                  alt={performanceInfo.perTitle}
-                  style={{ width: "100px", height: "120px" }}
-                  src={performanceInfo.perPoster}
-                />
-                <h6>{performanceInfo.perTitle}</h6>
-              </Link>
-            </div>
-          ))}
+    <div id="my_layout">
+      <div id='tl_layout'>
+        <div id='tl_top'>
+          <>| 전체보기 |</>
+        </div>
+        <div id='tl_mid'>
+          <div id='tl_mid_title'>
+            <div id='tl_mid_title1'>공연명</div>
+            <div id='tl_mid_title2'>기간/장소</div>
+          </div>
+          <div >
+            {performanceInfos.map((performanceInfo, idx) => (
+              <div key={idx} className='tl_per_container'>
+                <Link className='tl_per_container1'
+                  to="/ticket/info"
+                  state={{ performanceInfo }}
+                >
+                  <div >
+                    <img className='tl_per_img'
+                      src={performanceInfo.perPoster}
+                    />
+                  </div>
+                  <div className='tl_per_title'>
+                    {performanceInfo.perTitle}
+                  </div>
+                </Link>
+                <div className='tl_per_container2'>
+                  <div className='tl_per_container2_text'> {performanceInfo.perStartD} ~ {performanceInfo.perEndD}</div>
+                  <div className='tl_per_container2_text'>{performanceInfo.perPlace}</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
-    {/* 이전/다음 페이지 버튼 */}
-    <div style={{ display: "flex", justifyContent: "center", alignItems:"center", marginTop: "20px" }}>
-    {page > 1 && (
-        <Link
-        to="/ticket/list"
-        state={{ page : page - 1, region: region, type : type, genre : genre }}
-        style={{
-            display: "inline-block",
-            marginRight : "10px",
-            height:"auto",
-            background: "#ddd",
-            textDecoration: "none",
-            borderRadius: "4px",
-            color: "#000",
-        }}
-        >
-        이전
-        </Link>
-    )}
-    <h4>{page}</h4>
-    {hasNextPage && (
-        <Link
-        to="/ticket/list"
-        state={{ page : page + 1, region: region, type : type, genre : genre }}
-        style={{
-            display: "inline-block",
-            marginLeft : "10px",
-            height:"auto",
-            background: "#ddd",
-            textDecoration: "none",
-            borderRadius: "4px",
-            color: "#000",
-        }}
-        >
-        다음
-        </Link>
-    )}
-    </div>
+        {/* 이전/다음 페이지 버튼 */}
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "20px" }}>
+          {page > 1 && (
+            <Link
+              to="/ticket/list"
+              state={{ page: page - 1, region: region, type: type, genre: genre }}
+              style={{
+                display: "inline-block",
+                marginRight: "10px",
+                height: "auto",
+                background: "white",
+                textDecoration: "none",
+                borderRadius: "4px",
+                color: "#000",
+              }}
+            >
+              &lt;
+            </Link>
+          )}
+          <h4>{page}</h4>
+          {hasNextPage && (
+            <Link
+              to="/ticket/list"
+              state={{ page: page + 1, region: region, type: type, genre: genre }}
+              style={{
+                display: "inline-block",
+                marginLeft: "10px",
+                height: "auto",
+                background: "white",
+                textDecoration: "none",
+                borderRadius: "4px",
+                color: "#000",
+              }}
+            >
+              &gt;
+            </Link>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

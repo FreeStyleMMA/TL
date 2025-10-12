@@ -1,42 +1,37 @@
  #myLayout {
-
      background-color: white;
      margin-left: auto;
      margin-right: auto;
  }
 
-
- #postLayout {
+ #rb_postLayout {
      display: flex;
      height: 2800px;
  }
 
- #left {
-     width: 1020px;
+ #rb_left {
+     width: 450px;
+ }
+
+ #rb_right {
+     /* width: 1000px; */
      margin-top: 20px;
      display: flex;
      flex-direction: column;
  }
 
  #posting {
-     display: inline-block;
      width: 70px;
      height: 30px;
-     color: black;
-     font-size: 20px;
-     font-style: normal;
-     font-weight: 400;
-     text-decoration: none;
      border: 0.5px solid black;
-     border-radius: 5px;
-     box-sizing: border-box;
-     align-content: center;
-     text-align: center;
+     border-radius: 10px;
      float: right;
+     font-size: 18px;
+     font-weight: 500;
  }
 
-
  #posts {
+     margin-top: 10px;
      display: flex;
      flex-direction: column;
      gap: 5px;
@@ -44,22 +39,23 @@
 
 
 
- .post {
+ .rb_post {
      width: 750px;
      height: 600px;
      background-color: rgb(255, 255, 255);
      border-top: 1px solid grey;
      /* border-bottom: 1px solid gray; */
-     margin: 40px 0px 0px 270px;
+     /* margin: 40px 0px 0px 270px; */
  }
 
  .post_profile {
-     border-style: dotted;
      display: flex;
-     font-size: 20px;
-     align-items: flex-end;
+     align-items: center;
      gap: 12px;
-     margin: 10px 0px 0px 10px;
+     margin-left: 10px;
+     /* margin: 10px 0px 0px 10px; */
+     font-size: 14px;
+     text-decoration: none;
  }
 
  .profile_image {
@@ -71,13 +67,14 @@
 
  .p_writer {
      color: black;
-     font-size: 18px;
-     font-weight: 500;
-     margin-right: 20px;
+     font-size: 15px;
+     font-weight: 400;
+     margin-right: 5px;
  }
 
  .p_date {
-     font-size: 15px;
+     font-size: 13px;
+     padding-top: 2px;
  }
 
  .p_b {
@@ -93,37 +90,43 @@
  }
 
  .p_title {
-
-     font-size: 23px;
-     margin-top: 25px;
+     font-size: 17px;
+     font-weight: 600;
      color: black;
+     margin: 15px 0px 0px 10px;
      text-decoration: none;
-     font-weight: 500;
  }
 
  .p_image {
      margin-top: 20px;
-     width: 600px;
-     height: 430px;
-     border-radius: 10px;
+     width: 700px;
+     height: 450px;
+     border-radius: 30px;
  }
 
  .react {
      display: flex;
-     gap: 1px;
+     height: 30px;
  }
 
  .re {
-     margin-top: 10px;
-     background-color: white;
-     border: 0.5px solid grey;
+     all: unset;
+     appearance: none;
+     cursor: pointer;
+     width: 50px;
      height: 25px;
-     width: 55px;
-     color: grey;
-     gap: 5px
+     border-radius: 20px;
+     border: 1px solid black;
+     font-size: 13px;
+     font-weight: 400;
+     color: black;
+     margin: 10px 0px 0px 10px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
  }
 
  .re_img {
-     width: 18px;
-     height: 18px;
+     width: 20px;
+     height: 20px;
  }

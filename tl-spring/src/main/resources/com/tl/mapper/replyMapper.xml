@@ -11,8 +11,8 @@
 	</insert>
 	
 	<resultMap id="ReplyDtoMap" type = "com.tl.dto.MyRepliesResponse">
-	<result property="no" column="no"/>
-	<result property="originNo" column="originNo"/>
+<!-- 	<RESULT PROPERTY="NO" COLUMN="NO"/> -->
+<!-- 	<RESULT PROPERTY="ORIGINNO" COLUMN="ORIGINNO"/> -->
 	<result property="content" column="content"/>
 	<result property="memberId" column="memberId"/>
 	<result property="createdAt" column="created_at"/>
@@ -41,9 +41,9 @@
 	</resultMap>
 	
 	<select id="getMyReplies" resultMap="myRepliesMap">
-	SELECT r.content,
-	r.created_at,
-	p.title
+	SELECT r.content as content,
+	r.created_at AS created_at,
+	p.title AS title
 	From reply r
 	LEFT JOIN post p ON p.no = r.originNo
 	WHERE r.memberId = #{memberId}
