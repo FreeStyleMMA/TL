@@ -8,13 +8,13 @@ import com.tl.dto.PerformanceRequestDto;
 import com.tl.dto.TicketDto;
 
 public interface PerformanceDBMapper {
-	public void addPerformance(PerformanceInfoDto info);	// db¿¡ °ø¿¬ Á¤º¸ Ãß°¡
-	public void addTicket(List<TicketDto> ticket);			// db¿¡ ¿¹¸ÅÃ³ Á¤º¸ Ãß°¡
-	public int checkPerformance(PerformanceInfoDto info);	// ÀÏÄ¡ÇÏ´Â °ø¿¬Á¤º¸ ¿©ºÎ È®ÀÎ
-	public ArrayList<PerformanceInfoDto> getPerformance(PerformanceRequestDto request);	// Á¶°Ç¿¡ ¸Â´Â °ø¿¬ Á¤º¸ ¸ñ·Ï ¹Þ¾Æ¿À±â
-	public ArrayList<TicketDto> getTicket(Long perNum);	// °ø¿¬ÀÇ ¿¹¸ÅÃ³ Á¤º¸ ¹Þ¾Æ¿À±â
-	public void deletePastPerformance();	// ½Ã°£ÀÌ Áö³­ °ø¿¬ »èÁ¦
-	public void deleteByRequestT(String requestT);	// requestT¿Í ÀÏÄ¡ÇÏ´Â Á¤º¸ »èÁ¦
-	public String getUpdateDate();	// DB¸ñ·Ï Áß ÃÖ½Å ¾÷µ¥ÀÌÆ® ³¯Â¥ ¹Þ¾Æ¿À±â
-	public void deleteAllPerformance();		// ÀüÃ¼ °ø¿¬ »èÁ¦
+	public void addPerformance(PerformanceInfoDto info);	// dbï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+	public void addTicket(List<TicketDto> ticket);			// dbï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã³ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+	public int checkPerformance(PerformanceInfoDto info);	// ï¿½ï¿½Ä¡ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+	public ArrayList<PerformanceInfoDto> getPerformance(PerformanceRequestDto request);	// ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½Â´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½
+	public ArrayList<TicketDto> getTicket(Long perNum);	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã³ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½
+	public void deletePastPerformance();	// ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	public void deleteByRequestT(String requestT);	// requestTï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	public String getUpdateDate();	// DBï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½Â¥ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½
+	public void deleteAllPerformance();		// ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 }

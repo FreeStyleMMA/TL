@@ -117,12 +117,15 @@
 		resultMap="TicketResultMap">
 		SELECT * FROM performance_ticket WHERE per_num = #{perNum}
 	</select>
+	
 	<!-- 오늘 날짜가 endD를 지난 데이터 제거 -->
 	<delete id="deletePastPerformance">
-	  	DELETE FROM performance
-	  	WHERE per_endD IS NOT NULL
-	    AND per_endD != ''
-	    AND STR_TO_DATE(per_endD, '%Y.%m.%d') &lt; CURDATE()
+	  <![CDATA[
+    DELETE FROM performance
+    WHERE per_endD IS NOT NULL
+      AND TRIM(per_endD) <> ''
+      AND STR_TO_DATE(TRIM(per_endD), '%Y-%m-%d') < CURDATE()
+  ]]>
 	</delete>
 	<!-- requestT가 일치하는 데이터 제거 -->
 	<delete id="deleteByRequestT" parameterType="java.lang.String">

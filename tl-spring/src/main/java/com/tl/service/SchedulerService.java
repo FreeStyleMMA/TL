@@ -24,24 +24,25 @@ public class SchedulerService {
 		this.dbService = dbService;
 	}
 	
-	// Å×½ºÆ®¿ë
+	// DB ê³µì—° ì—…ë°ì´íŠ¸ í…ŒìŠ¤íŠ¸
 	public void DBFetchTest() {
 		fetchPerformances();
 	}
 
-	// ¸ÅÀÏ 18:30¿¡ ½ÇÇà(kopis °ø¿¬ api ¾÷µ¥ÀÌÆ®°¡ 18½Ã¿¡ µÇ±â ¶§¹®)
-	@Scheduled(cron = "0 30 18 * * ?")
+	//ë§¤ì¼ 18:30 ìŠ¤ì¼€ì¥´ë§(kopis ê³µì—° api DBì— ì—…ë°ì´íŠ¸)
+//	@Scheduled(cron = "0 30 18 * * ?")
+	@Scheduled(cron = "0 * * * * ?")// í…ŒìŠ¤íŠ¸ìš©
 	private void fetchPerformances() {
-    	log.info("DB ¾÷µ¥ÀÌÆ®");
-        // ±â°£ Áö³­ µ¥ÀÌÅÍ »èÁ¦
+    	log.info("DB ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®");
+        // ï¿½â°£ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     	ArrayList<PerformanceInfoDto> infos = new ArrayList<PerformanceInfoDto>();
     	dbService.fetchPerformance();
-        // ÀüÃ¼ °ø¿¬ api ÀúÀå
+        // ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ api ï¿½ï¿½ï¿½ï¿½
     	String twoWeeksAgo = LocalDate.now().minusWeeks(2).format(DateTimeFormatter.BASIC_ISO_DATE);
     	String twoWeeksLater = LocalDate.now().plusWeeks(2).format(DateTimeFormatter.BASIC_ISO_DATE);
     	int page = 1;
     	while(true) {
-    		log.info("¾÷µ¥ÀÌÆ® ³¯Â¥:" + dbService.getUpdateDate());
+    		log.info("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½Â¥:" + dbService.getUpdateDate());
     		infos = apiService.getPIP(new PerformanceRequestDto(twoWeeksAgo, twoWeeksLater, page,
     			Common.MAX_REQUEST, Common.ALL_CODE, dbService.getUpdateDate())).getPerformanceInfoList();
     		if(infos.isEmpty()) {
@@ -53,7 +54,7 @@ public class SchedulerService {
     		}
     		page++;
     	}
-    	//·©Å· api ÀúÀå
+    	//ï¿½ï¿½Å· api ï¿½ï¿½ï¿½ï¿½
     	infos = apiService.getPIP(new PerformanceRequestDto(twoWeeksAgo, twoWeeksLater, Common.ALL_CODE, "rank")).getPerformanceInfoList();
     	dbService.addPerformance(infos);
 		infos = apiService.getPIP(new PerformanceRequestDto(twoWeeksAgo, twoWeeksLater, Common.CONCERT_CODE, "rankConcert")).getPerformanceInfoList();
@@ -62,15 +63,15 @@ public class SchedulerService {
 		dbService.addPerformance(infos);
 		infos = apiService.getPIP(new PerformanceRequestDto(twoWeeksAgo, twoWeeksLater, Common.THEATRE_CODE, "rankTheatre")).getPerformanceInfoList();
 		dbService.addPerformance(infos);
-		log.info("db¾÷µ¥ÀÌÆ® ¿Ï·á");
+		log.info("dbï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ï·ï¿½");
     }
 	
 	public void resetPerformances() {
-    	log.info("DB ÃÊ±âÈ­");
-        // 1. DB ÃÊ±âÈ­
+    	log.info("DB ï¿½Ê±ï¿½È­");
+        // 1. DB ï¿½Ê±ï¿½È­
     	ArrayList<PerformanceInfoDto> infos = new ArrayList<PerformanceInfoDto>();
     	dbService.fetchPerformance();
-        // ÀüÃ¼ °ø¿¬ api ÀúÀå
+        // ï¿½ï¿½Ã¼ api ï¿½ï¿½ï¿½ï¿½
     	String twoWeeksAgo = LocalDate.now().minusWeeks(2).format(DateTimeFormatter.BASIC_ISO_DATE);
     	String twoWeeksLater = LocalDate.now().plusWeeks(2).format(DateTimeFormatter.BASIC_ISO_DATE);
     	int page = 1;
@@ -87,7 +88,7 @@ public class SchedulerService {
     		dbService.addPerformance(infos);
     		page++;
     	}
-    	//·©Å· api ÀúÀå
+    	//ï¿½ï¿½Å· api ï¿½ï¿½ï¿½ï¿½
     	infos = apiService.getPIP(new PerformanceRequestDto(twoWeeksAgo, twoWeeksLater, Common.ALL_CODE, "rank")).getPerformanceInfoList();
     	dbService.addPerformance(infos);
 		infos = apiService.getPIP(new PerformanceRequestDto(twoWeeksAgo, twoWeeksLater, Common.CONCERT_CODE, "rankConcert")).getPerformanceInfoList();
@@ -96,6 +97,7 @@ public class SchedulerService {
 		dbService.addPerformance(infos);
 		infos = apiService.getPIP(new PerformanceRequestDto(twoWeeksAgo, twoWeeksLater, Common.THEATRE_CODE, "rankTheatre")).getPerformanceInfoList();
 		dbService.addPerformance(infos);
-		log.info("dbÃÊ±âÈ­ ¿Ï·á");
+		log.info("dbï¿½Ê±ï¿½È­ ï¿½Ï·ï¿½");
     }
+
 }
