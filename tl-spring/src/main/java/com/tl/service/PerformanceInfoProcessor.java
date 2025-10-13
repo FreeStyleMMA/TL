@@ -14,7 +14,6 @@ import com.tl.dto.PerformanceStatusListDto;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -27,55 +26,60 @@ import lombok.extern.log4j.Log4j;
 public class PerformanceInfoProcessor {
 	private String apiKey = "da8350e1cfc642d49f9486fb19ade562"; // kopis api key
 
-	private PerformanceListDto performanceList = new PerformanceListDto(); // °ø¿¬ ¸ñ·Ï ¹è¿­
-	private ArrayList<PerformanceDetailDto> performanceDetailList = new ArrayList<PerformanceDetailDto>(); // °ø¿¬ »ó¼¼ Á¤º¸
-	private ArrayList<PerformancePeaceDto> performancePeaceList = new ArrayList<PerformancePeaceDto>(); // °ø¿¬Àå »ó¼¼ Á¤º¸
+	private PerformanceListDto performanceList = new PerformanceListDto(); // ê³µì—° ëª©ë¡ ë°°ì—´
+	private ArrayList<PerformanceDetailDto> performanceDetailList = new ArrayList<PerformanceDetailDto>(); // ê³µì—° ìƒì„¸ ì •ë³´
+	private ArrayList<PerformancePeaceDto> performancePeaceList = new ArrayList<PerformancePeaceDto>(); // ê³µì—°ì¥ ìƒì„¸ ì •ë³´
 	private PerformanceStatusListDto performanceStatusList = new PerformanceStatusListDto();
-	public ArrayList<PerformanceInfoDto> performanceInfoList = new ArrayList<PerformanceInfoDto>(); // »ç¿ëÇÒ °Í¸¸ Á¤¸®ÇÑ °ø¿¬ »ó¼¼
-	// Á¤º¸
+	private ArrayList<PerformanceInfoDto> performanceInfoList = new ArrayList<PerformanceInfoDto>(); // ì‚¬ìš©í•  ê²ƒë§Œ ì •ë¦¬í•œ ê³µì—° ìƒì„¸ ì •ë³´
 
-	public PerformanceInfoProcessor(PerformanceRequestDto prd) { // »ı¼ºÀÚ ÇÔ¼ö
+	public PerformanceInfoProcessor(PerformanceRequestDto prd) { // ìƒì„±ì í•¨ìˆ˜
 		setPerformanceList(prd);
 		setPerformanceDetailList(prd);
 		setPerformancePeaceList(performanceDetailList);
 
-		if (isBoxOfficeRequest(prd)) { // °ø¿¬, ·©Å· ¿äÃ»ÀÏ ¶§
+		if (isBoxOfficeRequest(prd)) { // ê³µì—°, ë­í‚¹ ìš”ì²­ì¼ ë•Œ
 			setPerformanceInfo(performanceDetailList, performancePeaceList, performanceStatusList.getBoxof(), prd);
 		} else {
 			setPerformanceInfo(performanceDetailList, performancePeaceList, prd);
 		}
 	}
+	// ì˜ˆì™¸ ì²˜ë¦¬ëœ api í˜¸ì¶œ
+	private String callApiWithRetry(String apiUrl, RestTemplate restTemplate, XmlMapper xmlMapper, int maxRetry) throws Exception {
+	    int attempt = 0;
+	    while (attempt < maxRetry) {
+	        try {
+	            return restTemplate.getForObject(apiUrl, String.class); // ì •ìƒ í˜¸ì¶œ
+	        } catch (HttpClientErrorException e) {
+	            attempt++;
+	            log.warn(apiUrl + " í˜¸ì¶œ ì‹¤íŒ¨, ì¬ì‹œë„ " + attempt + "/" + maxRetry + " - " + e.getStatusCode());
+	            Thread.sleep(150); // 0.15ì´ˆ ìœ ì˜ˆ
+	        } catch (Exception e) {
+	            attempt++;
+	            log.warn(apiUrl + " í˜¸ì¶œ ì‹¤íŒ¨, ì¬ì‹œë„ " + attempt + "/" + maxRetry, e);
+	            Thread.sleep(150); // 0.15ì´ˆ ìœ ì˜ˆ
+	        }
+	    }
+	    throw new Exception("API í˜¸ì¶œ ìµœëŒ€ ì¬ì‹œë„ íšŸìˆ˜ ì´ˆê³¼: " + apiUrl);
+	}
 
-	// kopis¿¡¼­ °ø¿¬ ¸ñ·Ï api ¹Ş¾Æ¿À´Â ÇÔ¼ö
+	// kopisì—ì„œ ê³µì—° ëª©ë¡ api ë°›ì•„ì˜¤ëŠ” í•¨ìˆ˜
 	private void setPerformanceList(PerformanceRequestDto prd) {
 		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.getMessageConverters().add(0, new StringHttpMessageConverter(StandardCharsets.UTF_8));
 		XmlMapper xmlMapper = new XmlMapper();
 
 		try {
-			Thread.sleep(110); // 0.11ÃÊ Áö¿¬
-			log.info(prd.getPerRequestT());
-
-			// ÃßÃµ, ·©Å· °ø¿¬ ¸ñ·ÏÀ» ¿äÃ» ¹Ş¾ÒÀ» ¶§
+			Thread.sleep(110); // 0.11ì´ˆ ì§€ì—°
+			// ë­í‚¹ ê³µì—° ëª©ë¡ì„ ìš”ì²­ ë°›ì•˜ì„ ë•Œ
 			if (isBoxOfficeRequest(prd)) {
+				log.info(prd);
 				String API_URL = String.format(
 						"http://kopis.or.kr/openApi/restful/boxoffice?service=%s&stdate=%s&eddate=%s&catecode=%s",
 						apiKey, prd.getStartdate(), prd.getEnddate(), prd.getShcate());
-				String xmlResponse = restTemplate.getForObject(API_URL, String.class);
+				String xmlResponse = callApiWithRetry(API_URL, restTemplate, xmlMapper, 3);
 				PerformanceStatusListDto temp = xmlMapper.readValue(xmlResponse, PerformanceStatusListDto.class);
-				// ÃßÃµ °ø¿¬ ÀÏ¶§ ¹è¿­ ¹«ÀÛÀ§·Î ¼¯±â
-				if ("recommend".equals(prd.getPerRequestT())) {
-					Collections.shuffle(temp.getBoxof());
-				}
-				// °ø¿¬ ½ÃÀÛ ÀÎµ¦½º, °¡Á®¿Ã °³¼ö Á¤ÇÏ±â
-				if (temp != null && temp.getBoxof() != null && prd.getCpage() != null && prd.getRows() != null) {
-					int start = (Integer.parseInt(prd.getCpage()) - 1) * Integer.parseInt(prd.getRows());
-					int limit = Math.min(start + Integer.parseInt(prd.getRows()), temp.getBoxof().size());
-
-					performanceStatusList.getBoxof().clear();
-					performanceStatusList.getBoxof().addAll(temp.getBoxof().subList(start, limit));
-				}
-			} else { // ÀÌ¿Ü °ø¿¬ ¸ñ·Ï
+				performanceStatusList.getBoxof().addAll(temp.getBoxof());
+			} else { // ì´ì™¸ ê³µì—° ëª©ë¡
 				String API_URL = String.format(
 						"http://kopis.or.kr/openApi/restful/pblprfr?service=%s&stdate=%s&eddate=%s&cpage=%s&"
 								+ "rows=%s&shprfnm=%s&shprfnmfct=%s&shcate=%s&prfplccd=%s&"
@@ -85,110 +89,102 @@ public class PerformanceInfoProcessor {
 						prd.getSigngucodesub(), prd.getKidstate(), prd.getPrfstate(), prd.getOpenrun(),
 						prd.getAfterdate());
 
-				String xmlResponse = restTemplate.getForObject(API_URL, String.class);
+				String xmlResponse = callApiWithRetry(API_URL, restTemplate, xmlMapper, 3);
 				performanceList = xmlMapper.readValue(xmlResponse, PerformanceListDto.class);
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.info("setPerformanceList ½ÇÆĞ");
+			log.info("setPerformanceList ì‹¤íŒ¨");
 		}
 	}
 
-	// ¹Ş¾Æ¿Â °ø¿¬ ¸ñ·ÏÀÇ °ø¿¬ »ó¼¼ Á¤º¸ api ¹Ş¾Æ¿À´Â ÇÔ¼ö
+	// ë°›ì•„ì˜¨ ê³µì—° ëª©ë¡ì˜ ê³µì—° ìƒì„¸ ì •ë³´ api ë°›ì•„ì˜¤ëŠ” í•¨ìˆ˜
 	private void setPerformanceDetailList(PerformanceRequestDto prd) {
-		// restTemplateÀº spring¿¡¼­ Á¦°øÇÏ´Â http¿ÍÀÇ Åë½Å µµ±¸
+		// restTemplateì€ springì—ì„œ ì œê³µí•˜ëŠ” httpì™€ì˜ í†µì‹  ë„êµ¬
 		RestTemplate restTemplate = new RestTemplate();
-		// ÇÑ±Û ±úÁü ¹æÁö¸¦ À§ÇÑ UTF-8 ±³Ã¼
+		// í•œê¸€ ê¹¨ì§ ë°©ì§€ë¥¼ ìœ„í•œ UTF-8 êµì²´
 		restTemplate.getMessageConverters().add(0, new StringHttpMessageConverter(StandardCharsets.UTF_8));
-		// µ¥ÀÌÅÍ°¡ XMLµ¥ÀÌÅÍ±â ¶§¹®¿¡ xmlmapper »ç¿ë
+		// ë°ì´í„°ê°€ XMLë°ì´í„°ê¸° ë•Œë¬¸ì— xmlmapper ì‚¬ìš©
 		XmlMapper xmlMapper = new XmlMapper();
 
-		// db°¡ ¿©·¯ °³ÀÏ °æ¿ì ¹İº¹
-		if (isBoxOfficeRequest(prd)) { // °ø¿¬, ·©Å· ¿äÃ»ÀÏ ¶§
+		// dbê°€ ì—¬ëŸ¬ ê°œì¼ ê²½ìš° ë°˜ë³µ
+		if (isBoxOfficeRequest(prd)) { // ì¶”ì²œ, ë­í‚¹ ìš”ì²­ì¼ ë•Œ
 			if (performanceStatusList.getBoxof() != null) {
 				for (PerformanceStatusDto perf : performanceStatusList.getBoxof()) {
 					String API_URL = String.format("http://www.kopis.or.kr/openApi/restful/pblprfr/%s?service=%s",
 							perf.getMt20id(), apiKey);
 					try {
-						Thread.sleep(110); // 0.11ÃÊ Áö¿¬
+						Thread.sleep(110); // 0.11ì´ˆ ì§€ì—°
 
-						String xmlResponse = restTemplate.getForObject(API_URL, String.class);
-						// performanceDetailList¿¡ ¹Ş¾Æ¿Â °ª ÀúÀå
+						String xmlResponse = callApiWithRetry(API_URL, restTemplate, xmlMapper, 3);
+						// performanceDetailListì— ë°›ì•„ì˜¨ ê°’ ì €ì¥
 						PerformanceDetailWrapperDto detail = xmlMapper.readValue(xmlResponse,
 								PerformanceDetailWrapperDto.class);
 						performanceDetailList.add(detail.getDb());
-
-					} catch (HttpClientErrorException e) { // 400, 404 µî Å¬¶óÀÌ¾ğÆ® ¿À·ù
-						log.error("HTTP ¿À·ù ¹ß»ı: " + perf.getMt20id() + e.getStatusCode());
-						log.error("Response Body: " + e.getResponseHeaders()); // ¼­¹ö°¡ ÁØ ¿À·ù ³»¿ëµµ Ãâ·Â
-					} catch (Exception e) { // ±âÅ¸ ¿¹¿Ü
-						log.error("XML ÆÄ½Ì/Åë½Å ¿À·ù: " + perf.getMt20id(), e);
+					} catch (Exception e) { // ê¸°íƒ€ ì˜ˆì™¸
+						e.printStackTrace();
+						log.info("setPerformanceDetailList ì˜¤ë¥˜");
 					}
 				}
 			}
-		} else { // ÀÌ¿Ü ¸ñ·ÏÀÏ ¶§
+		} else { // ì´ì™¸ ëª©ë¡ì¼ ë•Œ
 			if (performanceList.getDb() != null) {
 				for (PerformanceDto perf : performanceList.getDb()) {
 					String API_URL = String.format("http://www.kopis.or.kr/openApi/restful/pblprfr/%s?service=%s",
 							perf.getMt20id(), apiKey);
 					try {
-						Thread.sleep(110); // 0.11ÃÊ Áö¿¬
+						Thread.sleep(110); // 0.11ì´ˆ ì§€ì—°
 
-						String xmlResponse = restTemplate.getForObject(API_URL, String.class);
-						// performanceList¿¡ ¹Ş¾Æ¿Â °ª ÀúÀå
+						String xmlResponse = callApiWithRetry(API_URL, restTemplate, xmlMapper, 3);
+						// performanceListì— ë°›ì•„ì˜¨ ê°’ ì €ì¥
 						PerformanceDetailWrapperDto detail = xmlMapper.readValue(xmlResponse,
 								PerformanceDetailWrapperDto.class);
 						performanceDetailList.add(detail.getDb());
 
-					} catch (HttpClientErrorException e) { // 400, 404 µî Å¬¶óÀÌ¾ğÆ® ¿À·ù
-						log.error("HTTP ¿À·ù ¹ß»ı: " + perf.getMt20id() + e.getStatusCode());
-						log.error("Response Body: " + e.getResponseBodyAsString()); // ¼­¹ö°¡ ÁØ ¿À·ù ³»¿ëµµ Ãâ·Â
-					} catch (Exception e) { // ±âÅ¸ ¿¹¿Ü
-						log.error("XML ÆÄ½Ì/Åë½Å ¿À·ù: " + perf.getMt20id(), e);
+					} catch (Exception e) { // ê¸°íƒ€ ì˜ˆì™¸
+						e.printStackTrace();
+						log.info("setPerformanceDetailList ì˜¤ë¥˜");
 					}
 				}
 			}
 		}
 	}
 
-	// ¹Ş¾Æ¿Â °ø¿¬ »ó¼¼ ¸ñ·Ï¿¡¼­ °ø¿¬½Ã¼³ »ó¼¼ Á¤º¸ api ¹Ş¾Æ¿À´Â ÇÔ¼ö
+	// ë°›ì•„ì˜¨ ê³µì—° ìƒì„¸ ëª©ë¡ì—ì„œ ê³µì—°ì‹œì„¤ ìƒì„¸ ì •ë³´ api ë°›ì•„ì˜¤ëŠ” í•¨ìˆ˜
 	private void setPerformancePeaceList(ArrayList<PerformanceDetailDto> performanceDetailList) {
-		// restTemplateÀº spring¿¡¼­ Á¦°øÇÏ´Â http¿ÍÀÇ Åë½Å µµ±¸
+		// restTemplateì€ springì—ì„œ ì œê³µí•˜ëŠ” httpì™€ì˜ í†µì‹  ë„êµ¬
 		RestTemplate restTemplate = new RestTemplate();
-		// ÇÑ±Û ±úÁü ¹æÁö¸¦ À§ÇÑ UTF-8 ±³Ã¼
+		// í•œê¸€ ê¹¨ì§ ë°©ì§€ë¥¼ ìœ„í•œ UTF-8 êµì²´
 		restTemplate.getMessageConverters().add(0, new StringHttpMessageConverter(StandardCharsets.UTF_8));
-		// µ¥ÀÌÅÍ°¡ XMLµ¥ÀÌÅÍ±â ¶§¹®¿¡ xmlmapper »ç¿ë
+		// ë°ì´í„°ê°€ XMLë°ì´í„°ê¸° ë•Œë¬¸ì— xmlmapper ì‚¬ìš©
 		XmlMapper xmlMapper = new XmlMapper();
 
-		// db°¡ ¿©·¯ °³ÀÏ °æ¿ì ¹İº¹
+		// dbê°€ ì—¬ëŸ¬ ê°œì¼ ê²½ìš° ë°˜ë³µ
 		if (performanceDetailList != null) {
 			for (PerformanceDetailDto perf : performanceDetailList) {
 				String API_URL = String.format("http://www.kopis.or.kr/openApi/restful/prfplc/%s?service=%s",
 						perf.getMt10id(), apiKey);
 				try {
-					Thread.sleep(110); // 0.11ÃÊ Áö¿¬
+					Thread.sleep(110); // 0.11ì´ˆ ì§€ì—°
 
-					String xmlResponse = restTemplate.getForObject(API_URL, String.class);
-					// performancePeaceList¿¡ ¹Ş¾Æ¿Â °ª ÀúÀå
+					String xmlResponse = callApiWithRetry(API_URL, restTemplate, xmlMapper, 3);
+					// performancePeaceListì— ë°›ì•„ì˜¨ ê°’ ì €ì¥
 					PerformancePeaceWrapperDto detail = xmlMapper.readValue(xmlResponse,
 							PerformancePeaceWrapperDto.class);
 					performancePeaceList.add(detail.getDb());
 
-				} catch (HttpClientErrorException e) { // 400, 404 µî Å¬¶óÀÌ¾ğÆ® ¿À·ù
-					log.error("HTTP ¿À·ù ¹ß»ı: " + perf.getMt20id() + e.getStatusCode());
-					log.error("Response Body: " + e.getResponseBodyAsString()); // ¼­¹ö°¡ ÁØ ¿À·ù ³»¿ëµµ Ãâ·Â
-				} catch (Exception e) { // ±âÅ¸ ¿¹¿Ü
-					log.error("XML ÆÄ½Ì/Åë½Å ¿À·ù: " + perf.getMt20id(), e);
+				} catch (Exception e) { // ê¸°íƒ€ ì˜ˆì™¸
+					e.printStackTrace();
+					log.info("setPerformancePeaceList ì˜¤ë¥˜");
 				}
 			}
 		}
 	}
 
-	// ¹Ş¾Æ¿Â °ø¿¬ »ó¼¼ Á¤º¸ api Á¤¸®
+	// ë°›ì•„ì˜¨ ê³µì—° ìƒì„¸ ì •ë³´ api ì •ë¦¬
 	private void setPerformanceInfo(ArrayList<PerformanceDetailDto> detailList,
 			ArrayList<PerformancePeaceDto> peaceList, PerformanceRequestDto prd) {
-		int size = Math.min(detailList.size(), peaceList.size()); // µÎ ¸®½ºÆ® Áß ÀÛÀº Å©±â±îÁö¸¸ ¹İº¹
+		int size = Math.min(detailList.size(), peaceList.size()); // ë‘ ë¦¬ìŠ¤íŠ¸ ì¤‘ ì‘ì€ í¬ê¸°ê¹Œì§€ë§Œ ë°˜ë³µ
 
 		for (int i = 0; i < size; i++) {
 			PerformanceDetailDto detail = detailList.get(i);
@@ -198,11 +194,11 @@ public class PerformanceInfoProcessor {
 		}
 	}
 
-	// ¹Ş¾Æ¿Â °ø¿¬ »ó¼¼ Á¤º¸ api Á¤¸®
+	// ë°›ì•„ì˜¨ ê³µì—° ìƒì„¸ ì •ë³´ api ì •ë¦¬
 	private void setPerformanceInfo(ArrayList<PerformanceDetailDto> detailList,
 			ArrayList<PerformancePeaceDto> peaceList, List<PerformanceStatusDto> statusList,
 			PerformanceRequestDto prd) {
-		// ¼¼ ¸®½ºÆ® Áß ÀÛÀº Å©±â±îÁö¸¸ ¹İº¹
+		// ì„¸ ë¦¬ìŠ¤íŠ¸ ì¤‘ ì‘ì€ í¬ê¸°ê¹Œì§€ë§Œ ë°˜ë³µ
 		int size = Math.min(detailList.size(), Math.min(peaceList.size(), statusList.size()));
 
 		for (int i = 0; i < size; i++) {
@@ -214,12 +210,18 @@ public class PerformanceInfoProcessor {
 		}
 	}
 
-	// ÃßÃµ, ·©Å· °ø¿¬ ¿äÃ»ÀÎÁö È®ÀÎ
+	// ë­í‚¹ ê³µì—° ìš”ì²­ì¸ì§€ í™•ì¸
 	private boolean isBoxOfficeRequest(PerformanceRequestDto prd) {
-		return "recommend".equals(prd.getPerRequestT()) || "rank".equals(prd.getPerRequestT());
+		String type = prd.getPerRequestT();
+		return type != null && type.contains("rank");
 	}
 
 	// getter
+	
+	public ArrayList<PerformanceInfoDto> getPerformanceInfoList() {
+		return performanceInfoList;
+	}
+	
 	public PerformanceListDto getPerformanceList() {
 		return performanceList;
 	}

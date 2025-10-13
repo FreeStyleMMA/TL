@@ -59,10 +59,10 @@ export default function TicketMusicalpage() { // 뮤지컬 페이지 (장르 코
         setStatusLoading(true);
 
         const rankResponse = await axios.get("http://localhost:8080/tl/getPerformanceInfo", {
-          params: { startdate: sDate, enddate: eDate, rows: 5, cpage: 1, shcate: "GGGA", requestType: "rank" },
+          params: { startdate: sDate, enddate: eDate, rows: 5, cpage: 1, shcate: "GGGA", perRequestT: "rankMusical" },
         });
         const recommendResponse = await axios.get("http://localhost:8080/tl/getPerformanceInfo", {
-          params: { startdate: sDate, enddate: eDate, rows: 5, cpage: 1, shcate: "GGGA", requestType: "recommend" },
+          params: { startdate: sDate, enddate: eDate, rows: 5, cpage: 1, shcate: "GGGA", perRequestT: "recommend" },
         });
 
         setRankPerformanceInfos(rankResponse.data);
@@ -141,7 +141,7 @@ export default function TicketMusicalpage() { // 뮤지컬 페이지 (장르 코
       {/* 공연 랭킹 */}
       <div style={{ display: "flex", alignItems: "center", margin: "20px" }}>
         <h2>공연 랭킹</h2>
-        <Link to="/ticket/list" state={{ type: "rank", genre : "GGGA" }} // 모두 보기 버튼
+        <Link to="/ticket/list" state={{ type: "rankMusical", genre : "GGGA" }} // 모두 보기 버튼
           style={{ margin: "5px", border: "1px, solid, black", }}
         >
           모두 보기

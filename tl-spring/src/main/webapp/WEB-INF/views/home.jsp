@@ -27,14 +27,17 @@
 		<input name="prfstate" placeholder="공연상태 코드"> 
 		<input name="openrun" placeholder="오픈런(Y,N)"> 
 		<input name="afterdate" placeholder="해당일자 이후 등록/수정된 항목출력">
-		<input name="requestType" placeholder="요청 타입"> <br>
+		<input name="perRequestT" placeholder="요청 타입"> <br>
 		<input type="submit" value="테이블 보기" formaction="${cp}/tl/getPerformanceInfoTable">
-		<input type="submit" value="JSON 보기" formaction="${cp}/tl/getPerformanceInfo">
+		<input type="submit" value="PfmInfo 보기" formaction="${cp}/tl/getPerformanceInfoApi">
 		<input type="submit" value="PfmList 보기" formaction="${cp}/tl/getPerformanceList">
 		<input type="submit" value="PfmDetail 보기" formaction="${cp}/tl/getPerformanceDetailList">
 		<input type="submit" value="PfmPeace 보기" formaction="${cp}/tl/getPerformancePeaceList">
 		<input type="submit" value="PfmStatus 보기" formaction="${cp}/tl/getPerformanceStatusList">
+		<input type="submit" value="DB 업데이트" formaction="${cp}/tl/fetchDB">
+		<input type="submit" value="DB 초기화" formaction="${cp}/tl/resetDB">
 	</form>
+		
 	<pre>
 요청 타입
 recommend 추천 공연

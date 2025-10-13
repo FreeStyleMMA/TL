@@ -67,10 +67,10 @@ export default function TicketHomepage() {
         setStatusLoading(true);
 
         const rankResponse = await axios.get("http://localhost:8080/tl/getPerformanceInfo", {
-          params: { startdate: sDate, enddate: eDate, rows: 5, cpage: 1, requestType: "rank" },
+          params: { startdate: sDate, enddate: eDate, rows: 5, cpage: 1, perRequestT: "rank" },
         });
         const recommendResponse = await axios.get("http://localhost:8080/tl/getPerformanceInfo", {
-          params: { startdate: sDate, enddate: eDate, rows: 5, cpage: 1, requestType: "recommend" },
+          params: { startdate: sDate, enddate: eDate, rows: 5, cpage: 1, perRequestT: "recommend" },
         });
 
         setRankPerformanceInfos(rankResponse.data);
@@ -152,6 +152,9 @@ export default function TicketHomepage() {
 
   return (
     <div>
+      {console.log(rankPerformanceInfos)}
+      {console.log(recommendPerformanceInfos)}
+      {console.log(performanceInfos)}
       {/* 검색창 */}
       <form onSubmit={(e) => e.preventDefault()} style={{ marginBottom: "20px", display: "flex", justifyContent: "center" }}>
         <input

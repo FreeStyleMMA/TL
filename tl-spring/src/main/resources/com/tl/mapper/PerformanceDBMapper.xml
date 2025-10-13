@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tl.mapper.PerformanceDBMapper">
+	<!-- performance resultMap -->
+	<resultMap id="PerformanceResultMap"
+		type="com.tl.dto.PerformanceInfoDto">
+		<id property="perNum" column="per_num" />
+		<result property="perId" column="per_id" />
+		<result property="perUpdateD" column="per_updateD" />
+		<result property="perRequestT" column="per_requestT" />
+		<result property="perGenreC" column="per_genreC" />
+		<result property="perRegionC" column="per_regionC" />
+		<result property="perTitle" column="per_title" />
+		<result property="perStartD" column="per_startD" />
+		<result property="perEndD" column="per_endD" />
+		<result property="perRunT" column="per_runT" />
+		<result property="perSche" column="per_sche" />
+		<result property="perGenre" column="per_genre" />
+		<result property="perPoster" column="per_poster" />
+		<result property="perPrice" column="per_price" />
+		<result property="perPlace" column="per_place" />
+		<result property="perAddress" column="per_address" />
+		<result property="perLatitude" column="per_latitude" />
+		<result property="perLongitude" column="per_longitude" />
+		<result property="perRegion" column="per_region" />
+		<result property="perRank" column="per_rank" />
+	</resultMap>
+
+	<!-- ticket resultMap -->
+	<resultMap id="TicketResultMap" type="com.tl.dto.TicketDto">
+		<result property="perNum" column="per_num"
+			javaType="java.lang.Long" />
+		<result property="ticketNum" column="ticket_num"
+			javaType="java.lang.Long" />
+		<result property="name" column="ticket_name" />
+		<result property="url" column="ticket_url" />
+	</resultMap>
+
+	<!-- 공연 정보 db에 추가 -->
+	<insert id="addPerformance"
+		parameterType="com.tl.dto.PerformanceInfoDto" useGeneratedKeys="true"
+		keyProperty="perNum">
+		INSERT INTO performance (
+		per_requestT, per_updateD, per_genreC, per_regionC,
+		per_id, per_title, per_startD, per_endD, per_place,
+		per_runT, per_sche, per_price, per_genre, per_poster,
+		per_address, per_latitude, per_longitude, per_region, per_rank
+		)
+		VALUES(
+		#{perRequestT}, #{perUpdateD}, #{perGenreC},
+		#{perRegionC}, #{perId}, #{perTitle}, #{perStartD},
+		#{perEndD}, #{perPlace}, #{perRunT}, #{perSche},
+		#{perPrice}, #{perGenre}, #{perPoster}, #{perAddress},
+		#{perLatitude}, #{perLongitude}, #{perRegion}, #{perRank}
+		)
+	</insert>
+	<!-- 예매처 정보 db에 추가 -->
+	<insert id="addTicket" parameterType="java.util.List">
+		INSERT INTO performance_ticket (per_num, ticket_name, ticket_url)
+		VALUES
+		<foreach collection="list" item="ticket" separator=",">
+			(#{ticket.perNum}, #{ticket.name}, #{ticket.url})
+		</foreach>
+	</insert>
+	<!-- per_id가 일치하는 공연 개수 확인 -->
+	<select id="checkPerformance"
+		parameterType="com.tl.dto.PerformanceInfoDto" resultType="int">
+		SELECT
+		COUNT(*) FROM performance WHERE per_id = #{perId} AND per_requestT =
+		#{perRequestT}
+	</select>
+	<!-- 조건과 일치하는 공연 데이터 반환 -->
+	<select id="getPerformance"
+		parameterType="com.tl.dto.PerformanceRequestDto"
+		resultMap="PerformanceResultMap">
+		SELECT * FROM performance
+		<where>
+	        <choose>
+	            <!-- requestT가 recommend일 경우 -->
+	            <when test="perRequestT == 'recommend'">
+	                per_requestT IS NULL OR per_requestT = ''
+	            </when>
+	            <!-- requestT가 비어있지 않은 경우 -->
+	            <otherwise>
+	                <if test="perRequestT != null and perRequestT != ''">
+	                    per_requestT = #{perRequestT}
+	                </if>
+	            </otherwise>
+	        </choose>
+			<if test="shcate != null and shcate != ''">
+				AND per_genreC = #{shcate}
+			</if>
+			<if test="signgucode != null and signgucode != ''">
+				AND per_regionC = #{signgucode}
+			</if>
+		</where>
+    <choose>
+        <!-- perRequestT가 빈값이면 per_updateD 기준 정렬 -->
+        <when test="perRequestT == null or perRequestT == ''">
+            ORDER BY STR_TO_DATE(per_updateD, '%Y-%m-%d %H:%i:%s') DESC
+        </when>
+        <!-- perRequestT가 recommend면 랜덤 정렬 -->
+        <when test="perRequestT == 'recommend'">
+            ORDER BY RAND()
+        </when>
+        <!-- perRequestT가 recommend, 빈값 이외의 값이면 per_rank 기준 정렬 -->
+        <otherwise>
+            ORDER BY per_rank ASC
+        </otherwise>
+    </choose>
+    LIMIT #{rows} OFFSET #{startIndex}
+	</select>
+	<!-- per_num이 일치하는 예매처 데이터 반환 -->
+	<select id="getTicket" parameterType="java.lang.Long"
+		resultMap="TicketResultMap">
+		SELECT * FROM performance_ticket WHERE per_num = #{perNum}
+	</select>
+	<!-- 오늘 날짜가 endD를 지난 데이터 제거 -->
+	<delete id="deletePastPerformance">
+	  	DELETE FROM performance
+	  	WHERE per_endD IS NOT NULL
+	    AND per_endD != ''
+	    AND STR_TO_DATE(per_endD, '%Y.%m.%d') &lt; CURDATE()
+	</delete>
+	<!-- requestT가 일치하는 데이터 제거 -->
+	<delete id="deleteByRequestT" parameterType="java.lang.String">
+		DELETE FROM
+		performance WHERE per_requestT = #{requestT}
+	</delete>
+	<!-- 목록중 가장 최근의 업데이트 날짜 반환 -->
+	<select id="getUpdateDate" resultType="java.lang.String">
+		SELECT per_updateD FROM performance WHERE per_requestT = '' ORDER BY per_updateD 
+		DESC LIMIT 1;
+	</select>
+	<!-- 전체 공연 목록 삭제 -->
+	<delete id="deleteAllPerformance">
+		DELETE FROM performance
+	</delete>
+</mapper>

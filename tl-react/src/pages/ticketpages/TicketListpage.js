@@ -39,13 +39,13 @@ export default function TicketResearchpage() {
 
         // 현재 페이지 데이터
         const response = await axios.get('http://localhost:8080/tl/getPerformanceInfo', {
-          params: { startdate: startDate, enddate: endDate, cpage: page, rows: 10, signgucode: region, requestType : type, shcate : genre }
+          params: { startdate: startDate, enddate: endDate, cpage: page, rows: 10, signgucode: region, perRequestT : type, shcate : genre }
         });
         setPerformanceInfos(response.data);
 
         // 다음 페이지 존재 여부 확인
         const nextResponse = await axios.get('http://localhost:8080/tl/getPerformanceInfo', {
-          params: { startdate: startDate, enddate: endDate, cpage: page + 1, rows: 10, signgucode: region, requestType : type, shcate : genre }
+          params: { startdate: startDate, enddate: endDate, cpage: page + 1, rows: 10, signgucode: region, perRequestT : type, shcate : genre }
         });
         setHasNextPage(nextResponse.data.length > 0);
 

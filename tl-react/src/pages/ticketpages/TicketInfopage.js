@@ -23,7 +23,7 @@ export default function TicketInfopage() {
             <img alt={performanceInfo.perTitle} src={performanceInfo.perPoster} style={{ width: "200px", height: "240px" }} />
             <h4>공연 제목 : {performanceInfo.perTitle}</h4>
             <h4>공연 기간 : {performanceInfo.perStartD} ~ {performanceInfo.perEndD}</h4> {/* 공연 시작 ~ 종료 일자 */}
-            <h4>공연 장소 : {performanceInfo.perPeace}</h4>
+            <h4>공연 장소 : {performanceInfo.perPlace}</h4>
             <h4>공연 관람시간 : {performanceInfo.perRunT}</h4>
             <h4>공연 가격: {performanceInfo.perPrice}</h4>
             <h4>공연 일정 : {performanceInfo.perSche}</h4>
