@@ -1,31 +1,50 @@
-# Maven 관련
-/target/
-!.mvn/wrapper/maven-wrapper.jar
+# =========================
+# Eclipse / STS 관련
+# =========================
 
-# Eclipse/STS IDE 관련
-/.classpath
-/.project
-/.settings/
-/bin/
+# Eclipse 워크스페이스 설정
+.metadata/
 
-# Intellij 관련
-/.idea/
-/out/
-/*.iml
+# 프로젝트 설정
+.project
+.classpath
+.settings/
 
-# OS 관련
-.DS_Store
-Thumbs.db
+# 빌드 산출물
+bin/
+target/
 
-# 로그 및 임시 파일
-*.log
+# 임시/백업 파일
 *.tmp
 *.bak
+*.swp
+*.log
 
-# 환경설정 파일
-*.env
-application.properties
-application.yml
+# =========================
+# 운영체제별 파일
+# =========================
+# macOS
+.DS_Store
 
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# =========================
+# Maven / Gradle
+# =========================
+# Maven 빌드 산출물
+target/
+
+# Gradle 빌드 산출물
+.gradle/
+build/
+
+# =========================
 # 기타
+# =========================
+# 로그, 임시파일 등
 *.class
+*.jar
+*.war
+*.ear

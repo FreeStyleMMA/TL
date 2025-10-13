@@ -7,7 +7,6 @@ import { ReplyCountContext } from '../../context/ReplyCountContext';
 import { LikeContext } from "../../context/LikeContext";
 import { useAuth } from "../auth/AuthContext";
 
-
 export default function ComeHomePage() {
   const { totalReplies, setInitialReplies } = useContext(ReplyCountContext);
   const { handleLike, totalLikes, liked, setInitialLikes } = useContext(LikeContext);
@@ -20,6 +19,7 @@ export default function ComeHomePage() {
       const response = await axios.get("http://localhost:8080/post/getComHomeTop")
       const newPosts = Array.isArray(response.data) ? response.data : [];
       setTopPosts(newPosts);
+      console.log("media null 확인", response.data)
     } catch (error) {
       console.log("comhomepage fetchTop", error);
     }
@@ -48,31 +48,36 @@ export default function ComeHomePage() {
       <div id="story">
         <div id="story_title">인기게시물</div>
         <div id="story_container">
-          {topPosts.map(post =>
-            <Link to={`./posts/${post.no}`} style={{ position: 'relative' }} key={post.no}>
-              <div className="story_box">
-                {/* 배경 전용 */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: 0, left: 0, right: 0, bottom: 0,
-                    backgroundImage: post.media ? `url(http://localhost:8080${post.media})` : 'none',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    opacity: 0.9,
-                    borderRadius: '25px',
-                    zIndex: 0
-                  }}
-                />
-                <div className='story_box_link'
-                  style={{ position: 'relative', zIndex: 1, padding: 10 }}>
-                  <div className='story_box_title'>{post.title}</div>
-                  <div className='story_box_content'>{post.content}</div>
-                  {/* <div className='story_box_text'>{new Date(post.date).toLocaleDateString()}</div> */}
+          {topPosts
+            .filter((post) => post.media)
+            .map(post =>
+              <Link to={`./posts/${post.no}`}
+                style={{ position: 'relative' }}
+                key={post.no}>
+                <div className="story_box">
+                  {/* 배경 전용 */}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0, left: 0, right: 0, bottom: 0,
+                      backgroundImage: post.media ? `url(http://localhost:8080${post.media})` : 'none',
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      opacity: 0.9,
+                      borderRadius: '25px',
+                      zIndex: 0
+                    }}
+                    onError={(e) => (e.target.src = `${process.env.PUBLIC_URL}/images/grey.jpg`)}
+                  />
+                  <div className='story_box_link'
+                    style={{ position: 'relative', zIndex: 1, padding: 10 }}>
+                    <div className='story_box_title'>{post.title}</div>
+                    <div className='story_box_content'>{post.content}</div>
+                    {/* <div className='story_box_text'>{new Date(post.date).toLocaleDateString()}</div> */}
+                  </div>
                 </div>
-              </div>
-            </Link>
-          )}
+              </Link>
+            )}
         </div>
       </div>
       <div id='comehome_mid'>

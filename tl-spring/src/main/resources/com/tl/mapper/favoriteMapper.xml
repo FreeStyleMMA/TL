@@ -52,5 +52,7 @@
 			FROM favorite f
 			JOIN performance p ON f.per_id = p.per_id
 			where f.memberId=#{memberId} AND liked=1
+			ORDER BY fav_id DESC
+			Limit 8
 	</select>
 </mapper>

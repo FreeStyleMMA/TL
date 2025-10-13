@@ -43,25 +43,27 @@ export default function Homepage() {
             신규오픈
           </div>
           <div id="perform_list">
-            {performances.map(perform =>
-              <div className="perform_box" key={perform.favId}>
-                <div className="performe_poster">
-                  <img
-                    className="perform_poster_img"
-                    alt={perform.perTitle}
-                    src={perform.perPoster} //공연 포스터
-                  /></div>
-                <div className="perform_contents">
-                  <div className="perform_title">&nbsp;{perform.perTitle}</div>
-                  <div className="perform_run_date">
-                    &nbsp;&nbsp;{perform.perStartD}
-                    {/* &nbsp;~
+            {performances
+              .filter((perform) => perform.perPoster)
+              .map(perform =>
+                <div className="perform_box" key={perform.favId}>
+                  <div className="perform_poster">
+                    <img
+                      className="perform_poster_img"
+                      alt={perform.perTitle}
+                      src={perform.perPoster} //공연 포스터
+                    /></div>
+                  <div className="perform_contents">
+                    <div className="perform_title">&nbsp;{perform.perTitle}</div>
+                    <div className="perform_run_date">
+                      &nbsp;&nbsp;{perform.perStartD}
+                      {/* &nbsp;~
                     <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{perform.perEndD} */}
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
           </div>
         </div>
 
@@ -94,7 +96,7 @@ export default function Homepage() {
             <p className="r_text">뮤지컬&lt;보더라인&gt;</p>
             <p className="sub_text3">2025.07.15~2025.10.12</p>
           </div>
-          <img className="r_img" src="/images/borderline.jpg" />
+          <img className="r_img" alt="images/grey.jpg" src="/images/borderline.jpg" />
           <div id="r2">
             <div className="r_text2">뮤지컬&lt;보더라인&gt;</div>
             <div className="r_text2">뮤지컬 &lt;위대한개츠비&gt;(The Great Gatsby)</div>
