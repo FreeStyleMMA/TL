@@ -5,9 +5,11 @@
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/task https://www.springframework.org/schema/task/spring-task.xsd">
 	<!-- xmlns:mvc="http://www.springframework.org/schema/mvc" 추가 -->
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing 
@@ -29,6 +31,7 @@
 	</beans:bean>
 
 	<context:component-scan base-package="com.tl" />
+
 	<context:component-scan
 		base-package="com.tl.controller" />
 
@@ -40,9 +43,12 @@
 			allowed-headers="Content-Type, Authorization"
 			allow-credentials="true" />
 	</mvc:cors>
+	
 	<!-- 파일 경로 접근 설정 -->
 	<mvc:resources mapping="/upload/**" location="file:/C:/upload/"/>
 	<!-- MULTIPART RESOLVER 설정 -->
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
+    <!-- 스케줄러 활성화 -->
+    <task:annotation-driven />
 </beans:beans>

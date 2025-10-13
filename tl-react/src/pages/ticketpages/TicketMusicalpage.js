@@ -60,10 +60,10 @@ export default function TicketMusicalpage() { // 뮤지컬 페이지 (장르 코
         setStatusLoading(true);
 
         const rankResponse = await axios.get("http://localhost:8080/tl/getPerformanceInfo", {
-          params: { startdate: sDate, enddate: eDate, rows: 5, cpage: 1, shcate: "GGGA", requestType: "rank" },
+          params: { startdate: sDate, enddate: eDate, rows: 5, cpage: 1, shcate: "GGGA", perRequestT: "rankMusical" },
         });
         const recommendResponse = await axios.get("http://localhost:8080/tl/getPerformanceInfo", {
-          params: { startdate: sDate, enddate: eDate, rows: 5, cpage: 1, shcate: "GGGA", requestType: "recommend" },
+          params: { startdate: sDate, enddate: eDate, rows: 5, cpage: 1, shcate: "GGGA", perRequestT: "recommend" },
         });
 
         setRankPerformanceInfos(rankResponse.data);

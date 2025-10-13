@@ -59,10 +59,10 @@ export default function TicketTheatrepage() { // 연극 페이지 (장르 코드
         setStatusLoading(true);
 
         const rankResponse = await axios.get("http://localhost:8080/tl/getPerformanceInfo", {
-          params: { startdate: sDate, enddate: eDate, rows: 5, cpage: 1, shcate: "AAAA", requestType: "rank" },
+          params: { startdate: sDate, enddate: eDate, rows: 5, cpage: 1, shcate: "AAAA", perRequestT: "rankTheatre" },
         });
         const recommendResponse = await axios.get("http://localhost:8080/tl/getPerformanceInfo", {
-          params: { startdate: sDate, enddate: eDate, rows: 5, cpage: 1, shcate: "AAAA", requestType: "recommend" },
+          params: { startdate: sDate, enddate: eDate, rows: 5, cpage: 1, shcate: "AAAA", perRequestT: "recommend" },
         });
 
         setRankPerformanceInfos(rankResponse.data);
