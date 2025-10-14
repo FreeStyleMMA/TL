@@ -1,197 +1,187 @@
-#comhome_my_layout {
-  background-color: white;
-  margin-left: auto;
-  margin-right: auto;
+body {
+  margin: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #ffffff;
 }
 
-/* 상위 스토리 영역 전체 */
-#story {
-  margin-left: 150px;
-  height: 270px;
-  width: 1000px;
+.reddit_layout {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-#story_title {
-  font-size: 18px;
-  font-weight: 500;
+.reddit_header {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 20px 0 10px 0;
+  color: #ff4500;
 }
 
-/* 스토리 표현 영역 */
-#story_container {
+/* 인기 게시물 가로 스크롤 */
+.reddit_top_wrapper {
   position: relative;
   display: flex;
-  gap: 20px;
-  margin-top: 20px;
-  overflow: hidden;
+  align-items: center;
 }
 
-.story_box {
-  width: 210px;
-  height: 170px;
-  position: relative;
-  border-radius: 25px;
+.reddit_top_feed {
+  display: flex;
+  gap: 15px;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  padding: 10px 0;
+}
+
+.reddit_top_card {
+  min-width: 220px;
+  height: 300px;
+  border-radius: 12px;
   overflow: hidden;
+  flex-shrink: 0;
+  text-decoration: none;
+  color: white;
+  position: relative;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.reddit_top_img {
+  width: 100%;
+  height: 100%;
   background-size: cover;
   background-position: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  /* 아래쪽 정렬 */
-  padding: 10px;
-  color: white;
-}
-
-/* 스토리 텍스트 */
-.story_box_link {
-  color: white;
-  /* 글씨 색 */
-  text-decoration: none;
-  /* 밑줄 제거 */
-  overflow: hidden;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  /* gap: px; */
-  text-overflow: ellipsis;
 }
 
-.story_box_title {
-  position: relative;
-  width: 200px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font-size: 17px;
-  font-weight: 600;
-  margin-bottom: 5px;
-}
-
-.story_box_content {
-  position: relative;
-  width: 300px;
-  font-size: 12px;
-  color: white;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  margin-bottom: auto;
-}
-
-/* 본문 스크롤 영역 */
-#comehome_mid {
-  display: flex;
-  flex-direction: column;
-  height: 2800px;
-  width: 100%;
-
-}
-
-#comehome_mid_title {
-  font-size: 18px;
-  font-weight: 500;
-  padding-left: 250px;
-}
-
-#comehome_mid_body {
-  display: flex;
-  margin-top: 20px;
-}
-
-/* 좌측 빈 공간 */
-#comehome_mid_left {
-  width: 250px;
-}
-
-/* 우측 컨텐츠 영역 */
-#comehome_mid_right {
-  width: 750px;
-}
-
-/* 프로필 정보 영역 */
-#profile {
+.reddit_top_text {
   position: absolute;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  bottom: 20px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
 }
 
-/* 포스트 박스 */
-.comhome_post {
-  width: 650px;
-  height: 600px;
-  background-color: white;
-
-  border-top: 1px solid rgb(196, 196, 196);
-  /* margin: 50px 0px 0px 270px; */
+.reddit_top_title {
+  font-weight: 700;
+  font-size: 16px;
 }
 
-/* 포스트 박스 프로필 영역 */
-.comhome_post_profile {
+.reddit_top_content {
+  font-size: 13px;
+  line-height: 1.2;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* 화살표 버튼 */
+.scroll_btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: white;
+  font-size: 24px;
+  width: 40px;
+  height: 60px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.scroll_btn.left {
+  left: 0;
+}
+
+.scroll_btn.right {
+  right: 0;
+}
+
+/* 최신 게시물 피드 */
+.reddit_feed {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 카드 스타일 */
+.reddit_card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reddit_card_header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-left: 10px;
-  /* margin: 10px 0px 0px 10px; */
+  gap: 10px;
+}
+
+.reddit_profile_img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.reddit_member {
+  font-weight: 600;
+}
+
+.reddit_date {
+  font-size: 12px;
+  color: #888;
+}
+
+.reddit_card_title {
+  text-decoration: none;
+  color: black;
+}
+
+.reddit_card_title h3 {
+  margin: 5px 0 5px 0;
+}
+
+.reddit_card_img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin: 10px 0;
+}
+
+.reddit_card_content {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.4;
+}
+
+.reddit_card_actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.reddit_btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  background-color: #f0f2f5;
+  border: 1px solid #ddd;
+  padding: 5px 10px;
+  border-radius: 20px;
   font-size: 14px;
 }
 
-/* 프로필 이미지 샘플은 회색 */
-.comhome_profile_image {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  border: 1px solid black;
-}
-
-/* 포스트 날짜 글자  */
-.comhome_post_date {
-  color: black;
-  font-size: 13px;
-}
-
-/* 포스트 제목 */
-.comhome_post_title {
-  font-size: 17px;
-  font-weight: 600;
-  color: black;
-  margin: 15px 0px 0px 10px;
-  text-decoration: none;
-}
-
-/* 포스트 이미지 */
-.comhome_post_img {
-  width: 650px;
-  height: 450px;
-  border-radius: 30px;
-}
-
-/* 좋아요, 댓글 전체 구간 */
-.comhome_react {
-  display: flex;
-  height: 30px;
-}
-
-/* 좋아요 댓글 각각 */
-.comhome_re {
-  all: unset;
-  appearance: none;
-  cursor: pointer;
-  width: 50px;
-  height: 25px;
-  border-radius: 20px;
-  border: 1px solid black;
-  font-size: 13px;
-  font-weight: 400;
-  color: black;
-  margin: 10px 0px 0px 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* 좋아요, 댓글 이미지 */
-.comhome_re_img {
+.reddit_icon {
   width: 20px;
   height: 20px;
 }

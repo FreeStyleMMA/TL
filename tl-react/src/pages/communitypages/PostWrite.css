@@ -1,29 +1,66 @@
 .postLayout {
+  padding-top: 100px;
+  padding-left: 400px;
+  width: 1200px;
   display: flex;
   flex-direction: column;
 }
 
+#pw_category {
+  height: 50px;
+  display: flex;
+  gap: 30px;
+  /* border-bottom: 1px solid black; */
+  margin-bottom: 50;
+  align-items: flex-end;
+}
+
+#pw_catecory_text {
+  font-size: 30px;
+  font-weight: 500;
+}
+
 .select {
+  width: 60px;
+  height: 30px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+#pw_writer {
   margin-top: 30px;
+  font-size: 22px;
 }
 
 .titleBox {
-  width: 300px;
+  margin-top: 30px;
+  width: 800px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: 500;
   align-content: center;
+}
+
+.titleBox::placeholder {
+  margin-bottom: auto;
 }
 
 .textBox {
   margin-top: 30px;
-  width: 1000px;
-  height: 500px;
+  width: 800px;
+  min-height: 80px;
+  max-height: 400px;
+  resize: none;
+  overflow: hidden;
+  line-height: 1.4;
 }
 
 .file {
   padding: 30px;
-  margin-left: 750px;
+  margin-left: 630px;
 }
 
 .submitButton {
-  margin-left: 800px;
+  margin-left: 730px;
   width: 70px;
 }

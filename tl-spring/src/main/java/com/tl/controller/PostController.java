@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.tl.dto.CountDTO;
 import com.tl.dto.FreeBoardResponse;
+import com.tl.dto.LikeDTO;
 import com.tl.dto.LikeRequest;
 import com.tl.dto.LikeResponse;
 import com.tl.dto.MyPostResponse;
@@ -121,19 +122,23 @@ public class PostController {
 		return service.countLikes(postNo);
 	}
 
-	@GetMapping("/initialLikes") //첫 마운팅 시 좋아요 초기값(count)반납.
-	public List<CountDTO> initialLikes(@RequestParam List<Long> postNos,@RequestParam String memberId) {
-		List<CountDTO> result = new ArrayList<>();
-		for (Long postNo : postNos) {
-			int liked = service.getLike(memberId,postNo).getLiked();
-			int count = service.countLikes(postNo);
-			result.add(CountDTO.builder()
-					.postNo(postNo)
-					.count(count)
-					.liked(liked)
-					.build());
-		}
-		return result;
+	@GetMapping("/initialLikes") // 첫 마운팅 시 좋아요 초기값(count) 반납
+	public List<CountDTO> initialLikes(@RequestParam List<Long> postNos, @RequestParam String memberId) {
+	    log.info("요청 멤버 아이디: " + memberId);
+	    List<CountDTO> result = new ArrayList<>();
+	    for (Long postNo : postNos) {
+	        // 🔹 null 방어 코드
+	        LikeDTO like = service.getLike(memberId, postNo);
+	        int liked = (like != null) ? like.getLiked() : 0;
+	        int count = service.countLikes(postNo);
+	        result.add(CountDTO.builder()
+	                .postNo(postNo)
+	                .count(count)
+	                .liked(liked)
+	                .build());
+	    }
+
+	    return result;
 	}
 	
 	@GetMapping("/getMyPost")
