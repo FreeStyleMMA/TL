@@ -83,7 +83,6 @@ public class JwtTokenProvider {
 				return cookie.getValue();
 			}
 		}
-
 		return null;
 	}
 	//token에서 Expiration 추출

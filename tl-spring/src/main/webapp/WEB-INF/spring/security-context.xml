@@ -20,6 +20,8 @@
 	<security:http create-session="stateless"
 		entry-point-ref="authenticationEntryPoint">
 		<!-- 권한 핸들링 -->
+		<security:intercept-url pattern="/" 
+			access="permitAll" />
 		<security:intercept-url pattern="/api/**"
 			access="permitAll" />
 		<security:intercept-url pattern="/post/**"
@@ -42,7 +44,7 @@
 
 	<!-- JWT 필터 빈 등록 -->
 	<bean id="jwtAuthenticationFilter"	class="com.tl.security.JwtFilter" />
-<bean id="jwtTokenProvider" class="com.tl.security.JwtTokenProvider"/>
+	<bean id="jwtTokenProvider" class="com.tl.security.JwtTokenProvider"/>
 	<!-- 인증 매니저 -->
 	<security:authentication-manager>
 		<security:authentication-provider>

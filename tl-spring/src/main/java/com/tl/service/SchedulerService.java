@@ -30,8 +30,8 @@ public class SchedulerService {
 	}
 
 	//매일 18:30 스케쥴링(kopis 공연 api DB에 업데이트)
-//	@Scheduled(cron = "0 30 18 * * ?")
-	@Scheduled(cron = "0 * * * * ?")// 테스트용
+	@Scheduled(cron = "0 30 18 * * ?")
+//	@Scheduled(cron = "0 * * * * ?")// 테스트용
 	private void fetchPerformances() {
     	log.info("DB ������Ʈ");
         // �Ⱓ ���� ������ ����
