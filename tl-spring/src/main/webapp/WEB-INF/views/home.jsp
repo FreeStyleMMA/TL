@@ -1,48 +1,62 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="cp" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Home</title>
+<title>Kopis API</title>
+<link rel="stylesheet" type="text/css" href="${cp}/resources/css/homeStyle.css">
 </head>
 <body>
-	<h1>Kopis api</h1>
+    <h1>TL 테스트 페이지</h1>
+    <hr>
+    <h2>API 호출</h2>
+
+    <form method="get">
+        <div>
+            <input name="startdate" placeholder="공연 시작 일자(필수)"> 
+            <input name="enddate" placeholder="공연 종료 일자(필수)"> 
+            <input name="cpage" placeholder="현재 페이지(필수)"> 
+            <input name="rows" placeholder="페이지당 목록 수(필수)">
+            <input name="perRequestT" placeholder="요청 타입(status호출시 필수)">
+        </div>
+        <div>
+            <input name="shprfnm" placeholder="공연명">
+            <input name="shprfnmfct" placeholder="공연시설명">
+            <input name="shcate" placeholder="장르코드">
+            <input name="prfplccd" placeholder="공연장코드">
+            <input name="signgucode" placeholder="지역(시도)코드">
+        </div>
+        <div>
+            <input name="signgucodesub" placeholder="지역(구군)코드">
+            <input name="kidstate" placeholder="아동공연여부(Y,N)">
+            <input name="prfstate" placeholder="공연상태 코드">
+            <input name="openrun" placeholder="오픈런(Y,N)">
+            <input name="afterdate" placeholder="해당일자 이후 등록된 항목출력">
+        </div>
+        <div>
+            <input type="submit" value="테이블 보기" formaction="${cp}/tl/getPerformanceInfoTable">
+            <input type="submit" value="PfmInfo 보기" formaction="${cp}/tl/getPerformanceInfoApi">
+            <input type="submit" value="PfmList 보기" formaction="${cp}/tl/getPerformanceList">
+            <input type="submit" value="PfmDetail 보기" formaction="${cp}/tl/getPerformanceDetailList">
+            <input type="submit" value="PfmPeace 보기" formaction="${cp}/tl/getPerformancePeaceList">
+            <input type="submit" value="PfmStatus 보기" formaction="${cp}/tl/getPerformanceStatusList">
+        </div>
+    </form>
+	<hr>    
+	<h2>DB 테스트</h2>
+    <div class="button-group">
+        <a href="${cp}/tl/fetchDB"><button type="button">DB 업데이트</button></a>
+        <a href="${cp}/tl/resetDB"><button type="button">DB 초기화</button></a>
+    </div>
 	<hr>
-	<h2>공연 목록 보기</h2>
-	<form method="get">
-		<input name="startdate" placeholder="공연 시작 일자(필수)"> 
-		<input name="enddate" placeholder="공연 종료 일자(필수)"> 
-		<input name="cpage" placeholder="현재 페이지(필수)"> 
-		<input name="rows" placeholder="페이지당 목록 수(필수)"> 
-		<input name="shprfnm" placeholder="공연명"> <br> 
-		<input name="shprfnmfct" placeholder="공연시설명">
-		<input name="shcate" placeholder="장르코드">
-		<input name="prfplccd" placeholder="공연장코드"> 
-		<input name="signgucode" placeholder="지역(시도)코드"> 
-		<input name="signgucodesub" placeholder="지역(구군)코드"> <br> 
-		<input name="kidstate" placeholder="아동공연여부(Y,N)"> 
-		<input name="prfstate" placeholder="공연상태 코드"> 
-		<input name="openrun" placeholder="오픈런(Y,N)"> 
-		<input name="afterdate" placeholder="해당일자 이후 등록/수정된 항목출력">
-		<input name="perRequestT" placeholder="요청 타입"> <br>
-		<input type="submit" value="테이블 보기" formaction="${cp}/tl/getPerformanceInfoTable">
-		<input type="submit" value="PfmInfo 보기" formaction="${cp}/tl/getPerformanceInfoApi">
-		<input type="submit" value="PfmList 보기" formaction="${cp}/tl/getPerformanceList">
-		<input type="submit" value="PfmDetail 보기" formaction="${cp}/tl/getPerformanceDetailList">
-		<input type="submit" value="PfmPeace 보기" formaction="${cp}/tl/getPerformancePeaceList">
-		<input type="submit" value="PfmStatus 보기" formaction="${cp}/tl/getPerformanceStatusList">
-		<input type="submit" value="DB 업데이트" formaction="${cp}/tl/fetchDB">
-		<input type="submit" value="DB 초기화" formaction="${cp}/tl/resetDB">
-	</form>
-		
-	<pre>
-요청 타입
+	<h2>요청 타입</h2>
+    <pre>
 recommend 추천 공연
 rank      공연 랭킹
-기본 값     공연 목록
+기본 값   공연 목록
 --------------------------------------------------
 공연상태 코드
 01 공연예정
@@ -87,6 +101,6 @@ GGGA 뮤지컬
 36 세종특별자치시   3611 세종특별자치시
 41 경기도           4111 경기도 수원시 장안구
                     4114 경기도 수원시 권선구
-</pre>
+    </pre>
 </body>
 </html>

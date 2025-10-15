@@ -36,9 +36,9 @@ public class SchedulerService {
     	// db 목록 정리
     	dbService.fetchPerformance();
     	ArrayList<PerformanceInfoDto> infos = new ArrayList<PerformanceInfoDto>();
-    	String oneMonthsLater = LocalDate.now().plusMonths(1).format(DateTimeFormatter.BASIC_ISO_DATE);
-    	String twoWeeksAgo = LocalDate.now().minusWeeks(2).format(DateTimeFormatter.BASIC_ISO_DATE);
-    	String twoWeeksLater = LocalDate.now().plusWeeks(2).format(DateTimeFormatter.BASIC_ISO_DATE);
+    	String today = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
+    	String oneMonthsAgo = LocalDate.now().minusDays(30).format(DateTimeFormatter.BASIC_ISO_DATE);
+    	String oneMonthsLater = LocalDate.now().plusDays(30).format(DateTimeFormatter.BASIC_ISO_DATE);
     	int page = 1;
     	while(true) {
     		infos = apiService.getPIP(new PerformanceRequestDto(oneMonthsLater, oneMonthsLater, page,
@@ -59,7 +59,7 @@ public class SchedulerService {
     	    log.warn("API 호출 대기 중 인터럽트 발생", e);
     	}
     	//rank 목록 추가
-    	addRankPerformances(twoWeeksAgo, twoWeeksLater);
+    	addRankPerformances(oneMonthsAgo, today);
 		log.info("db업데이트 완료");
     }
 	
@@ -71,9 +71,8 @@ public class SchedulerService {
         // db 목록 추가
     	ArrayList<PerformanceInfoDto> infos = new ArrayList<PerformanceInfoDto>();
     	String today = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
-    	String oneMonthsLater = LocalDate.now().plusMonths(1).format(DateTimeFormatter.BASIC_ISO_DATE);
-    	String twoWeeksAgo = LocalDate.now().minusWeeks(2).format(DateTimeFormatter.BASIC_ISO_DATE);
-    	String twoWeeksLater = LocalDate.now().plusWeeks(2).format(DateTimeFormatter.BASIC_ISO_DATE);
+    	String oneMonthsAgo = LocalDate.now().minusDays(30).format(DateTimeFormatter.BASIC_ISO_DATE);
+    	String oneMonthsLater = LocalDate.now().plusDays(30).format(DateTimeFormatter.BASIC_ISO_DATE);
     	int page = 1;
     	while(true) {
     		infos = apiService.getPIP(new PerformanceRequestDto(today, oneMonthsLater, page, 
@@ -95,7 +94,7 @@ public class SchedulerService {
     	    log.warn("API 호출 대기 중 인터럽트 발생", e);
     	}
     	// rank db 목록 추가
-    	addRankPerformances(twoWeeksAgo, twoWeeksLater);
+    	addRankPerformances(oneMonthsAgo, today);
 		log.info("db초기화 완료");
     }
 	// db에 rank목록 추가
