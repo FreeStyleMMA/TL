@@ -10,5 +10,4 @@ public interface PerformanceDBService {
 	public ArrayList<PerformanceInfoDto> getPerformance(PerformanceRequestDto request);
 	public void fetchPerformance();
 	public void resetPerformance();
-	public String getUpdateDate();
 }

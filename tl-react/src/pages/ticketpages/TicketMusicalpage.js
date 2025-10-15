@@ -169,19 +169,21 @@ export default function TicketMusicalpage() { // 뮤지컬 페이지 (장르 코
           <PerformanceList data={recommendPerformanceInfos} loading={statusLoading} />
         </div>
         {/* 전체 공연 */}
-        <div className="tm_perform_list" >
+        <div className="tc_perform_list">
           <div className="list_title">
             <div className="list_name">전체 공연</div>
             <Link
               to="/ticket/list"
-              state={{ type: "rank", genre: "GGGA" }} // 모두 보기 버튼
+              state={{ genre: "GGGA" }} // 모두 보기 버튼
               className="show_all"
             >
               전체보기
             </Link>
-            <PerformanceList data={performanceInfos} loading={loading} />
           </div>
+
+          <PerformanceList data={performanceInfos} loading={loading} />
         </div>
+
 
         {/* 지역별 공연 */}
         <div className="tm_perform_list" >
