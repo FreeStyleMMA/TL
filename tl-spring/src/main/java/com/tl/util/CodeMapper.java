@@ -1,51 +1,51 @@
 package com.tl.util;
 
-	import java.util.HashMap;
-	import java.util.Map;
+   import java.util.HashMap;
+   import java.util.Map;
 
-	public class CodeMapper {
-	    public static final Map<String, String> REGION_MAP = new HashMap<>();
-	    public static final Map<String, String> GENRE_MAP = new HashMap<>();
+   public class CodeMapper {
+       public static final Map<String, String> REGION_MAP = new HashMap<>();
+       public static final Map<String, String> GENRE_MAP = new HashMap<>();
 
-	    static {
-	        // Áö¿ª ÄÚµå ¸ÅÇÎ
-	        REGION_MAP.put("¼­¿ïÆ¯º°½Ã", "11");
-	        REGION_MAP.put("ºÎ»ê±¤¿ª½Ã", "26");
-	        REGION_MAP.put("´ë±¸±¤¿ª½Ã", "27");
-	        REGION_MAP.put("ÀÎÃµ±¤¿ª½Ã", "28");
-	        REGION_MAP.put("±¤ÁÖ±¤¿ª½Ã", "29");
-	        REGION_MAP.put("´ëÀü±¤¿ª½Ã", "30");
-	        REGION_MAP.put("¿ï»ê±¤¿ª½Ã", "31");
-	        REGION_MAP.put("¼¼Á¾Æ¯º°ÀÚÄ¡½Ã", "36");
-	        REGION_MAP.put("°æ±âµµ", "41");
-	        REGION_MAP.put("°­¿øµµ", "51");
-	        REGION_MAP.put("°­¿øÆ¯º°ÀÚÄ¡µµ", "51");
-	        REGION_MAP.put("ÃæÃ»ºÏµµ", "43");
-	        REGION_MAP.put("ÃæÃ»³²µµ", "44");
-	        REGION_MAP.put("Àü¶óºÏµµ", "45");
-	        REGION_MAP.put("ÀüºÏÆ¯º°ÀÚÄ¡µµ", "45");
-	        REGION_MAP.put("Àü¶ó³²µµ", "46");
-	        REGION_MAP.put("°æ»óºÏµµ", "47");
-	        REGION_MAP.put("°æ»ó³²µµ", "48");
-	        REGION_MAP.put("Á¦ÁÖÆ¯º°ÀÚÄ¡µµ", "50");
+       static {
+           // ì§€ì—­ ì½”ë“œ ë§¤í•‘
+           REGION_MAP.put("ì„œìš¸íŠ¹ë³„ì‹œ", "11");
+           REGION_MAP.put("ë¶€ì‚°ê´‘ì—­ì‹œ", "26");
+           REGION_MAP.put("ëŒ€êµ¬ê´‘ì—­ì‹œ", "27");
+           REGION_MAP.put("ì¸ì²œê´‘ì—­ì‹œ", "28");
+           REGION_MAP.put("ê´‘ì£¼ê´‘ì—­ì‹œ", "29");
+           REGION_MAP.put("ëŒ€ì „ê´‘ì—­ì‹œ", "30");
+           REGION_MAP.put("ìš¸ì‚°ê´‘ì—­ì‹œ", "31");
+           REGION_MAP.put("ì„¸ì¢…íŠ¹ë³„ìì¹˜ì‹œ", "36");
+           REGION_MAP.put("ê²½ê¸°ë„", "41");
+           REGION_MAP.put("ê°•ì›ë„", "51");
+           REGION_MAP.put("ê°•ì›íŠ¹ë³„ìì¹˜ë„", "51");
+           REGION_MAP.put("ì¶©ì²­ë¶ë„", "43");
+           REGION_MAP.put("ì¶©ì²­ë‚¨ë„", "44");
+           REGION_MAP.put("ì „ë¼ë¶ë„", "45");
+           REGION_MAP.put("ì „ë¶íŠ¹ë³„ìì¹˜ë„", "45");
+           REGION_MAP.put("ì „ë¼ë‚¨ë„", "46");
+           REGION_MAP.put("ê²½ìƒë¶ë„", "47");
+           REGION_MAP.put("ê²½ìƒë‚¨ë„", "48");
+           REGION_MAP.put("ì œì£¼íŠ¹ë³„ìì¹˜ë„", "50");
 
-	        // Àå¸£ ÄÚµå ¸ÅÇÎ
-	        GENRE_MAP.put("¿¬±Ø", "AAAA");
-	        GENRE_MAP.put("¹«¿ë(¼­¾ç/ÇÑ±¹¹«¿ë)", "BBBC");
-	        GENRE_MAP.put("´ëÁß¹«¿ë", "BBBE");
-	        GENRE_MAP.put("¼­¾çÀ½¾Ç(Å¬·¡½Ä)", "CCCA");
-	        GENRE_MAP.put("ÇÑ±¹À½¾Ç(±¹¾Ç)", "CCCC");
-	        GENRE_MAP.put("´ëÁßÀ½¾Ç", "CCCD");
-	        GENRE_MAP.put("º¹ÇÕ", "EEEA");
-	        GENRE_MAP.put("¼­Ä¿½º/¸¶¼ú", "EEEB");
-	        GENRE_MAP.put("¹ÂÁöÄÃ", "GGGA");
-	    }
+           // ì¥ë¥´ ì½”ë“œ ë§¤í•‘
+           GENRE_MAP.put("ì—°ê·¹", "AAAA");
+           GENRE_MAP.put("ë¬´ìš©(ì„œì–‘/í•œêµ­ë¬´ìš©)", "BBBC");
+           GENRE_MAP.put("ëŒ€ì¤‘ë¬´ìš©", "BBBE");
+           GENRE_MAP.put("ì„œì–‘ìŒì•…(í´ë˜ì‹)", "CCCA");
+           GENRE_MAP.put("í•œêµ­ìŒì•…(êµ­ì•…)", "CCCC");
+           GENRE_MAP.put("ëŒ€ì¤‘ìŒì•…", "CCCD");
+           GENRE_MAP.put("ë³µí•©", "EEEA");
+           GENRE_MAP.put("ì„œì»¤ìŠ¤/ë§ˆìˆ ", "EEEB");
+           GENRE_MAP.put("ë®¤ì§€ì»¬", "GGGA");
+       }
 
-	    public static String getRegionCode(String regionName) {
-	        return REGION_MAP.getOrDefault(regionName, null); // ¾ø´Â °æ¿ì null ¹İÈ¯
-	    }
+       public static String getRegionCode(String regionName) {
+           return REGION_MAP.getOrDefault(regionName, null); // ì—†ëŠ” ê²½ìš° null ë°˜í™˜
+       }
 
-	    public static String getGenreCode(String genreName) {
-	        return GENRE_MAP.getOrDefault(genreName, null); // ¾ø´Â °æ¿ì null ¹İÈ¯
-	    }
+       public static String getGenreCode(String genreName) {
+           return GENRE_MAP.getOrDefault(genreName, null); // ì—†ëŠ” ê²½ìš° null ë°˜í™˜
+       }
 }
