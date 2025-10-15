@@ -24,7 +24,7 @@ public class PostServiceImpl implements PostService {
 	public PostMapper mapper;
 
 	private static final int PAGE_SIZE_REVIEW = 4; // 리뷰게시판 페이지에 들어갈 게시물 수
-	private static final int PAGE_SIZE_FREE = 10; // 자유게시판 한 페이지 당 게시물 수
+	private static final int PAGE_SIZE_FREE = 20; // 자유게시판 한 페이지 당 게시물 수
 
 	public void write(PostDto post) {
 		mapper.write(post);
