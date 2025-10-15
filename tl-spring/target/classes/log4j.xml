@@ -46,13 +46,13 @@
 	</logger>
 
 	<logger name="com.tl.dto">
-		<level value="warn" />
+		<level value="info" />
 	</logger>
 	<logger name="com.tl.controller">
 		<level value="info" />
 	</logger>
 	<logger name="com.tl.service">
-		<level value="warn" />
+		<level value="info" />
 	</logger>
 
 

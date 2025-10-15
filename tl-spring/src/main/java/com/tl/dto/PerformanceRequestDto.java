@@ -24,14 +24,6 @@ public class PerformanceRequestDto { // api에서 공연 목록을 받아올 때 요청할 매�
     private String perRequestT = "";   // 추천 공연 여부(DB)
     private Integer startIndex = 0; // 시작 인덱스(DB)
     
-    public PerformanceRequestDto(String startdate, String enddate, Integer cpage, Integer rows, String shcate, String afterdate){
-    	this.startdate = startdate;
-    	this.enddate = enddate;
-    	this.cpage = cpage;
-    	this.rows = rows;
-    	this.shcate = shcate;
-    	this.afterdate = afterdate;
-    }
     public PerformanceRequestDto(String startdate, String enddate, String shcate, String perRequestT){
     	this.startdate = startdate;
     	this.enddate = enddate;

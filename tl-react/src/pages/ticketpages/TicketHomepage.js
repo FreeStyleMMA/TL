@@ -146,15 +146,16 @@ export default function TicketHomepage() {
           <div key={idx}
             className="perform_container"
           >
-            <Link to="/ticket/info" state={{ performanceInfo }} // 공연 상세 정보 페이지로 이동
-            >
+            <Link to="/ticket/info" state={{ performanceInfo }}> {/* 공연 상세 정보 페이지 이동 */}
+  
               <img
                 // alt={performanceInfo.perTitle} 
                 className="img"
                 src={performanceInfo.perPoster} //공연 포스터
               />
               <div className="title">
-                {performanceInfo.perTitle} {/* 공연 제목 */}                </div>
+                {performanceInfo.perTitle} {/* 공연 제목 */}               
+               </div>
             </Link>
           </div>
         ))}
@@ -165,7 +166,7 @@ export default function TicketHomepage() {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
-    navigate("./research", { state: { searchQuery, page: 1 } });
+    navigate("./list", { state: { title : searchQuery } });
   }
   return (
     <div id="my_layout">

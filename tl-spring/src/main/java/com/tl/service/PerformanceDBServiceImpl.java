@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tl.dto.PerformanceInfoDto;
 import com.tl.dto.PerformanceRequestDto;
@@ -20,29 +21,28 @@ public class PerformanceDBServiceImpl implements PerformanceDBService {
 	public PerformanceDBMapper mapper;
 
 
-	// api���� �޾ƿ� ���� ������ db�� ����
+	// 받아온 api를 db목록에 저장
 	@Override
+	@Transactional
 	public void addPerformance(ArrayList<PerformanceInfoDto> pfmInfo) {
-		// perId������ ��ġ�ϴ� ���� �ִ��� Ȯ�� �� ������ db�� ����
-		log.info("����" + pfmInfo.size());
+		// db에 저장
+		log.info("db 길이 : " + pfmInfo.size());
+		int test = 0;
 		for (PerformanceInfoDto info : pfmInfo) {
 			if (mapper.checkPerformance(info) == 0) {
-				// performance ����(perNum ����)
 				mapper.addPerformance(info);
-				// Ƽ�Ͽ� perNum ����
+				// ticket db에 저장
 				if (info.getPerTicket() != null) {
 					for (TicketDto ticket : info.getPerTicket()) {
 						ticket.setPerNum(info.getPerNum());
 					}
-					// Ƽ�� ����
 					mapper.addTicket(info.getPerTicket());
 				}
-
 			}
 		}
 	}
 
-	// db���� ���ǿ� �´� ���� ���� ��������
+	// 조건과 일치하는 db목록 가져오기
 	@Override
 	public ArrayList<PerformanceInfoDto> getPerformance(PerformanceRequestDto request) {
 		ArrayList<PerformanceInfoDto> infos = mapper.getPerformance(request);
@@ -55,7 +55,7 @@ public class PerformanceDBServiceImpl implements PerformanceDBService {
 	}
 
 
-	// db���� ���� ���� �����
+	// db 목록 정리
 	@Override
 	public void fetchPerformance() {
 		mapper.deletePastPerformance();
@@ -65,14 +65,7 @@ public class PerformanceDBServiceImpl implements PerformanceDBService {
 		mapper.deleteByRequestT("rankTheatre");
 	}
 	
-	// �ֽ� ������Ʈ ��¥ �޾ƿ���
-	@Override
-	public String getUpdateDate() {
-		String updateD = mapper.getUpdateDate();
-		return updateD;
-	}
-	
-	// DB ��ü ����
+	// DB 목록 모두 삭제
 	@Override
 	public void resetPerformance() {
 		mapper.deleteAllPerformance();

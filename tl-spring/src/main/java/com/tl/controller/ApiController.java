@@ -33,78 +33,78 @@ public class ApiController {
 	PerformanceDBService dbService;
 	SchedulerService scheService;
 
-	// í˜¸ì¶œ ì‹œ PerformanceInfoProcessor ë°˜í™˜(ì‹¤ì œ ì‚¬ìš©í•  ë°˜í™˜ìš©)
-
 	@GetMapping(value = "/getPerformanceInfo", produces = "application/json")
 	@ResponseBody
-	// reactì˜ ë§¤ê°œë³€ìˆ˜ ìš”ì²­ì„ ìë™ìœ¼ë¡œ ë°”ê¿”ì£¼ê¸° ìœ„í•´ ModelAttribute ì‚¬ìš©
+	// react¿¡¼­ Àü´ŞÇÑ µ¥ÀÌÅÍ¸¦ ModelAttribute·Î ÀÚµ¿º¯È¯ÇØ¼­ °ø¿¬ ¸ñ·Ï ¹İÈ¯
 	public ArrayList<PerformanceInfoDto> getPerformanceInfo(@ModelAttribute PerformanceRequestDto requestDto) {
-
+		log.info("°ø¿¬ Á¤º¸ ¿äÃ»");
+		log.info(requestDto);
 		return dbService.getPerformance(requestDto);
 	}
 
-	// ï¿½×½ï¿½Æ®ï¿½ï¿½(DB ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®)
-	@RequestMapping("/fetchDB")
-	public String fetchDB() {
-		scheService.DBFetchTest();
-
-		return "redirect:/home";
-	}
-
-	// ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½(DB ï¿½Ê±ï¿½È­)
+	// DB ÃÊ±âÈ­(ÃÊ±â°ª ¼³Á¤)
 	@RequestMapping("/resetDB")
 	public String resetDB() {
 		scheService.resetPerformances();
+		
+		return "home";
+	}
 
-		return "redirect:/home";
+	// Å×½ºÆ®¿ë(db¾÷µ¥ÀÌÆ®)
+	@RequestMapping("/fetchDB")
+	public String fetchDB() {
+		scheService.DBFetchTest();
+		
+		return "home";
 	}
 
 	@GetMapping(value = "/getPerformanceInfoApi", produces = "application/json")
 	@ResponseBody
-	// ï¿½×½ï¿½Æ®ï¿½ï¿½(performanceInfoList ï¿½ï¿½ï¿½)
+	// Å×½ºÆ®¿ë(performanceInfoList ¹İÈ¯)
 	public ArrayList<PerformanceInfoDto> getPerformanceInfoApi(@ModelAttribute PerformanceRequestDto requestDto) {
+		log.info("getPerformanceInfoApi ½ÇÇà");
 		return service.getPIP(requestDto).getPerformanceInfoList();
 	}
 
-	// ï¿½×½ï¿½Æ®ï¿½ï¿½(È£ï¿½ï¿½ ï¿½ï¿½ getPerformanceInfo.jspï¿½ï¿½ ï¿½Ìµï¿½)
+	// Å×½ºÆ®¿ë(getPerformanceTable.jsp·Î ÀÌµ¿)
 	@RequestMapping("/getPerformanceInfoTable")
 	public String getPerformanceInfoTable(PerformanceRequestDto requestDto, Model model) {
-		// performanceInfoList ï¿½ï¿½ï¿½ï¿½
+		log.info("getPerformanceInfoTable ½ÇÇà");
 		model.addAttribute("performanceInfoList", service.getPIP(requestDto).getPerformanceInfoList());
-
+		
 		return "tl/getPerformanceInfoTable";
 	}
 
-	// ï¿½×½ï¿½Æ®ï¿½ï¿½(performanceList ï¿½ï¿½ï¿½)
+	// Å×½ºÆ®¿ë(performanceList ¹İÈ¯)
 	@GetMapping("/getPerformanceList")
 	@ResponseBody
 	public PerformanceListDto getPerformanceList(PerformanceRequestDto requestDto) {
-		log.info("getPerformanceList ï¿½ï¿½ï¿½ï¿½");
-		return service.getPIP(requestDto).getPerformanceList(); // performanceListï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		log.info("getPerformanceList ½ÇÇà");
+		return service.getPIP(requestDto).getPerformanceList();
 	}
 
-	// ï¿½×½ï¿½Æ®ï¿½ï¿½(performanceDetailList ï¿½ï¿½ï¿½)
+	// Å×½ºÆ®¿ë(performanceDetailList ¹İÈ¯)
 	@GetMapping("/getPerformanceDetailList")
 	@ResponseBody
 	public ArrayList<PerformanceDetailDto> getPerformanceDetailList(PerformanceRequestDto requestDto) {
-		log.info("getPerformanceList ï¿½ï¿½ï¿½ï¿½");
-		return service.getPIP(requestDto).getPerformanceDetailList(); // performanceDetailListï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		log.info("getPerformanceList ½ÇÇà");
+		return service.getPIP(requestDto).getPerformanceDetailList();
 	}
 
-	// ï¿½×½ï¿½Æ®ï¿½ï¿½(performancePeaceList ï¿½ï¿½ï¿½)
+	// Å×½ºÆ®¿ë(performancePeaceList ¹İÈ¯)
 	@GetMapping("/getPerformancePeaceList")
 	@ResponseBody
 	public ArrayList<PerformancePeaceDto> getPerformancePeaceList(PerformanceRequestDto requestDto) {
-		log.info("getPerformancePeaceList ï¿½ï¿½ï¿½ï¿½");
-		return service.getPIP(requestDto).getPerformancePeaceList(); // performancePeaceListï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		log.info("getPerformancePeaceList ½ÇÇà");
+		return service.getPIP(requestDto).getPerformancePeaceList();
 	}
 
-	// ï¿½×½ï¿½Æ®ï¿½ï¿½(performanceStatusList ï¿½ï¿½ï¿½)
+	// Å×½ºÆ®¿ë(performanceStatusList ¹İÈ¯)
 	@GetMapping("/getPerformanceStatusList")
 	@ResponseBody
 	public PerformanceStatusListDto getPerformanceStatusList(PerformanceRequestDto requestDto) {
-		log.info("getPerformanceStatusList ï¿½ï¿½ï¿½ï¿½");
-		return service.getPIP(requestDto).getPerformanceStatusList(); // performanceStatusListï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		log.info("getPerformanceStatusList ½ÇÇà");
+		return service.getPIP(requestDto).getPerformanceStatusList(); 
 	}
 
 }

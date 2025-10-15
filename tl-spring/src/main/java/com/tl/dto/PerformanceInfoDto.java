@@ -1,7 +1,5 @@
 package com.tl.dto;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +17,6 @@ public class PerformanceInfoDto {
 	private String perGenreC; // 공연 장르 코드(DB)
 	private String perRegionC; // 공연 지역 코드(DB)
 	private String perRequestT; // 요청 타입(DB)
-	private String perUpdateD; // 공연 수정 날짜(DB)
 	private String perId; // 공연 ID
 	private String perTitle; // 공연 제목
 	private String perStartD; // 공연 시작일
@@ -37,14 +34,10 @@ public class PerformanceInfoDto {
 	private Integer perRank; // 공연 랭킹
 	private List<TicketDto> perTicket = new ArrayList<TicketDto>();// 공연 티켓 예매처 정보
 
-	private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss[.SSSSSS]");
-	private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("yyyyMMdd");
-
 	// 필드 데이터 값 설정
 	public PerformanceInfoDto(PerformanceDetailDto detail, PerformancePeaceDto peace, PerformanceRequestDto request) {
 		// 요소들 값 할당
 		this.perRequestT = request.getPerRequestT() != null ? request.getPerRequestT() : "";
-		this.perUpdateD = parseAndFormatDate(detail.getUpdatedate());
 		this.perTitle = detail.getPrfnm() != null ? detail.getPrfnm() : "";
 		this.perId = detail.getMt20id() != null ? detail.getMt20id() : "";
 		this.perStartD = detail.getPrfpdfrom() != null ? detail.getPrfpdfrom() : "";
@@ -76,7 +69,6 @@ public class PerformanceInfoDto {
 			PerformanceRequestDto request) {
 		// 요소들 값 할당
 		this.perRequestT = request.getPerRequestT() != null ? request.getPerRequestT() : "";
-		this.perUpdateD = parseAndFormatDate(detail.getUpdatedate());
 		this.perTitle = detail.getPrfnm() != null ? detail.getPrfnm() : "";
 		this.perId = detail.getMt20id() != null ? detail.getMt20id() : "";
 		this.perStartD = detail.getPrfpdfrom() != null ? detail.getPrfpdfrom() : "";
@@ -102,19 +94,6 @@ public class PerformanceInfoDto {
 				String url = rel.getRelateurl() != null ? rel.getRelateurl() : "";
 				this.perTicket.add(new TicketDto(name, url));
 			}
-		}
-	}
-
-	// 문자열 → LocalDateTime → 원하는 포맷 String 변환
-	private String parseAndFormatDate(String input) {
-		if (input == null || input.isEmpty())
-			return "";
-		try {
-			LocalDateTime dateTime = LocalDateTime.parse(input, INPUT_FORMAT);
-			return dateTime.format(OUTPUT_FORMAT);
-		} catch (Exception e) {
-			// 예외 발생 시 원본 문자열 그대로 반환
-			return input;
 		}
 	}
 }

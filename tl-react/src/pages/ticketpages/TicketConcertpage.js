@@ -188,7 +188,7 @@ export default function TicketConcertpage() { // 콘서트 페이지 (장르 코
         {/* 지역별 공연 */}
         <div className="tc_perform_list">
           <div className="list_title">
-            <h2>지역별 공연</h2>
+            <h2 div className="list_name">지역별 공연</h2>
             <Link
               to="/ticket/list"
               state={{ region: regionCode, genre: "CCCD" }} // 모두 보기 버튼

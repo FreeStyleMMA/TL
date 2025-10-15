@@ -24,27 +24,25 @@ public class SchedulerService {
 		this.dbService = dbService;
 	}
 	
-	// DB 공연 업데이트 테스트
+	// DB ������Ʈ ����(�׽�Ʈ��)
 	public void DBFetchTest() {
 		fetchPerformances();
 	}
 
-	//매일 18:30 스케쥴링(kopis 공연 api DB에 업데이트)
+	//���� 18:30 ����(kopis api ������Ʈ 18:00)
 	@Scheduled(cron = "0 30 18 * * ?")
-//	@Scheduled(cron = "0 * * * * ?")// 테스트용
 	private void fetchPerformances() {
     	log.info("DB ������Ʈ");
-        // �Ⱓ ���� ������ ����
-    	ArrayList<PerformanceInfoDto> infos = new ArrayList<PerformanceInfoDto>();
+    	// db ��� ����
     	dbService.fetchPerformance();
-        // ��ü ���� api ����
+    	ArrayList<PerformanceInfoDto> infos = new ArrayList<PerformanceInfoDto>();
+    	String oneMonthsLater = LocalDate.now().plusMonths(1).format(DateTimeFormatter.BASIC_ISO_DATE);
     	String twoWeeksAgo = LocalDate.now().minusWeeks(2).format(DateTimeFormatter.BASIC_ISO_DATE);
     	String twoWeeksLater = LocalDate.now().plusWeeks(2).format(DateTimeFormatter.BASIC_ISO_DATE);
     	int page = 1;
     	while(true) {
-    		log.info("������Ʈ ��¥:" + dbService.getUpdateDate());
-    		infos = apiService.getPIP(new PerformanceRequestDto(twoWeeksAgo, twoWeeksLater, page,
-    			Common.MAX_REQUEST, Common.ALL_CODE, dbService.getUpdateDate())).getPerformanceInfoList();
+    		infos = apiService.getPIP(new PerformanceRequestDto(oneMonthsLater, oneMonthsLater, page,
+    			Common.MAX_REQUEST, Common.ALL_CODE)).getPerformanceInfoList();
     		if(infos.isEmpty()) {
     			break;
     		}
@@ -54,29 +52,31 @@ public class SchedulerService {
     		}
     		page++;
     	}
-    	//��ŷ api ����
-    	infos = apiService.getPIP(new PerformanceRequestDto(twoWeeksAgo, twoWeeksLater, Common.ALL_CODE, "rank")).getPerformanceInfoList();
-    	dbService.addPerformance(infos);
-		infos = apiService.getPIP(new PerformanceRequestDto(twoWeeksAgo, twoWeeksLater, Common.CONCERT_CODE, "rankConcert")).getPerformanceInfoList();
-		dbService.addPerformance(infos);
-		infos = apiService.getPIP(new PerformanceRequestDto(twoWeeksAgo, twoWeeksLater, Common.MUSICAL_CODE, "rankMusical")).getPerformanceInfoList();
-		dbService.addPerformance(infos);
-		infos = apiService.getPIP(new PerformanceRequestDto(twoWeeksAgo, twoWeeksLater, Common.THEATRE_CODE, "rankTheatre")).getPerformanceInfoList();
-		dbService.addPerformance(infos);
+    	try {
+    	    Thread.sleep(1000);
+    	} catch (InterruptedException e) {
+    	    Thread.currentThread().interrupt();
+    	    log.warn("API ȣ�� ��� �� ���ͷ�Ʈ �߻�", e);
+    	}
+    	//rank ��� �߰�
+    	addRankPerformances(twoWeeksAgo, twoWeeksLater);
 		log.info("db������Ʈ �Ϸ�");
     }
 	
+	// db �ʱ�ȭ(�ʱⰪ ����)
 	public void resetPerformances() {
     	log.info("DB �ʱ�ȭ");
-        // 1. DB �ʱ�ȭ
+        // DB �ʱ�ȭ
+    	dbService.resetPerformance();
+        // db ��� �߰�
     	ArrayList<PerformanceInfoDto> infos = new ArrayList<PerformanceInfoDto>();
-    	dbService.fetchPerformance();
-        // ��ü api ����
+    	String today = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE);
+    	String oneMonthsLater = LocalDate.now().plusMonths(1).format(DateTimeFormatter.BASIC_ISO_DATE);
     	String twoWeeksAgo = LocalDate.now().minusWeeks(2).format(DateTimeFormatter.BASIC_ISO_DATE);
     	String twoWeeksLater = LocalDate.now().plusWeeks(2).format(DateTimeFormatter.BASIC_ISO_DATE);
     	int page = 1;
     	while(true) {
-    		infos = apiService.getPIP(new PerformanceRequestDto(twoWeeksAgo, twoWeeksLater, page, 
+    		infos = apiService.getPIP(new PerformanceRequestDto(today, oneMonthsLater, page, 
     			Common.MAX_REQUEST, Common.ALL_CODE)).getPerformanceInfoList();
     		if(infos.isEmpty()) {
     			break;
@@ -88,16 +88,32 @@ public class SchedulerService {
     		dbService.addPerformance(infos);
     		page++;
     	}
-    	//��ŷ api ����
-    	infos = apiService.getPIP(new PerformanceRequestDto(twoWeeksAgo, twoWeeksLater, Common.ALL_CODE, "rank")).getPerformanceInfoList();
-    	dbService.addPerformance(infos);
-		infos = apiService.getPIP(new PerformanceRequestDto(twoWeeksAgo, twoWeeksLater, Common.CONCERT_CODE, "rankConcert")).getPerformanceInfoList();
-		dbService.addPerformance(infos);
-		infos = apiService.getPIP(new PerformanceRequestDto(twoWeeksAgo, twoWeeksLater, Common.MUSICAL_CODE, "rankMusical")).getPerformanceInfoList();
-		dbService.addPerformance(infos);
-		infos = apiService.getPIP(new PerformanceRequestDto(twoWeeksAgo, twoWeeksLater, Common.THEATRE_CODE, "rankTheatre")).getPerformanceInfoList();
-		dbService.addPerformance(infos);
+    	try {
+    	    Thread.sleep(10000);
+    	} catch (InterruptedException e) {
+    	    Thread.currentThread().interrupt();
+    	    log.warn("API ȣ�� ��� �� ���ͷ�Ʈ �߻�", e);
+    	}
+    	// rank db ��� �߰�
+    	addRankPerformances(twoWeeksAgo, twoWeeksLater);
 		log.info("db�ʱ�ȭ �Ϸ�");
     }
+	// db�� rank��� �߰�
+	private void addRankPerformances(String startDate, String endDate) {
+        ArrayList<PerformanceInfoDto> infos = new ArrayList<PerformanceInfoDto>();
 
+        String[] rankTypes = {
+            "rank", "rankConcert", "rankMusical", "rankTheatre"
+        };
+        String[] genreCodes = {
+            Common.ALL_CODE, Common.CONCERT_CODE, Common.MUSICAL_CODE, Common.THEATRE_CODE
+        };
+
+        for (int i = 0; i < rankTypes.length; i++) {
+            infos = apiService.getPIP(new PerformanceRequestDto(startDate, endDate, genreCodes[i], rankTypes[i]))
+                    .getPerformanceInfoList();
+
+            dbService.addPerformance(infos);
+        }
+    }
 }

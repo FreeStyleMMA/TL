@@ -8,7 +8,6 @@
 		type="com.tl.dto.PerformanceInfoDto">
 		<id property="perNum" column="per_num" />
 		<result property="perId" column="per_id" />
-		<result property="perUpdateD" column="per_updateD" />
 		<result property="perRequestT" column="per_requestT" />
 		<result property="perGenreC" column="per_genreC" />
 		<result property="perRegionC" column="per_regionC" />
@@ -43,13 +42,13 @@
 		parameterType="com.tl.dto.PerformanceInfoDto" useGeneratedKeys="true"
 		keyProperty="perNum">
 		INSERT INTO performance (
-		per_requestT, per_updateD, per_genreC, per_regionC,
+		per_requestT, per_genreC, per_regionC,
 		per_id, per_title, per_startD, per_endD, per_place,
 		per_runT, per_sche, per_price, per_genre, per_poster,
 		per_address, per_latitude, per_longitude, per_region, per_rank
 		)
 		VALUES(
-		#{perRequestT}, #{perUpdateD}, #{perGenreC},
+		#{perRequestT}, #{perGenreC},
 		#{perRegionC}, #{perId}, #{perTitle}, #{perStartD},
 		#{perEndD}, #{perPlace}, #{perRunT}, #{perSche},
 		#{perPrice}, #{perGenre}, #{perPoster}, #{perAddress},
@@ -65,11 +64,8 @@
 		</foreach>
 	</insert>
 	<!-- per_id가 일치하는 공연 개수 확인 -->
-	<select id="checkPerformance"
-		parameterType="com.tl.dto.PerformanceInfoDto" resultType="int">
-		SELECT
-		COUNT(*) FROM performance WHERE per_id = #{perId} AND per_requestT =
-		#{perRequestT}
+	<select id="checkPerformance" parameterType="com.tl.dto.PerformanceInfoDto" resultType="int">
+		SELECT COUNT(*) FROM performance WHERE per_id = #{perId} AND per_requestT = #{perRequestT}
 	</select>
 	<!-- 조건과 일치하는 공연 데이터 반환 -->
 	<select id="getPerformance"
@@ -82,15 +78,19 @@
 	            <when test="perRequestT == 'recommend'">
 	                per_requestT IS NULL OR per_requestT = ''
 	            </when>
-	            <!-- requestT가 비어있지 않은 경우 -->
-	            <otherwise>
-	                <if test="perRequestT != null and perRequestT != ''">
-	                    per_requestT = #{perRequestT}
-	                </if>
-	            </otherwise>
+			    <!-- perRequestT에 'rank'가 포함된 경우 -->
+			    <when test="perRequestT != null and perRequestT.indexOf('rank') != -1">
+			        per_requestT = #{perRequestT} AND (per_rank IS NOT NULL AND per_rank != 0)
+			    </when>
+			    <!-- 그 외의 경우 -->
+			    <otherwise>
+			    </otherwise>
 	        </choose>
 			<if test="shcate != null and shcate != ''">
 				AND per_genreC = #{shcate}
+			</if>
+			<if test="shprfnm != null and shprfnm != ''">
+			    per_title LIKE CONCAT('%', #{shprfnm}, '%')
 			</if>
 			<if test="signgucode != null and signgucode != ''">
 				AND per_regionC = #{signgucode}
@@ -99,7 +99,7 @@
     <choose>
         <!-- perRequestT가 빈값이면 per_updateD 기준 정렬 -->
         <when test="perRequestT == null or perRequestT == ''">
-            ORDER BY STR_TO_DATE(per_updateD, '%Y-%m-%d %H:%i:%s') DESC
+            
         </when>
         <!-- perRequestT가 recommend면 랜덤 정렬 -->
         <when test="perRequestT == 'recommend'">
@@ -112,6 +112,7 @@
     </choose>
     LIMIT #{rows} OFFSET #{startIndex}
 	</select>
+	
 	<!-- per_num이 일치하는 예매처 데이터 반환 -->
 	<select id="getTicket" parameterType="java.lang.Long"
 		resultMap="TicketResultMap">
@@ -119,24 +120,16 @@
 	</select>
 	
 	<!-- 오늘 날짜가 endD를 지난 데이터 제거 -->
-	<delete id="deletePastPerformance">
-	  <![CDATA[
-    DELETE FROM performance
-    WHERE per_endD IS NOT NULL
-      AND TRIM(per_endD) <> ''
-      AND STR_TO_DATE(TRIM(per_endD), '%Y-%m-%d') < CURDATE()
-  ]]>
+	<delete id="deletePastPerformance"> 	  	
+		DELETE FROM performance 	  	
+		WHERE per_endD IS NOT NULL
+	 	AND per_endD != '' 	    
+	 	AND STR_TO_DATE(per_endD, '%Y.%m.%d') &lt; CURDATE() 	
 	</delete>
 	<!-- requestT가 일치하는 데이터 제거 -->
 	<delete id="deleteByRequestT" parameterType="java.lang.String">
-		DELETE FROM
-		performance WHERE per_requestT = #{requestT}
+		DELETE FROM performance WHERE per_requestT = #{requestT}
 	</delete>
-	<!-- 목록중 가장 최근의 업데이트 날짜 반환 -->
-	<select id="getUpdateDate" resultType="java.lang.String">
-		SELECT per_updateD FROM performance WHERE per_requestT = '' ORDER BY per_updateD 
-		DESC LIMIT 1;
-	</select>
 	<!-- 전체 공연 목록 삭제 -->
 	<delete id="deleteAllPerformance">
 		DELETE FROM performance
