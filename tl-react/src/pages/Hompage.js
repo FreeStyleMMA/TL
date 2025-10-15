@@ -3,13 +3,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from "./auth/AuthContext";
 import './reset.css'
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Homepage() {
   const { member } = useAuth();
   const [posts, setPosts] = useState([]);
   const [performances, setPerformances] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const navigatie = useNavigate();
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true)

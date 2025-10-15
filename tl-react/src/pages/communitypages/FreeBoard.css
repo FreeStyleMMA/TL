@@ -28,6 +28,9 @@
    border: 1px solid #ccc;
    border-radius: 8px;
    overflow: hidden;
+   justify-content: center;
+   align-items: center;
+   margin-bottom: 100px;
 
  }
 
@@ -60,6 +63,7 @@
    padding: 10px 0;
    border-bottom: 1px solid #eee;
    margin: left 200px;
+   height: 20px;
  }
 
  .Link {
@@ -73,4 +77,8 @@
  .free_title {
    text-align: left;
    font-weight: 500;
+ }
+
+ #page_block_container {
+   margin-top: 30px;
  }

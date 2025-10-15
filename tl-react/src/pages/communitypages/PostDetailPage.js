@@ -26,13 +26,17 @@ export default function PostDetailPage() {
     const fetchPost = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/post/read?no=${postNo}`);
-        setTitle(response.data.title);
-        setContent(response.data.content);
-        setMemberId(response.data.memberId);
-        setMedia(response.data.media);
-        setDate(new Date(response.data.createdAt).toLocaleDateString());
-        setInitialLikes([response.data]);
-        setInitialReplies([response.data]);
+        const data = response.data;
+
+        setTitle(data.title);
+        setContent(data.content);
+        setMemberId(data.memberId);
+        setMedia(data.media);
+        setDate(new Date(data.createdAt).toLocaleDateString());
+
+        // 좋아요, 댓글 초기값 설정
+        setInitialLikes([data]);
+        setInitialReplies([data]);
       } catch (error) {
         console.log("서버 에러:", error);
       }
@@ -47,7 +51,7 @@ export default function PostDetailPage() {
   return (
     <div id="pageLayout">
       <div id="postLayout">
-        <div id='post_head'>
+        <div id="post_head">
           <div id="ph_1">
             <div id="post_writer">{memberId}</div>
             <div id="post_date">{date}</div>
@@ -55,35 +59,73 @@ export default function PostDetailPage() {
         </div>
 
         <div id="post_title">{title}</div>
-
         <div id="post_body">
-          {media && <img className="post_img" src={`http://localhost:8080${media}`} alt="media" />}
+          {media && (
+            <img
+              className="post_img"
+              src={`http://localhost:8080${media}`}
+              alt="media"
+            />
+          )}
           <div id="post_content">{content}</div>
         </div>
 
         <div id="pdp_react">
-          <button onClick={() => handleLike(member.memberId, postNo)} className="pdp_re">
-            <img
-              src={liked[postNo] === 1 ? "/images/like.png" : "/images/like_grey.png"}
-              className="pdp_re_img"
-              alt="좋아요"
-            />
-            {totalLikes[postNo] ?? 0}
-          </button>
+          {/* 좋아요 버튼 */}
+          {member && member.memberId ? (
+            <button
+              onClick={() => handleLike(member.memberId, postNo)}
+              className="pdp_re"
+            >
+              <img
+                src={
+                  liked[postNo] === 1
+                    ? "/images/like.png"
+                    : "/images/like_grey.png"
+                }
+                className="pdp_re_img"
+                alt="좋아요"
+              />
+              {totalLikes[postNo] ?? 0}
+            </button>
+          ) : (
+            <div className="pdp_re">
+              <img
+                src="/images/like_grey.png"
+                className="pdp_re_img"
+                alt="좋아요"
+              />
+              {totalLikes[postNo] ?? 0}
+            </div>
+          )}
 
+          {/* 댓글 수 표시 */}
           <div className="pdp_re">
-            <img src="/images/reply.png" alt="댓글" className="pdp_re_img" />
+            <img
+              src="/images/reply.png"
+              alt="댓글"
+              className="pdp_re_img"
+            />
             {totalReplies[postNo] ?? 0}
           </div>
 
-          {member.memberId === memberId && (
-            <button onClick={() => handlePostDelete(postNo)} className="pdp_re">
-              <img src="/images/trashbin.png" alt="삭제" className="pdp_re_img" />
+          {/* 게시글 삭제 버튼 (작성자 본인만 표시) */}
+          {member && member.memberId === memberId && (
+            <button
+              onClick={() => handlePostDelete(postNo)}
+              className="pdp_re"
+            >
+              <img
+                src="/images/trashbin.png"
+                alt="삭제"
+                className="pdp_re_img"
+              />
             </button>
           )}
         </div>
       </div>
 
+      {/* 댓글 영역 */}
       <div className="ReplyLayout">
         <ReplyWrite onReplyAdded={handleAddReply} />
         <ReplyList refreshReply={refreshReply} />

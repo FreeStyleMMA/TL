@@ -50,7 +50,7 @@ export default function ReplyList({ no, refreshReply }) { // no ->reply의 no
             </div>
           </div>
           <div className="reply_right">
-            {member.memberId === reply.memberId ?
+            {member && member.memberId === reply.memberId ?
               <button className="delete_box" onClick={() => { handleDelete(reply.no, reply.originNo) }}>
                 <img src="/images/trashbin.png" alt="삭제" className="trashbin" />삭제</button> : null}
           </div>

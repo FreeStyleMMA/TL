@@ -1,5 +1,5 @@
 .postLayout {
-  padding-top: 100px;
+  margin-top: 50px;
   padding-left: 400px;
   width: 1200px;
   display: flex;
@@ -7,7 +7,7 @@
 }
 
 #pw_category {
-  height: 50px;
+  height: 30px;
   display: flex;
   gap: 30px;
   /* border-bottom: 1px solid black; */
@@ -34,7 +34,7 @@
 
 .titleBox {
   margin-top: 30px;
-  width: 800px;
+  width: 600px;
   height: 40px;
   font-size: 16px;
   font-weight: 500;
@@ -48,7 +48,7 @@
 .textBox {
   margin-top: 30px;
   width: 800px;
-  min-height: 80px;
+  min-height: 300px;
   max-height: 400px;
   resize: none;
   overflow: hidden;
