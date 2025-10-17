@@ -16,19 +16,19 @@ public class FavoriteServiceImpl implements FavoriteService {
 	@Setter(onMethod_ = @Autowired)
 	public FavoriteMapper mapper;
 
-	public Integer checkFavorite(String memberId, String perId) {
-		return mapper.checkFavorite(memberId, perId);
+	public Integer checkFavorite(String memberId,Long perNum) {
+		return mapper.checkFavorite(memberId, perNum);
 	}
 	
-	public int handleFavorite(String memberId, String perId) {
-		Integer existing= mapper.checkFavorite(memberId, perId);
+	public int handleFavorite(String memberId, Long perNum) {
+		Integer existing= mapper.checkFavorite(memberId, perNum);
 		
 		if (existing == null) {
-			mapper.addFavorite(memberId, perId);
+			mapper.addFavorite(memberId, perNum);
 			return 1;
 		} else {
 			int newLiked = existing == 0 ? 1 : 0;
-			mapper.handleFavorite(memberId, perId,newLiked);
+			mapper.handleFavorite(memberId, perNum,newLiked);
 			return newLiked;
 		}
 	}

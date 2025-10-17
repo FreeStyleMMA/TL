@@ -48,15 +48,16 @@
 
 	<select id="getComHomeTop" resultMap="postDtoMap">
 		SELECT p.*,
-		COUNT(l.postNo)
-		AS likeCount
+		IFNULL(l.likeCount, 0) AS likeCount
 		FROM post p
-		LEFT JOIN liked l ON p.no = l.postNo AND
-		l.liked = 1
-		WHERE p.category='reviewBoard'
-		GROUP BY p.no
-		ORDER BY likeCount DESC,p.no
-		DESC
+		LEFT JOIN (
+		SELECT postNo, COUNT(*) AS likeCount
+		FROM liked
+		WHERE liked = 1
+		GROUP BY postNo
+		) l ON p.no = l.postNo
+		WHERE p.category = 'reviewBoard'
+		ORDER BY likeCount DESC, p.no DESC
 		LIMIT 4
 	</select>
 
@@ -91,30 +92,36 @@
 		memberId=#{memberId} and postNo=#{postNo}
 	</select>
 
-	<resultMap id="myPostResponseMap" type="com.tl.dto.MyPostResponse">
-    <result property="title" column="title" jdbcType="VARCHAR"/>
-    <result property="content" column="content" jdbcType="VARCHAR"/>
-    <result property="no" column="no" jdbcType="BIGINT"/>
-    <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
-</resultMap>
+	<resultMap id="myPostResponseMap"
+		type="com.tl.dto.MyPostResponse">
+		<result property="title" column="title" jdbcType="VARCHAR" />
+		<result property="content" column="content" jdbcType="VARCHAR" />
+		<result property="no" column="no" jdbcType="BIGINT" />
+		<result property="createdAt" column="created_at"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
 
 	<select id="getMyPost" resultMap="myPostResponseMap">
-		SELECT title, no,content, created_at
+		SELECT title, no,content,
+		created_at
 		FROM post
 		WHERE memberId = #{memberId}
 	</select>
 	<select id="getHomePosts" resultMap="postDtoMap">
-	SELECT p.*,
-		COUNT(l.postNo) 
+		SELECT p.*,
+		COUNT(l.postNo)
 		AS likeCount
 		FROM post p
-		LEFT JOIN liked l 
+		LEFT JOIN liked l
 		ON p.no = l.postNo AND
-		l.liked = 1
+		l.liked
+		= 1
 		WHERE p.category='reviewBoard'
-		GROUP BY p.no
-		ORDER BY 
-		likeCount DESC,p.no DESC
+		GROUP BY
+		p.no
+		ORDER BY
+		likeCount
+		DESC,p.no DESC
 		LIMIT 5
 	</select>
 </mapper>

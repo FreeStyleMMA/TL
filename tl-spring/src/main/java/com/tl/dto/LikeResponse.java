@@ -15,5 +15,5 @@ public class LikeResponse {
     private Long postNo;
     private int liked;
     private int totalLikes;
-    private String perId;
+    private Long perNum;
 }

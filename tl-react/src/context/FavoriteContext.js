@@ -1,45 +1,37 @@
 import axios from 'axios';
-import React, { createContext, useState, useEffect } from "react";
-import { useAuth } from '../pages/auth/AuthContext';
+import React, { createContext, useState } from "react";
 
 export const FavoriteContext = createContext();
 
-export function FavoriteProvider({ children, memberId, perId }) {
+export function FavoriteProvider({ children }) {
+  const [liked, setLiked] = useState({});  // perNum: liked 상태 (0 또는 1)
+  const [totalLikes, setTotalLikes] = useState(0);
 
-  const [liked, setLiked] = useState({});
-  const [totalLIkes, setTotalLikes] = useState(0);
-
-
-  const handleFavorite = async (memberId, perId) => {
+  const handleFavorite = async (memberId, perNum) => {
     try {
-      const response = await axios.post(`http://localhost:8080/favorite/handleFavorite`,
-        null,
-        { params: { memberId, perId } }
-      );
-      setLiked(prev => ({ ...prev, [perId]: response.data.liked }));
-      console.log("liked: ", response.data.newLiked)
-      setTotalLikes("totalLikes: ", response.data.totalLikes)
+      const response = await axios.post(`http://localhost:8080/favorite/handleFavorite`, null, {
+        params: { memberId, perNum }
+      });
+      setLiked(prev => ({ ...prev, [perNum]: response.data.liked }));
+      setTotalLikes(response.data.totalLikes);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
-  useEffect(() => {
-    const fetchLiked = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/favorite/checkFavorite?memberId=${memberId}&perId=${perId}`);
-        setLiked(response.data);
-      } catch (error) {
-        console.log(error);
-      }
+  const fetchLiked = async (memberId, perNum) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/favorite/checkFavorite`, {
+        params: { memberId, perNum }
+      });
+      setLiked(prev => ({ ...prev, [perNum]: response.data }));
+    } catch (error) {
+      console.log(error);
     }
-    fetchLiked();
-  }, [memberId]);
-
-
+  }
 
   return (
-    <FavoriteContext.Provider value={{ handleFavorite, liked }}>
+    <FavoriteContext.Provider value={{ handleFavorite, liked, fetchLiked, totalLikes }}>
       {children}
     </FavoriteContext.Provider>
   )

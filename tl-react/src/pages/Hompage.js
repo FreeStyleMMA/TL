@@ -20,15 +20,15 @@ export default function Homepage() {
         console.log(error);
       }
     }
-    const fetchPerformances = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/tl/getHomePerform`)
-        setPerformances(response.data); //[{content:oo , originTitle:00, createdAt:yyyy.mm.dd.time}] 의 ArrayList 형태. map으로
-      } catch (error) {
-      }
-    }
+    // const fetchPerformances = async () => {
+    //   try {
+    //     const response = await axios.get(`http://localhost:8080/tl/getHomePerform`)
+    //     setPerformances(response.data); //[{content:oo , originTitle:00, createdAt:yyyy.mm.dd.time}] 의 ArrayList 형태. map으로
+    //   } catch (error) {
+    //   }
+    // }
     fetchPosts();
-    fetchPerformances();
+    // fetchPerformances();
   }, [])
   return (
     <div id="home_layout">

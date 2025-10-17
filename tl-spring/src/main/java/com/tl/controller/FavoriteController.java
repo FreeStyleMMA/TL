@@ -26,21 +26,25 @@ public class FavoriteController {
 	public FavoriteService service;
 	
 	@PostMapping("handleFavorite")
-	public LikeResponse handleFavorite(@RequestParam String memberId, @RequestParam String perId) {
-		int newLiked = service.handleFavorite(memberId,perId);
+	public LikeResponse handleFavorite(@RequestParam String memberId, @RequestParam Long perNum) {
+		int newLiked = service.handleFavorite(memberId,perNum);
 		int totalFavorite = service.countFavorite(memberId);
 		return LikeResponse.builder()
 				.memberId(memberId)
-				.perId(perId)
+				.perNum(perNum)
 				.liked(newLiked)
 				.totalLikes(totalFavorite)
 				.build();
 	}
 	
 	@GetMapping("checkFavorite")// favorite테이블 liked 확인 (1 or 0)
-	public Integer checkFavorite(@RequestParam String memberId,@RequestParam String perId) {
-		return service.checkFavorite(memberId, perId);
-	}
+	public Integer checkFavorite(@RequestParam String memberId,@RequestParam Long perNum) {
+		  if (perNum == null) {
+			    // 예외 처리 또는 기본 동작
+			    throw new IllegalArgumentException("perNum 파라미터가 필요합니다.");
+			  }
+			  return service.checkFavorite(memberId, perNum);
+			}
 	@GetMapping("getFavorite")
 	public ArrayList<FavoritePostDTO> getFavorite(@RequestParam String memberId) {
 		return service.getFavoriteList(memberId);

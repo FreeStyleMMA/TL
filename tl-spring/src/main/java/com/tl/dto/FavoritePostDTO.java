@@ -7,7 +7,7 @@ import lombok.Data;
 public class FavoritePostDTO {
 	public Long favId; // favorite 고유 key(no )
 	public String memberId;
-	public String perId;
+	public Long perNum;
 	public String perTitle;
 	public String perPoster;
 	public String perStartD;

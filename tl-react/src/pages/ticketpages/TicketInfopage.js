@@ -18,17 +18,20 @@ L.Icon.Default.mergeOptions({
 });
 
 export default function TicketInfopage() {
-    const { handleFavorite, liked } = useContext(FavoriteContext);
+    const { handleFavorite, liked, fetchLiked } = useContext(FavoriteContext);
     const { member } = useAuth();
 
     const location = useLocation();
     const { performanceInfo } = location.state || {}; // 공연 상세 정보
     console.log(performanceInfo.perLatitude);
     const position = { lat: Number(performanceInfo.perLatitude), lng: Number(performanceInfo.perLongitude) } // 위도, 경도
+    console.log(performanceInfo.perNum);
 
     useEffect(() => {
-        handleFavorite(member?.memberId, performanceInfo?.perId)
-    }, [])
+        fetchLiked(member?.memberId, performanceInfo?.perNum)
+        console.log(liked);
+    }, [performanceInfo])
+
     return (
         <div id='my_layout'> {/*공연 상세 정보 출력 */}
             <div id='ti_top'>
@@ -65,12 +68,12 @@ export default function TicketInfopage() {
                     <div id='ti_top_right4'>
                         <div id='ti_top_right4_l'>
                             <button
-                                onClick={() => handleFavorite(member.memberId, performanceInfo.perId)}
+                                onClick={() => handleFavorite(member.memberId, performanceInfo.perNum)}
                                 style={{ bacgroundcolor: 'white', all: 'unset' }}
                                 id="re">
                                 <img
-                                    src={liked[performanceInfo.perId] === 1 ? "/images/like.png" : "/images/like_grey.png"}
-                                    // alt={liked[performanceInfo.perId] ? "좋아요 취소" : "좋아요"}
+                                    src={liked[performanceInfo.perNum] === 1 ? "/images/like.png" : "/images/like_grey.png"}
+                                    // alt={liked[performanceInfo.perNum] ? "좋아요 취소" : "좋아요"}
                                     id="re_img" style={{ width: 25, height: 25 }}
                                 />
                             </button>

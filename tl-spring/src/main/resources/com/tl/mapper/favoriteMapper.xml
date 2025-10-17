@@ -5,14 +5,14 @@
 <mapper namespace="com.tl.mapper.FavoriteMapper">
 
 	<select id="checkFavorite" resultType="java.lang.Integer">
-		SELECT liked from favorite where memberId=#{memberId} AND per_id=#{perId}
+		SELECT liked from favorite where memberId=#{memberId} AND per_num=#{perNum}
 	</select>
 
 	<update id="handleFavorite">
 	UPDATE favorite
 	SET liked=#{newLiked} 
 	where memberId=#{memberId} 
-	AND per_id=#{perId}
+	AND per_num=#{perNum}
 	</update>
 	
 	<select id="countFavorite" resultType="int">
@@ -22,14 +22,14 @@
 	</select>
 	
 	<insert id="addFavorite">
-	INSERT INTO favorite (memberId,per_id,liked)
-			VALUES(#{memberId},#{perId},1)
+	INSERT INTO favorite (memberId,per_num,liked)
+			VALUES(#{memberId},#{perNum},1)
 	</insert>
 	
 	<resultMap id="favoriteResultMap" type="com.tl.dto.FavoritePostDTO">
 	<result property = "favId" column="fav_id"/>
 	<result property = "memberId" column="memberId"/>
-	<result property = "perId" column="per_id"/>
+	<result property = "perNum" column="per_num"/>
 	<result property = "perTitle" column="per_title"/>
 	<result property = "perPoster" column="per_poster"/>
 	<result property = "perStartD" column="per_startD"/>
@@ -40,7 +40,7 @@
 	
 	<select id="getFavorite" resultMap = "favoriteResultMap">
 			SELECT 
-			p.per_id		AS per_id,
+			p.per_num		AS per_num,
 			p.per_title		AS per_title, 
 			p.per_poster	AS per_poster,
 			p.per_startD	AS per_startD,
@@ -50,7 +50,7 @@
 			f.liked			AS liked,
 			f.created_at 	AS created_at
 			FROM favorite f
-			JOIN performance p ON f.per_id = p.per_id
+			JOIN performance p ON f.per_num = p.per_num
 			where f.memberId=#{memberId} AND liked=1
 			ORDER BY fav_id DESC
 			Limit 8

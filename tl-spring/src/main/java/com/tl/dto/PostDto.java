@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class PostDto {
-
 	public Long no;
 	public String category;
 	public String title;
