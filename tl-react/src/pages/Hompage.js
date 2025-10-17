@@ -3,14 +3,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from "./auth/AuthContext";
 import './reset.css'
-import { useNavigate, Link } from "react-router-dom";
 
 export default function Homepage() {
   const { member } = useAuth();
   const [posts, setPosts] = useState([]);
   const [performances, setPerformances] = useState([]);
   const [loading, setLoading] = useState(false);
-  const navigatie = useNavigate();
+
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true)
@@ -39,34 +38,6 @@ export default function Homepage() {
         </div>
       </div>
       <div id="home_mid">
-        <div id="home_mid1">
-          <div className="mid_title">
-            신규오픈
-          </div>
-          <div id="perform_list">
-            {performances
-              .filter((perform) => perform.perPoster)
-              .map(perform =>
-                <div className="perform_box" key={perform.favId}>
-                  <div className="perform_poster">
-                    <img
-                      className="perform_poster_img"
-                      alt={perform.perTitle}
-                      src={perform.perPoster} //공연 포스터
-                    /></div>
-                  <div className="perform_contents">
-                    <div className="perform_title">&nbsp;{perform.perTitle}</div>
-                    <div className="perform_run_date">
-                      &nbsp;&nbsp;{perform.perStartD}
-                      {/* &nbsp;~
-                    <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{perform.perEndD} */}
-                    </div>
-                  </div>
-                </div>
-              )}
-          </div>
-        </div>
 
         <div id="home_mid2">
           <div className="mid_title">

@@ -28,7 +28,7 @@ export default function TicketInfopage() {
 
     useEffect(() => {
         handleFavorite(member?.memberId, performanceInfo?.perId)
-    }, [member, performanceInfo])
+    }, [])
     return (
         <div id='my_layout'> {/*공연 상세 정보 출력 */}
             <div id='ti_top'>
@@ -44,30 +44,22 @@ export default function TicketInfopage() {
                         </div>
                     </div>
                     <div id='ti_top_right2'>
-                        <div id='ti_top_right2_l'>
-                            <div className='ti_top_text'>장소&nbsp;&nbsp;&nbsp;&nbsp;  {performanceInfo.perPlace}</div>
-                            <div className='ti_top_text'>기간&nbsp;&nbsp;&nbsp;&nbsp;  {performanceInfo.perStartD} ~ {performanceInfo.perEndD} </div>
-                            {/* 공연 시작 ~ 종료 일자 */}
-                        </div>
-                        <div id='ti_top_right2_r'>
-                            <div className='ti_top_text'>
-                                관람 시간&nbsp;&nbsp;&nbsp;&nbsp;  {performanceInfo.perRunT}
-                            </div>
-                            <div className='ti_top_text'>
-                                가격 &nbsp;&nbsp; {performanceInfo.perPrice}
-                            </div>
-
-
-                        </div>
+                        <div className='ti_top_text'>장소&nbsp;&nbsp;&nbsp;&nbsp;  {performanceInfo.perPlace}</div>
+                        <div className='ti_top_text'>기간&nbsp;&nbsp;&nbsp;&nbsp;  {performanceInfo.perStartD} ~ {performanceInfo.perEndD} </div>
+                        {/* 공연 시작 ~ 종료 일자 */}
                     </div>
+                    <div id='ti_top_right2_5'>
+                        <div className='ti_top_text'>관람 시간&nbsp;&nbsp;&nbsp;&nbsp;  {performanceInfo.perRunT}</div>
+                        <div className='ti_top_text'>가격 &nbsp;&nbsp; {performanceInfo.perPrice}</div>
+                    </div>
+
+
                     <div id='ti_top_right3'>
                         <div id='ti_top_right3_l'>
-                            <div className='ti_top_text'>
+                            <div className='ti_top_text_2'>
                                 공연 일정&nbsp;&nbsp;&nbsp;&nbsp;   {performanceInfo.perSche}
                             </div>
 
-                        </div>
-                        <div id='ti_top_right3_r'>
                         </div>
                     </div>
                     <div id='ti_top_right4'>
@@ -101,16 +93,17 @@ export default function TicketInfopage() {
 
 
             <div id='ti_mid'>
-
-                <MapContainer center={position} zoom={16} >
+                <div id="tl_mid_title">장소 정보</div>
+                <div id="tl_mid_text">장소 : {performanceInfo.perPlace}</div>
+                <div id="tl_mid_text">주소 : {performanceInfo.perAddress}</div>
+                <MapContainer center={position} zoom={16} style={{ width: "500px", height: "400px", marginTop: "20px" }}>
                     <TileLayer
-                        attribution='&copy; 
-                        <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                     <Marker position={position}> {/* 지도 마커 */}
                         <Popup>
-                            <div id="ti_map">
+                            <div>
                                 <h5>{performanceInfo.perPeace}</h5>
                                 <h6>{performanceInfo.perAddress}</h6>
                             </div>

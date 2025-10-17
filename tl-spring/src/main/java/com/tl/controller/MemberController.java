@@ -63,7 +63,6 @@ public class MemberController {
 //		loginResponse.setToken(null);
 //		// http 형태로 리턴. header에는 jwt가 있는 쿠키, body에 loginResponse.
 //		return ResponseEntity.ok(loginResponse);
-//		
 //	}
 	
 	@PostMapping("/signIn") // 로그인
